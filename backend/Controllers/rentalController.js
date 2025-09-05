@@ -1,5 +1,5 @@
 import Rental from '../Models/Rental.js';
-import createError from '../utils/createError.js';
+import { createError } from '../utils/createError.js';
 
 const VALID_STATUSES = ['active', 'completed', 'canceled'];
 

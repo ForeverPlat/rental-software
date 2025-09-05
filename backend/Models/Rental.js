@@ -44,7 +44,7 @@ const rentalSchema = new mongoose.Schema({
         method: {
             type: String,
             enum: ['card', 'cash', 'transfer'],
-            type: required,
+            required: true,
             trim: true
         },
         amount: {

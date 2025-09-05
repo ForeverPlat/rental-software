@@ -16,10 +16,10 @@ export const sendVerificationEmail = async ({ _id, username, email, verification
   const verificationLink = `http://localhost:${process.env.PORT}/api/auth/verify-email?userId=${_id}&verificationToken=${verificationToken}`;
 
   await transporter.sendMail({
-    from: 'noreply.println.typinggame@gmail.com',
+    from: 'the.rental.software@gmail.com',
     to: email,
     subject: 'Verify your email',
-    html: `<p>Welcome to Typing Game, ${username}!</p>
+    html: `<p>Welcome to The Rental Software, ${username}!</p>
            <p>Please verify your email by clicking the link below:</p>
            <a href="${verificationLink}">Verify Email</a>`,
   });

@@ -1,5 +1,7 @@
 import express from 'express';
-import connectToDB from './Database/db';
+import 'dotenv/config';
+import cors from 'cors';
+import connectToDB from './Database/db.js';
 
 import item from './Routes/itemRouter.js';
 import inventory from './Routes/inventoryRouter.js';
@@ -13,8 +15,16 @@ const port = process.env.PORT || 2000;
 
 const app = express();
 
+// app.use(cors({
+//   origin: 'http://localhost:5174',
+//   methods: ['GET', 'POST', 'PUT', 'DELETE'],
+//   credentials: true
+// }));
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+app.use(cors());
 
 app.use('/api/item', item);
 app.use('/api/inventory', inventory);
@@ -24,7 +34,7 @@ app.use('/api/auth', verifyEmail);
 
 app.use(errorHandler);
 
-connectToDB.then(() => {
+connectToDB().then(() => {
     app.listen(port, () => console.log('Server is running on 2000'));
 }).catch((error) => {
     console.error('Failed to connect to database: ', error);

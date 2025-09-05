@@ -1,5 +1,5 @@
 import Item from '../Models/Item.js';
-import createError from '../utils/createError.js';
+import { createError } from '../utils/createError.js';
 
 export const createItem = async (req, res, next) => {
     

@@ -1,9 +1,9 @@
 import User from '../Models/User.js';
-import { createError } from './utils/createError.js';
+import { createError } from '../utils/createError.js';
 import { sendVerificationEmail } from '../utils/sendVerificationEmail.js';
 
 import crypto from 'crypto';
-import bcrypt from 'bcryptjs';
+import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
 export const signup = async (req, res, next) => {
@@ -14,7 +14,7 @@ export const signup = async (req, res, next) => {
         //  check if username/email is already in the db
         const user = await User.findOne({ $or: [{ username }, { email }] });
         
-        if (user && user.verified){
+        if (user && user.verified) {
             return next(createError('This user already exists.', 409));
         }
 

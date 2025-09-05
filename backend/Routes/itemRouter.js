@@ -1,7 +1,7 @@
-import { Router } from "express";
+import express from 'express';
 import { createItem, deleteItem, getItem, getItems, updateItem, getUserItems } from "../Controllers/itemController.js";
 
-const itemRouter = Router();
+const itemRouter = express.Router();
 
 itemRouter.post('/', createItem);
 
@@ -19,4 +19,4 @@ itemRouter.get('/user', getUserItems);
 
 
 
-export default Router;
+export default itemRouter;

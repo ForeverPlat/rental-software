@@ -1,9 +1,9 @@
 //  Think of /inventory as the live status of the physical stock.
 
-import { Router } from "express";
+import express from 'express';
 import { createInventory, deleteInventory, getInventories, getInventory, updateInventory } from "../Controllers/inventoryController.js";
 
-const inventoryRouter = Router();
+const inventoryRouter = express.Router();
 
 inventoryRouter.post('/:itemId', createInventory);
 
@@ -15,4 +15,4 @@ inventoryRouter.put('/:itemId', updateInventory);
 
 inventoryRouter.delete('/:itemId', deleteInventory);
 
-export default Router;
+export default inventoryRouter;

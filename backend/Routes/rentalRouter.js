@@ -1,7 +1,7 @@
-import { Router } from "express";
+import express from 'express';
 import { createRental, deleteRental, getRental, getRentals, updateRental, getUserRentals, updateUserRentalStatus } from "../Controllers/rentalController.js";
 
-const rentalRouter = Router();
+const rentalRouter = express.Router();
 
 rentalRouter.post('/', createRental);
 
@@ -20,4 +20,4 @@ rentalRouter.get('/user', getUserRentals);
 
 rentalRouter.put('/rentalId', updateUserRentalStatus);
 
-export default Router;
+export default rentalRouter;
