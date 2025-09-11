@@ -5,7 +5,7 @@ import connectToDB from './Database/db.js';
 
 import item from './Routes/itemRouter.js';
 import inventory from './Routes/inventoryRouter.js';
-import rental from './Routes/rentalRouter.js';
+import booking from './Routes/bookingRouter.js';
 import auth from './Routes/authRouter.js';
 import verifyEmail from './Routes/verifyEmailRouter.js';
 
@@ -28,7 +28,7 @@ app.use(cors());
 
 app.use('/api/item', item);
 app.use('/api/inventory', inventory);
-app.use('/api/rental', rental);
+app.use('/api/booking', booking);
 app.use('/api/auth', auth);
 app.use('/api/auth', verifyEmail);
 

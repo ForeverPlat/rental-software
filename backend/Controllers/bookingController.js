@@ -1,9 +1,9 @@
-import Rental from '../Models/Rental.js';
+import Booking from '../Models/Booking.js';
 import { createError } from '../utils/createError.js';
 
 const VALID_STATUSES = ['active', 'completed', 'canceled'];
 
-export const createRental = async (req, res, next) => {
+export const createBooking = async (req, res, next) => {
     
     try {
         const { customerId, items , startDate, endDate, status, payment } = req.body;
@@ -20,7 +20,7 @@ export const createRental = async (req, res, next) => {
             return next(createError('Invalid status value.', 400));
         }
 
-        const newRental = new Rental({
+        const newBooking = new Booking({
             customerId,
             items,
             startDate,
@@ -28,11 +28,11 @@ export const createRental = async (req, res, next) => {
             status,
             payment
         });
-        await newRental.save();
+        await newBooking.save();
 
         res.status(200).json({
             success: true,
-            message: `Rental created successfully.`
+            message: `Booking created successfully.`
         });
         
     } catch (error) {
@@ -40,19 +40,19 @@ export const createRental = async (req, res, next) => {
     }
 }
 
-export const getRentals = async (req, res, next) => {
+export const getBookings = async (req, res, next) => {
 
     try {
-        const rentals = await Rental.find();
+        const bookings = await Booking.find();
 
-        if (!rentals) {
-            return next(createError('No rentals found.', 404));
+        if (!bookings) {
+            return next(createError('No bookings found.', 404));
         }
 
         res.status(200).json({
             success: true,
-            message: `Rentals found.`,
-            data: rentals
+            message: `Bookings found.`,
+            data: bookings
         });
 
     } catch (error) {
@@ -60,25 +60,25 @@ export const getRentals = async (req, res, next) => {
     }
 }
 
-export const getRental = async (req, res, next) => {
+export const getBooking = async (req, res, next) => {
 
     try {
-        const { rentalId } = req.params;
+        const { bookingId } = req.params;
 
-        if (!rentalId) {
+        if (!bookingId) {
             return next(createError('All parameters most be filled.', 400));
         }
 
-        const rental = await Rental.findById(rentalId);
+        const booking = await Booking.findById(bookingId);
 
-        if (!rental) {
-            return next(createError(`Rental with rentalId ${rentalId} not found.`, 404));
+        if (!booking) {
+            return next(createError(`Booking with bookingId ${bookingId} not found.`, 404));
         }
 
         res.status(200).json({
             success: true,
-            message: `Rental with rentalId ${rentalId} was found.`,
-            data: rental
+            message: `Booking with bookingId ${bookingId} was found.`,
+            data: booking
         });
 
     } catch (error) {
@@ -86,29 +86,29 @@ export const getRental = async (req, res, next) => {
     }
 }
 
-export const updateRental = async (req, res, next) => {
+export const updateBooking = async (req, res, next) => {
 
     try {
-        const { rentalId } = req.params;
+        const { bookingId } = req.params;
 
-        if (!rentalId) {
+        if (!bookingId) {
             return next(createError('All parameters most be filled.', 400));
         }
 
-        const rental = await Rental.findByIdAndUpdate(
-            rentalId,
+        const booking = await Booking.findByIdAndUpdate(
+            bookingId,
             req.body,
             { new: true }   // returns updated document
         );
 
-        if (!rental) {
-            return next(createError(`Rental with rentalId ${rentalId} not found.`, 404));
+        if (!booking) {
+            return next(createError(`Booking with bookingId ${bookingId} not found.`, 404));
         }
 
         res.status(200).json({
             success: true,
-            message: `Rental with rentalId ${rentalId} was updated.`,
-            data: rental
+            message: `Booking with bookingId ${bookingId} was updated.`,
+            data: booking
         });
 
     } catch (error) {
@@ -116,25 +116,25 @@ export const updateRental = async (req, res, next) => {
     }
 }
 
-export const deleteRental = async (req, res, next) => {
+export const deleteBooking = async (req, res, next) => {
 
     try {
-        const { rentalId } = req.params;
+        const { bookingId } = req.params;
 
-        if (!rentalId) {
+        if (!bookingId) {
             return next(createError('All parameters most be filled.', 400));
         }
 
-        const rental = await Rental.findOneAndDelete({ rentalId });
+        const booking = await Booking.findOneAndDelete({ bookingId });
 
-        if (!rental) {
-            return next(createError(`Rental with rentalId ${rentalId} not found.`, 404));
+        if (!booking) {
+            return next(createError(`Booking with bookingId ${bookingId} not found.`, 404));
         }
 
         res.status(200).json({
             success: true,
-            message: `Rental with rentalId ${rentalId} was deleted.`,
-            data: rental
+            message: `Booking with bookingId ${bookingId} was deleted.`,
+            data: booking
         });
 
     } catch (error) {
@@ -144,7 +144,7 @@ export const deleteRental = async (req, res, next) => {
 
 //  More specific
 
-export const getUserRentals = async (req, res, next) => {
+export const getUserBookings = async (req, res, next) => {
 
     try {
         const { userId, username } = req.user;
@@ -153,15 +153,15 @@ export const getUserRentals = async (req, res, next) => {
             return next(createError('All parameters most be filled.', 400));
         }
 
-        const rentals = await Rental.find({ user: userId });
+        const bookings = await Booking.find({ user: userId });
 
-        if (!rentals) {
-            return next(createError(`Rentals for ${username} was not found.`, 404));
+        if (!bookings) {
+            return next(createError(`Bookings for ${username} was not found.`, 404));
         }
 
         res.status(200).json({
             success: true,
-            message: `Rentals for ${username} was found.`,
+            message: `Bookings for ${username} was found.`,
             data: items
         });
 
@@ -170,14 +170,14 @@ export const getUserRentals = async (req, res, next) => {
     }
 }
 
-export const updateUserRentalStatus = async (req, res, next) => {
+export const updateUserBookingStatus = async (req, res, next) => {
 
     try {
         const { userId } = req.user;
-        const { rentalId } = req.params;
+        const { bookingId } = req.params;
         const { status } = req.body;
 
-        if (!userId || !rentalId || !status) {
+        if (!userId || !bookingId || !status) {
             return next(createError('All parameters most be filled.', 400));
         }
 
@@ -185,20 +185,20 @@ export const updateUserRentalStatus = async (req, res, next) => {
             return next(createError('Invalid status value.', 400));
         }
 
-        const rental = await Rental.findByIdAndUpdate(
-            { _id: rentalId, user: userId },    //  Looking for both ensures user owns the rental
+        const booking = await Booking.findByIdAndUpdate(
+            { _id: bookingId, user: userId },    //  Looking for both ensures user owns the booking
             { $set: { status } },
             { new: true }   //  returns updated document
         );
 
-        if (!rental) {
-            return next(createError('Rental not found or you are not authorized.', 404));
+        if (!booking) {
+            return next(createError('Booking not found or you are not authorized.', 404));
         }
 
         res.status(200).json({
             success: true,
-            message: `Rental with rentalId ${rentalId} was updated.`,
-            data: rental
+            message: `Booking with bookingId ${bookingId} was updated.`,
+            data: booking
         });
 
     } catch (error) {

@@ -1,6 +1,6 @@
 import mongoose, { Schema } from "mongoose";
 
-const rentalSchema = new mongoose.Schema({
+const bookingSchema = new mongoose.Schema({
     customerId: {
         type: mongoose.Schema.Types.ObjectId,
         // Still need to create user
@@ -54,7 +54,7 @@ const rentalSchema = new mongoose.Schema({
     }
 });
 
-export default mongoose.model('Rental', rentalSchema);
+export default mongoose.model('Booking', bookingSchema);
 
 
 // ==> Idea of what will be stored <==
