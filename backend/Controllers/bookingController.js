@@ -91,14 +91,21 @@ export const getBooking = async (req, res, next) => {
 export const getBookingsMetrics = async (req, res, next) => {
     
     try {
+
+        // const bookings = await Booking.find();
+        // console.log('Raw bookings:', JSON.stringify(bookings, null, 2));
+
         const bookingsCount = await Booking.countDocuments({});
         console.log("booking count:", bookingsCount);
         
+        const quantityAggregation = await Booking.aggregate([
+            { $unwind: "$items" },
+            {
+                $group: { _id: null, total: { $sum: "$items.quantity" } }
+            }
+        ]);
 
-        // const quantity = await Booking.find().select('quantity');
-
-        // console.log('quantity:',quantity);
-
+        const totalItemQuantity = quantityAggregation.length > 0 ? quantityAggregation[0].total : 0;
 
         if (!bookingsCount) {
             return next(createError('No bookings found.', 404));
@@ -106,8 +113,11 @@ export const getBookingsMetrics = async (req, res, next) => {
 
         res.status(200).json({
             success: true,
-            message: `Total number of bookings sent.`,
-            data: bookingsCount
+            message: `Booking metrics sent.`,
+            data: {
+                bookingsCount,
+                totalItemQuantity
+            }
         });
 
     } catch (error) {
