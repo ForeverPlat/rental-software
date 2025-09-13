@@ -1,11 +1,12 @@
 import Booking from '../Models/Booking.js';
 import { createError } from '../utils/createError.js';
 
-const VALID_STATUSES = ['active', 'completed', 'canceled'];
+const VALID_STATUSES = ['pending', 'confirmed', 'completed', 'canceled'];
 
 export const createBooking = async (req, res, next) => {
     
     try {
+        const { userId } = req.user;
         const { customerId, items , startDate, endDate, status, payment } = req.body;
 
         if (!customerId || !items || !startDate || !endDate || !status || !payment) {
@@ -21,6 +22,7 @@ export const createBooking = async (req, res, next) => {
         }
 
         const newBooking = new Booking({
+            user: userId,
             customerId,
             items,
             startDate,

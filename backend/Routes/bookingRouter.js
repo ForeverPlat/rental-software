@@ -1,9 +1,10 @@
 import express from 'express';
 import { createBooking, deleteBooking, getBooking, getBookings, getBookingsMetrics , updateBooking, getUserBookings, updateUserBookingStatus } from "../Controllers/bookingController.js";
+import authMiddleware from '../Middleware/authMiddleware.js';
 
 const bookingRouter = express.Router();
 
-bookingRouter.post('/', createBooking);
+bookingRouter.post('/', authMiddleware, createBooking);
 
 bookingRouter.get('/', getBookings);
 

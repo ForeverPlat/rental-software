@@ -1,32 +1,27 @@
 import Customer from "../Models/Customer.js";
-import createError from '../utils/createError.js';
+import { createError } from '../utils/createError.js';
 
 export const createCustomer = async (req, res, next) => {
     
     try {
-        // const 
         const { userId } = req.user;
-        const { itemId, name, pricePerDay, category } = req.body;
+        const { name, email, number } = req.body;
 
-        if (!itemId || !name || !pricePerDay || !category) {
+        if (!name || !email || !number ) {
             return next(createError('All fields most be filled.', 400));
         }
 
-        //  Make the itemId something like this schema (userId-itemId)
-        //  Scrap this idea for now
-
-        const newItem = new Item({
-            userId,
-            itemId,
+        const newCustomer = new Customer({
+            user: userId,
             name,
-            pricePerDay,
-            category
+            email,
+            number
         });
-        await newItem.save();
+        await newCustomer.save();
 
         res.status(200).json({
             success: true,
-            message: `Item ${name} created successfully.`
+            message: `Customer ${name} created successfully.`
         });
         
     } catch (error) {
