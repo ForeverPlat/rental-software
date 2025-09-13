@@ -28,3 +28,23 @@ export const createCustomer = async (req, res, next) => {
         next(error);
     }
 }
+
+export const getCustomers = async (req, res, next) => {
+
+    try {
+        const customers = await Customer.find();
+
+        if (!customers) {
+            return next(createError('No customers found.', 404));
+        }
+
+        res.status(200).json({
+            success: true,
+            message: `customers found.`,
+            data: customers 
+        });
+
+    } catch (error) {
+        next(error);
+    }
+}

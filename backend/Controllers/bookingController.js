@@ -9,6 +9,8 @@ export const createBooking = async (req, res, next) => {
         const { userId } = req.user;
         const { customerId, items , startDate, endDate, status, payment } = req.body;
 
+        // console.log( customerId, items , startDate, endDate, status, payment )
+
         if (!customerId || !items || !startDate || !endDate || !status || !payment) {
             return next(createError('All fields most be filled.', 400));
         }
@@ -91,12 +93,7 @@ export const getBooking = async (req, res, next) => {
 export const getBookingsMetrics = async (req, res, next) => {
     
     try {
-
-        // const bookings = await Booking.find();
-        // console.log('Raw bookings:', JSON.stringify(bookings, null, 2));
-
-        const bookingsCount = await Booking.countDocuments({});
-        console.log("booking count:", bookingsCount);
+        const totalBookings = await Booking.countDocuments({});
         
         const quantityAggregation = await Booking.aggregate([
             { $unwind: "$items" },
@@ -104,10 +101,29 @@ export const getBookingsMetrics = async (req, res, next) => {
                 $group: { _id: null, total: { $sum: "$items.quantity" } }
             }
         ]);
-
         const totalItemQuantity = quantityAggregation.length > 0 ? quantityAggregation[0].total : 0;
 
-        if (!bookingsCount) {
+        //  filters for only completed bookings
+        const revenueAggregation = await Booking.aggregate([
+            { $match: { status: "completed" } },
+            { $unwind: "$payment" },
+            {
+                $group: { _id: null, total: { $sum: "$payment.amount" } }
+            }
+        ]);
+        const totalRevenue = revenueAggregation.length > 0 ? revenueAggregation[0].total : 0;
+
+        const dueAggregation = await Booking.aggregate([
+            { $match: { status: { $ne: "completed" } } },
+            { $unwind: "$payment" },
+            {
+                $group: { _id: null, total: { $sum: "$payment.amount" } }
+            }
+        ]);
+        const totalAmountDue = dueAggregation .length > 0 ? dueAggregation [0].total : 0;
+
+
+        if (!totalBookings) {
             return next(createError('No bookings found.', 404));
         }
 
@@ -115,8 +131,10 @@ export const getBookingsMetrics = async (req, res, next) => {
             success: true,
             message: `Booking metrics sent.`,
             data: {
-                bookingsCount,
-                totalItemQuantity
+                bookings: totalBookings,
+                items: totalItemQuantity,
+                revenue: totalRevenue,
+                due: totalAmountDue
             }
         });
 

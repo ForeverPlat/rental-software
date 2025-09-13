@@ -10,26 +10,49 @@ const MetricsSummary = () => {
         due: 0
     });
 
+    const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState(null);
+
     useEffect(() => {
         const getMetrics = async () => {
             try {
-                const res = await fetch('http://localhost:2000/bookings/metrics');
-                const result = await res.json();
+                setIsLoading(true);
+                // const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:2000';
+                const apiUrl = 'http://localhost:2000';
+                const res = await fetch(`${apiUrl}/api/bookings/metrics`);
 
-                setMetrics(result.data);
+                if (!res.ok) {
+                    throw new Error(`Failed to fetch metrics: ${res.status}`);
+                }
+
+                const result = await res.json();
+                const { bookings, items, revenue, due } = result.data;
+ 
+                setMetrics({
+                    bookings,
+                    items,
+                    revenue,
+                    due
+                });
 
             } catch (error) {
                 console.error('Error fetching metrics: ', error);
+            } finally {
+                setIsLoading(false);
             }
         }
 
         getMetrics();
     }, []);
 
+    if(isLoading) {
+        return <div style={{ textAlign: 'center' }}>Loading metrics...</div>
+    }
+
     const { bookings, items, revenue, due } = metrics;
 
   return (
-    <div>
+    <div style={{ display: 'flex', gap: '1rem', width: '100%' }}>
         <MetricCard label='Bookings' value={bookings} />
         <MetricCard label='Items ordered' value={items} />
         <MetricCard label='Revenue' value={revenue} />
