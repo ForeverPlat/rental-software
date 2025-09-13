@@ -1,9 +1,10 @@
 import express from 'express';
 import { createItem, deleteItem, getItem, getItems, updateItem, getUserItems } from "../Controllers/itemController.js";
+import authMiddleware from '../Middleware/authMiddleware.js';
 
 const itemRouter = express.Router();
 
-itemRouter.post('/', createItem);
+itemRouter.post('/', authMiddleware, createItem);
 
 itemRouter.get('/', getItems);
 

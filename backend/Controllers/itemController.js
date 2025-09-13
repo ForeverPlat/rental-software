@@ -5,9 +5,9 @@ export const createItem = async (req, res, next) => {
     
     try {
         const { userId } = req.user;
-        const { itemId, name, pricePerDay, category } = req.body;
+        const { name, pricePerDay } = req.body;
 
-        if (!itemId || !name || !pricePerDay || !category) {
+        if (!name || !pricePerDay ) {
             return next(createError('All fields most be filled.', 400));
         }
 
@@ -15,11 +15,9 @@ export const createItem = async (req, res, next) => {
         //  Scrap this idea for now
 
         const newItem = new Item({
-            userId,
-            itemId,
+            user: userId,
             name,
             pricePerDay,
-            category
         });
         await newItem.save();
 

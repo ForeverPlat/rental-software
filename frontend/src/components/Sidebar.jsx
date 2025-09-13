@@ -8,10 +8,10 @@ import { FaRegUser } from "react-icons/fa";
 import { MdOutlineInventory2 } from "react-icons/md";
 
 const sidebarItems = [
-    { name: "Dashboards", path: "/dashboard", icon: <RiDashboard3Line /> },
+    { name: "Dashboard", path: "/dashboard", icon: <RiDashboard3Line /> },
     { name: "Calendar", path: "/calendar", icon: <FaRegCalendarMinus /> },
     { name: "Bookings", path: "/bookings", icon: <LuInbox /> },
-    { name: "Customer", path: "/customer", icon: <FaRegUser /> },
+    { name: "Customers", path: "/customers", icon: <FaRegUser /> },
     { name: "Inventory", path: "/inventory", icon: <MdOutlineInventory2 /> }
 ]
 

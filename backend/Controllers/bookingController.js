@@ -86,6 +86,31 @@ export const getBooking = async (req, res, next) => {
     }
 }
 
+export const getBookingsMetrics = async (req, res, next) => {
+    
+    try {
+        const bookingsCount = await Booking.countDocuments({});
+
+        const quantity = await Booking.find().select('quantity');
+
+        console.log(quantity);
+
+
+        if (!bookingsCount) {
+            return next(createError('No bookings found.', 404));
+        }
+
+        res.status(200).json({
+            success: true,
+            message: `Total number of bookings sent.`,
+            data: bookingsCount
+        });
+
+    } catch (error) {
+        next(error);
+    }
+}
+
 export const updateBooking = async (req, res, next) => {
 
     try {

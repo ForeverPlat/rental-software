@@ -17,12 +17,6 @@ const itemSchema = new mongoose.Schema({
         required: true,
         unique: true,
         trim: true
-    },
-    category: {
-        type: Number,
-        required: true,
-        unique: true,
-        trim: true
     }
 });
 

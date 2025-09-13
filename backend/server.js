@@ -26,9 +26,9 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(cors());
 
-app.use('/api/item', item);
+app.use('/api/items', item);
 app.use('/api/inventory', inventory);
-app.use('/api/booking', booking);
+app.use('/api/bookings', booking);
 app.use('/api/auth', auth);
 app.use('/api/auth', verifyEmail);
 
