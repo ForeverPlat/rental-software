@@ -8,9 +8,10 @@ bookingRouter.post('/', authMiddleware, createBooking);
 
 bookingRouter.get('/', getBookings);
 
-bookingRouter.get('/:bookingId', getBooking);
-
+//  position matters (ensures metrics is not seen as param)
 bookingRouter.get('/metrics', getBookingsMetrics);
+
+bookingRouter.get('/:bookingId', getBooking);
 
 bookingRouter.put('/:bookingId', updateBooking);
 

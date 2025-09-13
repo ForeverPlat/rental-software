@@ -92,10 +92,12 @@ export const getBookingsMetrics = async (req, res, next) => {
     
     try {
         const bookingsCount = await Booking.countDocuments({});
+        console.log("booking count:", bookingsCount);
+        
 
-        const quantity = await Booking.find().select('quantity');
+        // const quantity = await Booking.find().select('quantity');
 
-        console.log(quantity);
+        // console.log('quantity:',quantity);
 
 
         if (!bookingsCount) {
