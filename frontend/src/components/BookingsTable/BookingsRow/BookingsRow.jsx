@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import './BookingsRow.css';
 
 const BookingRow = () => {
 
@@ -39,16 +40,17 @@ const BookingRow = () => {
 
   return (
     <div>
-
         {
             bookings.map(({ id, status, startDate, endDate, payment }) => (
-                <div key={ id }>
-                    {status},
-                    {startDate}
+                <div key={ id } className='booking-row'>
+                    {/* these should probably be turned into components T.T */}
+                    <div className='booking-status'>{status}</div>
+                    <div>{startDate}</div>
+                    <div>{endDate}</div>
+                    <div>${payment.amount}</div>
                 </div>
             )) 
         }
-
     </div>
   )
 }

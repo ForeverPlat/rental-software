@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import MetricCard from './MetricCard'
+// import './MetricSummary.css'
 
 const MetricsSummary = () => {
 
@@ -52,7 +53,7 @@ const MetricsSummary = () => {
     const { bookings, items, revenue, due } = metrics;
 
   return (
-    <div style={{ display: 'flex', gap: '1rem', width: '100%' }}>
+    <div style={{ display: 'flex', gap: '1rem', width: '100%', marginBottom: '16px' }}>
         <MetricCard label='Bookings' value={bookings} />
         <MetricCard label='Items ordered' value={items} />
         <MetricCard label='Revenue' value={revenue} />
