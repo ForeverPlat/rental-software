@@ -1,8 +1,8 @@
 .bookings-header {
     display: grid;
     grid-template-columns: repeat(6, 1fr);
-    border-top: 1px solid #ccc;
-    border-bottom: 1px solid #ccc;
+    /* change this when there is a booking table component */
+    border: 1px solid #ccc;
 }
 
 .bookings-header-item {

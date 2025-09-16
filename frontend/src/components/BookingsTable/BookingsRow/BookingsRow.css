@@ -1,10 +1,13 @@
 .booking-row {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
   align-items: center;
   justify-content: center;
   gap: 10px;
   padding: 10px;
   border-bottom: 1px solid #ccc;
+  border-left: 1px solid #ccc;
+  border-right: 1px solid #ccc;
 }
 
 .booking-status {

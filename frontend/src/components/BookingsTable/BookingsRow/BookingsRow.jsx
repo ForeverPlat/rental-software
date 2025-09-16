@@ -3,13 +3,15 @@ import './BookingsRow.css';
 
 const BookingRow = () => {
 
-    const [bookings, setBookings] = useState();
-    const [isLoading, setIsLoading] = useState(true);
+    const [bookings, setBookings] = useState([]);
+    const [customers, setCustomers] = useState({});
+    const [isLoadingBookings, setIsLoadingBookings] = useState(false);
+    const [isLoadingNames, setIsLoadingNames] = useState(false);
 
     useEffect(() => {
-        const getCustomers = async () => {
+        const getBookings = async () => {
             try {
-                setIsLoading(true);
+                setIsLoadingBookings(true);
                 // const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:2000';
                 const apiUrl = 'http://localhost:2000';
                 const res = await fetch(`${apiUrl}/api/bookings`);
@@ -25,29 +27,68 @@ const BookingRow = () => {
             } catch (error) {
                 console.error('Error fetching metrics: ', error);
             } finally {
-                setIsLoading(false);
+                setIsLoadingBookings(false);
+            }
+        }
+
+        getBookings();
+    }, [])
+
+    useEffect(() => {
+        if (!bookings) return;
+
+        const getCustomers = async () => {
+            try {
+                setIsLoadingNames(true);
+                const ids = bookings.map((booking) => booking.customerId);
+
+                // const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:2000';
+                const apiUrl = 'http://localhost:2000';
+                const res = await fetch(`${apiUrl}/api/customers/batch`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ ids })
+                });
+
+                if (!res.ok) {
+                    throw new Error(`Failed to fetch customers: ${res.status}`);
+                }
+
+                const result = await res.json();
+
+                setCustomers(result.data || {});
+
+            } catch (error) {
+                console.error('Error fetching customers: ', error);
+            } finally {
+                setIsLoadingNames(false);
             }
         }
 
         getCustomers();
-    }, [])
+    }, [bookings])
 
-    if(isLoading) {
+    if(isLoadingBookings || isLoadingNames) {
         return <div style={{ textAlign: 'center' }}>Loading bookings...</div>
     }
-
-    // const { status, startDate, endDate, payment } = bookings;
+    
+    if (bookings.length === 0) {
+        return <div style={{ textAlign: 'center' }}>No bookings found.</div>;
+    }
 
   return (
     <div>
         {
-            bookings.map(({ id, status, startDate, endDate, payment }) => (
+            bookings.map(({ customerId, id, status, startDate, endDate, payment }) => (
                 <div key={ id } className='booking-row'>
                     {/* these should probably be turned into components T.T */}
+                    <div>{ customers[customerId]?.name || 'Unknown Customer' }</div>
                     <div className='booking-status'>{status}</div>
-                    <div>{startDate}</div>
-                    <div>{endDate}</div>
-                    <div>${payment.amount}</div>
+                    <div>{ new Date(startDate).toLocaleDateString() }</div>
+                    <div>{ new Date(endDate).toLocaleDateString() }</div>
+                    <div>${payment.amount.toFixed(2)}</div>
                 </div>
             )) 
         }
