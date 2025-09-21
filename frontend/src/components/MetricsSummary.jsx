@@ -27,11 +27,11 @@ const MetricsSummary = () => {
                 }
 
                 const result = await res.json();
-                const { bookings, items, revenue, due } = result.data;
+                const { bookings, products, revenue, due } = result.data;
  
                 setMetrics({
                     bookings,
-                    items,
+                    products,
                     revenue,
                     due
                 });

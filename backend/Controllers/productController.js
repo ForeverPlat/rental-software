@@ -1,7 +1,7 @@
-import Item from '../Models/Item.js';
+import Product from '../Models/Product.js';
 import { createError } from '../utils/createError.js';
 
-export const createItem = async (req, res, next) => {
+export const createProduct = async (req, res, next) => {
     
     try {
         const { userId } = req.user;
@@ -11,19 +11,19 @@ export const createItem = async (req, res, next) => {
             return next(createError('All fields most be filled.', 400));
         }
 
-        //  Make the itemId something like this schema (userId-itemId)
+        //  Make the productId something like this schema (userId-productId)
         //  Scrap this idea for now
 
-        const newItem = new Item({
+        const newProduct = new Product({
             user: userId,
             name,
             pricePerDay,
         });
-        await newItem.save();
+        await newProduct.save();
 
         res.status(200).json({
             success: true,
-            message: `Item ${name} created successfully.`
+            message: `Product ${name} created successfully.`
         });
         
     } catch (error) {
@@ -31,19 +31,19 @@ export const createItem = async (req, res, next) => {
     }
 }
 
-export const getItems = async (req, res, next) => {
+export const getProducts = async (req, res, next) => {
 
     try {
-        const items = await Item.find();
+        const products = await Product.find();
 
-        if (!items) {
-            return next(createError('No items found.', 404));
+        if (!products) {
+            return next(createError('No products found.', 404));
         }
 
         res.status(200).json({
             success: true,
-            message: `Items found.`,
-            data: items
+            message: `Products found.`,
+            data: products
         });
 
     } catch (error) {
@@ -51,7 +51,7 @@ export const getItems = async (req, res, next) => {
     }
 }
 
-export const getItem = async (req, res, next) => {
+export const getProduct = async (req, res, next) => {
 
     try {
         const { id } = req.params;
@@ -60,16 +60,16 @@ export const getItem = async (req, res, next) => {
             return next(createError('All parameters most be filled.', 400));
         }
 
-        const item = await Item.findById(id);
+        const product = await Product.findById(id);
 
-        if (!item) {
-            return next(createError(`Item with id ${id} not found.`, 404));
+        if (!product) {
+            return next(createError(`Product with id ${id} not found.`, 404));
         }
 
         res.status(200).json({
             success: true,
-            message: `Item with id ${id} was found.`,
-            data: item
+            message: `Product with id ${id} was found.`,
+            data: product
         });
 
     } catch (error) {
@@ -77,7 +77,7 @@ export const getItem = async (req, res, next) => {
     }
 }
 
-export const updateItem = async (req, res, next) => {
+export const updateProduct = async (req, res, next) => {
 
     try {
         const { id } = req.params;
@@ -86,20 +86,20 @@ export const updateItem = async (req, res, next) => {
             return next(createError('All parameters most be filled.', 400));
         }
 
-        const item = await Item.findByIdAndUpdate(
+        const product = await Product.findByIdAndUpdate(
             id,
             req.body,
             { new: true }   // returns updated document
         );
 
-        if (!item) {
-            return next(createError(`Item with id ${id} not found.`, 404));
+        if (!product) {
+            return next(createError(`Product with id ${id} not found.`, 404));
         }
 
         res.status(200).json({
             success: true,
-            message: `Item with id ${id} was updated.`,
-            data: item
+            message: `Product with id ${id} was updated.`,
+            data: product
         });
 
     } catch (error) {
@@ -107,7 +107,7 @@ export const updateItem = async (req, res, next) => {
     }
 }
 
-export const deleteItem = async (req, res, next) => {
+export const deleteProduct = async (req, res, next) => {
 
     try {
         const { id } = req.params;
@@ -116,16 +116,16 @@ export const deleteItem = async (req, res, next) => {
             return next(createError('All parameters most be filled.', 400));
         }
 
-        const item = await Item.findByIdAndDelete({ id });
+        const product = await Product.findByIdAndDelete({ id });
 
-        if (!item) {
-            return next(createError(`Item with id ${id} not found.`, 404));
+        if (!product) {
+            return next(createError(`Product with id ${id} not found.`, 404));
         }
 
         res.status(200).json({
             success: true,
-            message: `Item with id ${id} was deleted.`,
-            data: item
+            message: `Product with id ${id} was deleted.`,
+            data: product
         });
 
     } catch (error) {
@@ -135,7 +135,7 @@ export const deleteItem = async (req, res, next) => {
 
 //  More specific
 
-export const getUserItems = async (req, res, next) => {
+export const getUserProducts = async (req, res, next) => {
 
     try {
         const { userId, username } = req.user;
@@ -144,16 +144,16 @@ export const getUserItems = async (req, res, next) => {
             return next(createError('All parameters most be filled.', 400));
         }
 
-        const items = await Item.find({ user: userId });
+        const products = await Product.find({ user: userId });
 
-        if (!items) {
-            return next(createError(`Items for ${username} was not found.`, 404));
+        if (!products) {
+            return next(createError(`Products for ${username} was not found.`, 404));
         }
 
         res.status(200).json({
             success: true,
-            message: `Items for ${username} was found.`,
-            data: items
+            message: `Products for ${username} was found.`,
+            data: products
         });
 
     } catch (error) {

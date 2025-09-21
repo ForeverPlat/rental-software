@@ -13,7 +13,7 @@ const Table = ({ headers, rows }) => {
                 <tr className='table-header' >
                     {
                         headers.map((header, headerIndex) => (
-                            <th key={headerIndex} className='header-cell'>{ header }</th>
+                            <th key={headerIndex} className='header-cell'>{ header.display }</th>
                         ))
                     }
                 </tr>
@@ -24,7 +24,7 @@ const Table = ({ headers, rows }) => {
                         <tr key={rowIndex} className='table-row'>
                             {
                                 headers.map((header, dataIndex) => (
-                                    <td key={dataIndex} className='cell'>{row[header.toLowerCase()]}</td>
+                                    <td key={dataIndex} className='cell'>{row[header.key]}</td>
                                 ))
                             }
                         </tr>

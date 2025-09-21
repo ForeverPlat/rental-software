@@ -39,8 +39,8 @@ const Customers = () => {
   }
 
     const headers = [
-      'Name',
-      'Email'
+      { display: 'Name', key: 'name'},
+      { display: 'Email', key: 'email' }
     ]
     // console.log("customers:"+customers);
 

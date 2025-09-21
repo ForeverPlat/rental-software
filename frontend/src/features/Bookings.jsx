@@ -7,6 +7,7 @@ import Table from '../components/Table/Table'
 const Bookings = () => {
 
     
+    
       const rows = [
       {
         customer: 'John Doe',
@@ -33,14 +34,17 @@ const Bookings = () => {
         'payment status': 'Refunded',
       },
     ];
+
+    // const [bookings, setBookings] = useState([]);
+    // const [isLoading, setIsLoading] = useState({})
+
     const headers = [
-      'Customer',
-      'Status',
-      'From',
-      'Until',
-      'Price',
-      'Payment Status'
-    ]
+      { display: 'Customer', key: 'customer' },
+      { display: 'From', key: 'from' },
+      { display: 'Until', key: 'until' },
+      { display: 'Price', key: 'price' },
+      { display: 'Payment Status', key: 'payment status' },
+    ];
 
     
 
