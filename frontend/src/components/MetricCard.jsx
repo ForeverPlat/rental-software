@@ -4,6 +4,7 @@ const MetricCard = ({ label, value }) => {
   return (
     <div style={{ 
       border: '1px solid #ddd',
+      'background-color': '#ffffff',
       borderRadius: '8px',
       padding: '1rem',
       minWidth: '120px',

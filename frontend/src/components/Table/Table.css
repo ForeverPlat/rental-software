@@ -1,0 +1,62 @@
+.table-container {
+  width: 100%;
+  margin-bottom: 16px;
+  padding: 1.5rem;
+  background-color: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  border-collapse: separate; /* Ensures border-radius and spacing work */
+  border-spacing: 0; /* Removes default spacing between table cells */
+}
+
+.table-header {
+  background-color: #f3f4f6;
+  font-weight: 700;
+  color: #1f2937;
+}
+
+.table-header th:first-child {
+  border-top-left-radius: 0.5rem; /* Apply border-radius to first header cell */
+}
+
+.table-header th:last-child {
+  border-top-right-radius: 0.5rem; /* Apply border-radius to last header cell */
+}
+
+.header-cell {
+  padding: 1rem;
+  text-align: left; /* Align text similar to the original design */
+}
+
+.table-row {
+  border-top: 1px solid #e5e7eb;
+}
+
+.table-row:hover {
+  background-color: #f9fafb; /* Hover effect for rows */
+}
+
+.cell {
+  padding: 1rem;
+  text-align: left; /* Align text similar to the original design */
+}
+
+/* Optional: Style for the last row to ensure clean borders */
+.table-row:last-child td {
+  border-bottom: 1px solid #e5e7eb; /* Add bottom border to last row */
+}
+
+/* Optional: Column width approximation (to mimic grid-template-columns: 3fr 2fr) */
+.table-container colgroup col:nth-child(1) {
+  width: 60%; /* Approximates 3fr */
+}
+
+.table-container colgroup col:nth-child(2) {
+  width: 40%; /* Approximates 2fr */
+}
+
+.loading {
+  text-align: center;
+  padding: 1rem;
+}

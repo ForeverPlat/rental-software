@@ -8,7 +8,7 @@ import Sidebar from './components/Sidebar/Sidebar';
 import Signup from './features/auth/Signup'
 import Login from './features/auth/Login'
 import Bookings from './features/Bookings';
-import Customers from './features/Customers'
+import Customers from './features/Customers/Customers'
 import Dashboard from './features/Dashboard';
 import Calendar from './features/Calendar';
 import Inventory from './features/Inventory';

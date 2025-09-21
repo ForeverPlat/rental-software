@@ -5,14 +5,14 @@ import { createInventory, deleteInventory, getInventories, getInventory, updateI
 
 const inventoryRouter = express.Router();
 
-inventoryRouter.post('/:itemId', createInventory);
+inventoryRouter.post('/:productId', createInventory);
 
 inventoryRouter.get('/', getInventories);
 
-inventoryRouter.get('/:itemId', getInventory);
+inventoryRouter.get('/:productId', getInventory);
 
-inventoryRouter.put('/:itemId', updateInventory);
+inventoryRouter.put('/:productId', updateInventory);
 
-inventoryRouter.delete('/:itemId', deleteInventory);
+inventoryRouter.delete('/:productId', deleteInventory);
 
 export default inventoryRouter;

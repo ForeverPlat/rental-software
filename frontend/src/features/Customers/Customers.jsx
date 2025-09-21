@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react'
+import './Customers.css'
+import Table from '../../components/Table/Table';
 
 const Customers = () => {
 
@@ -36,16 +38,31 @@ const Customers = () => {
     return <div style={{ textAlign: 'center' }}>Loading customers...</div>
   }
 
+    const headers = [
+      'Name',
+      'Email'
+    ]
+    // console.log("customers:"+customers);
+
   return (
     <div>
-      {
-        customers.map(({ id,name, email }) => (
-          <div key={id}>
-            <div>{ name }</div>
-            <div>{ email }</div>
-          </div>
-        ))
-      }
+
+      <Table rows={customers} headers={headers} />
+      {/* <div className='table-container'>
+        <div className='table-header'>
+          <div className='header-cell'>Name</div>
+          <div className='header-cell'>Email</div>
+        </div>
+        {
+          customers.map(({ id,name, email }) => (
+            <div key={id} className='table-row'>
+              <div className='cell'>{ name }</div>
+              <div className='cell'>{ email }</div>
+            </div>
+          ))
+        }
+      </div>       */}
+
     </div>
   )
 }

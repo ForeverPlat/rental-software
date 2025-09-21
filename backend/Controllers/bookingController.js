@@ -7,11 +7,11 @@ export const createBooking = async (req, res, next) => {
     
     try {
         const { userId } = req.user;
-        const { customerId, items , startDate, endDate, status, payment } = req.body;
+        const { customerId, products , startDate, endDate, status, payment } = req.body;
 
-        // console.log( customerId, items , startDate, endDate, status, payment )
+        // console.log( customerId, products , startDate, endDate, status, payment )
 
-        if (!customerId || !items || !startDate || !endDate || !status || !payment) {
+        if (!customerId || !products || !startDate || !endDate || !status || !payment) {
             return next(createError('All fields most be filled.', 400));
         }
 
@@ -26,7 +26,7 @@ export const createBooking = async (req, res, next) => {
         const newBooking = new Booking({
             user: userId,
             customerId,
-            items,
+            products,
             startDate,
             endDate,
             status,
@@ -96,12 +96,12 @@ export const getBookingsMetrics = async (req, res, next) => {
         const totalBookings = await Booking.countDocuments({});
         
         const quantityAggregation = await Booking.aggregate([
-            { $unwind: "$items" },
+            { $unwind: "$products" },
             {
-                $group: { _id: null, total: { $sum: "$items.quantity" } }
+                $group: { _id: null, total: { $sum: "$products.quantity" } }
             }
         ]);
-        const totalItemQuantity = quantityAggregation.length > 0 ? quantityAggregation[0].total : 0;
+        const totalProductQuantity = quantityAggregation.length > 0 ? quantityAggregation[0].total : 0;
 
         //  filters for only completed bookings
         const revenueAggregation = await Booking.aggregate([
@@ -132,7 +132,7 @@ export const getBookingsMetrics = async (req, res, next) => {
             message: `Booking metrics sent.`,
             data: {
                 bookings: totalBookings,
-                items: totalItemQuantity,
+                products: totalProductQuantity,
                 revenue: totalRevenue,
                 due: totalAmountDue
             }
@@ -219,7 +219,7 @@ export const getUserBookings = async (req, res, next) => {
         res.status(200).json({
             success: true,
             message: `Bookings for ${username} was found.`,
-            data: items
+            data: products
         });
 
     } catch (error) {

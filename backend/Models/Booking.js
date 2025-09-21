@@ -13,10 +13,10 @@ const bookingSchema = new mongoose.Schema({
         required: true,
         index: true
     },
-    items: [{
-        itemId: {
+    products: [{
+        productId: {
             type: mongoose.Schema.Types.ObjectId,
-            ref: 'Item',
+            ref: 'Product',
             required: true,
             index: true
         },
@@ -62,9 +62,9 @@ export default mongoose.model('Booking', bookingSchema);
 // {
 //   "rentalId": "r124",
 //   "customerId": "c789",
-//   "items": [
-//     { "itemId": "pingpong", "quantity": 1 },
-//     { "itemId": "cornhole", "quantity": 2 }
+//   "products": [
+//     { "productId": "pingpong", "quantity": 1 },
+//     { "productId": "cornhole", "quantity": 2 }
 //   ],
 //   "startDate": "2025-08-25",
 //   "endDate": "2025-08-27",

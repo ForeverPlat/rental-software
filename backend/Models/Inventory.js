@@ -7,9 +7,9 @@ const inventorySchema = new mongoose.Schema({
         required: true,
         index: true
     },
-    item: {
+    product: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Item',
+        ref: 'Product',
         required: true,
         index: true
     },
