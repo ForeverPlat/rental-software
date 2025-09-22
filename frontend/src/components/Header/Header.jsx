@@ -15,7 +15,7 @@ const Header = ({ page }) => {
   };
 
   return (
-    <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '10px 20px', borderBottom: '1px solid #ddd', backgroundColor: '#f8f9fa' }}>
+    <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '5px 20px', borderBottom: '1px solid #ddd', backgroundColor: '#f8f9fa' }}>
       <h2>{page.charAt(0).toUpperCase() + page.slice(1)}</h2>
       <button
         style={{
