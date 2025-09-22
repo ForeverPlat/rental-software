@@ -7,6 +7,11 @@ const Customers = () => {
   const [customers, setCustomers] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
+    const headers = [
+      { display: 'Name', key: 'name'},
+      { display: 'Email', key: 'email' }
+    ];
+
   useEffect(() => {
     const getCustomers = async () => {
       try {
@@ -38,31 +43,9 @@ const Customers = () => {
     return <div style={{ textAlign: 'center' }}>Loading customers...</div>
   }
 
-    const headers = [
-      { display: 'Name', key: 'name'},
-      { display: 'Email', key: 'email' }
-    ]
-    // console.log("customers:"+customers);
-
   return (
-    <div>
-
+    <div style={{ flexGrow: 1, padding: '20px' }}>
       <Table rows={customers} headers={headers} />
-      {/* <div className='table-container'>
-        <div className='table-header'>
-          <div className='header-cell'>Name</div>
-          <div className='header-cell'>Email</div>
-        </div>
-        {
-          customers.map(({ id,name, email }) => (
-            <div key={id} className='table-row'>
-              <div className='cell'>{ name }</div>
-              <div className='cell'>{ email }</div>
-            </div>
-          ))
-        }
-      </div>       */}
-
     </div>
   )
 }

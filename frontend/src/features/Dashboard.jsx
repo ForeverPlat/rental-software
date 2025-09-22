@@ -2,7 +2,9 @@ import React from 'react'
 
 const Dashboard = () => {
   return (
-    <div>Dashboard</div>
+    <div style={{ flexGrow: 1, padding: '20px' }}>
+      Dashboard
+    </div>
   )
 }
 

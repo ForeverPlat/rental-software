@@ -2,7 +2,9 @@ import React from 'react'
 
 const Calendar = () => {
   return (
-    <div>Calendar</div>
+    <div style={{ flexGrow: 1, padding: '20px' }}>
+      Calendar
+    </div>
   )
 }
 

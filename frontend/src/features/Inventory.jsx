@@ -54,7 +54,7 @@ const Inventory = () => {
   }
 
   return (
-    <div>
+    <div style={{ flexGrow: 1, padding: '20px' }}>
       <Table rows={products} headers={headers} />
     </div>
   )
