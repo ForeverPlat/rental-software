@@ -90,6 +90,32 @@ export const getBooking = async (req, res, next) => {
     }
 }
 
+export const getTodaysBookings = async (req, res, next) => {
+    
+    try {
+
+        // const currentDate = new Date();
+        const currentDate = '2025-10-01T00:00:00.000+00:00';
+
+        const todaysBookings = await Booking.find({ startDate: currentDate })
+
+        console.log(todaysBookings);
+        
+        if (!todaysBookings) {
+            return next(createError('No bookings found.', 404));
+        }
+
+        res.status(200).json({
+            success: true,
+            message: `Booking metrics sent.`,
+            data: todaysBookings
+        });
+
+    } catch (error) {
+        next(error);
+    }
+}
+
 export const getBookingsMetrics = async (req, res, next) => {
     
     try {

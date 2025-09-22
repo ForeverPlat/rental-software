@@ -22,7 +22,7 @@ const Header = ({ page }) => {
           backgroundColor: '#007bff',
           color: 'white',
           border: 'none',
-          padding: '8px 16px',
+          padding: '8px 25px',
           borderRadius: '4px',
           cursor: 'pointer'
         }}
