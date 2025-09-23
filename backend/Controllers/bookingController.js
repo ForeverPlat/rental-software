@@ -1,4 +1,5 @@
 import Booking from '../Models/Booking.js';
+import Customer from '../Models/Customer.js'
 import { createError } from '../utils/createError.js';
 
 const VALID_STATUSES = ['pending', 'confirmed', 'completed', 'canceled'];
@@ -94,12 +95,41 @@ export const getTodaysBookings = async (req, res, next) => {
     
     try {
 
+        // this doesn't store time (add a time ot the booking schema?)
         // const currentDate = new Date();
         const currentDate = '2025-10-01T00:00:00.000+00:00';
 
         const todaysBookings = await Booking.find({ startDate: currentDate })
 
-        console.log(todaysBookings);
+        // promise.all ensures all the async code happens in proper order before everything is sent
+        // at least as far as ik
+        const allBookingData = await Promise.all(todaysBookings.map(async (booking) => {
+            const { name, email } = await Customer.findById(booking.customerId);
+
+            if (!name || !email) {
+                throw createError(`Customer not found for booking ID ${booking._id}`, 404);
+            }
+
+            let quantity = 0;
+
+            booking.products.map((product) => {
+                quantity += product.quantity;
+            });
+
+            return {
+                startDate: booking.startDate,
+                name,
+                email,
+                quantity
+            };
+            // console.log(bookingData);
+            
+            // console.log(allBookingData);
+            // allBookingData.push(bookingData);
+            // console.log(allBookingData);
+        }));
+
+        console.log(allBookingData);
         
         if (!todaysBookings) {
             return next(createError('No bookings found.', 404));
@@ -108,7 +138,7 @@ export const getTodaysBookings = async (req, res, next) => {
         res.status(200).json({
             success: true,
             message: `Booking metrics sent.`,
-            data: todaysBookings
+            data: allBookingData
         });
 
     } catch (error) {

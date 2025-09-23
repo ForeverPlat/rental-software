@@ -1,7 +1,10 @@
 .dashboard-card-result {
   display: flex;
+  /* justify-content: space-around; */
   align-items: center;
   text-align: left;
+  gap: 20px;
+  padding: 0px 20px;
 }
 
 .time {
