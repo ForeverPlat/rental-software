@@ -16,6 +16,11 @@ const Layout = () => {
     if (path === '/bookings') return 'bookings';
     if (path === '/customers') return 'customers';
     if (path === '/inventory') return 'inventory';
+
+    if (path === '/bookings/new') return 'new booking';
+    if (path === '/customers/new') return 'new customer';
+    if (path === '/products/new') return 'new product';
+
     return 'dashboard';
 
   }

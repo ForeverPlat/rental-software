@@ -23,6 +23,10 @@ export const createBooking = async (req, res, next) => {
         if (!VALID_STATUSES.includes(status)) {
             return next(createError('Invalid status value.', 400));
         }
+        // consider adding a time of date as well?
+        // maybe that can be passed with start date?
+
+        // consider adding status for both payment and booking status 
 
         const newBooking = new Booking({
             user: userId,

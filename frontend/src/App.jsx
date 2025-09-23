@@ -14,6 +14,10 @@ import Dashboard from './features/Dashboard/Dashboard';
 import Calendar from './features/Calendar';
 import Inventory from './features/Inventory';
 
+import NewBooking from './features/NewBooking';
+import NewCustomer from './features/NewCustomer'
+import NewProduct from './features/NewProduct';
+
 const App = () => {
   return (
     <Router>
@@ -25,7 +29,11 @@ const App = () => {
           <Route path="/calendar" element={<Calendar />} />
           <Route path="/bookings" element={<Bookings />} />
           <Route path="/customers" element={<Customers />} />
-          <Route path="/Inventory" element={<Inventory />} />
+          <Route path="/inventory" element={<Inventory />} />
+
+          <Route path="/bookings/new" element={<NewBooking />} />
+          <Route path="/customers/new" element={<NewCustomer />} />
+          <Route path="/products/new" element={<NewProduct />} />
 
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login />} />

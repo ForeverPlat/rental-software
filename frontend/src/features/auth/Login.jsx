@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 const Login = () => {
   
-  const [user, setUser] = useState({ "email": '', "password": '' });
+  const [user, setUser] = useState({ "username": '', "password": '' });
   const [error, setError] = useState('');
 
   const handleChange = (e) => {
@@ -15,15 +15,15 @@ const Login = () => {
     }))
   }
 
-const delayedMessage = (setter, message) => {
-  setter(''); 
-  setTimeout(() => {
-    setter(message);
+  const delayedMessage = (setter, message) => {
+    setter(''); 
     setTimeout(() => {
-      setter(''); // Clear message after 5 seconds
-    }, 5000);
-  }, 100); // Small delay to ensure previous message clears
-};
+      setter(message);
+      setTimeout(() => {
+        setter(''); // Clear message after 5 seconds
+      }, 5000);
+    }, 100); // Small delay to ensure previous message clears
+  };
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -31,13 +31,18 @@ const delayedMessage = (setter, message) => {
     try {
         const res = await fetch('http://localhost:2000/api/auth/login', {
             method: 'POST',
-            header: {
+            headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(user),
+            body: JSON.stringify(user)
         });
-
         const result = await res.json();
+
+        console.log(result);
+        console.log(user);
+
+        setUser({ "username": '', "password": '' })
+
 
         if(!res.ok) {
             delayedMessage(setError, 'Login failed.');

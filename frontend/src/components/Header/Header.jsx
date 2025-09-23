@@ -1,35 +1,38 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Header = ({ page }) => {
-  const getButtonText = () => {
+  const getButton = () => {
     switch (page) {
       case 'customers':
-        return 'Add customer';
+        return { text: 'Add customer', path: '/customers/new' };
       case 'bookings':
-        return 'New booking';
+        return { text: 'New booking', path: '/bookings/new' };
       case 'inventory':
-        return 'Add product';
+        return { text: 'Add product', path: 'products/new' };
       default:
-        return 'Add item';
+        return 'none';
     }
   };
+
+  const navigate = useNavigate();
 
   return (
     <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '5px 20px', borderBottom: '1px solid #ddd', backgroundColor: '#f8f9fa' }}>
       <h2>{page.charAt(0).toUpperCase() + page.slice(1)}</h2>
-      <button
-        style={{
-          backgroundColor: '#007bff',
-          color: 'white',
-          border: 'none',
-          padding: '8px 25px',
-          borderRadius: '4px',
-          cursor: 'pointer'
-        }}
-        onClick={() => alert(`Add ${getButtonText().toLowerCase().replace(' ', '_')} clicked`)}
-      >
-        {getButtonText()}
-      </button>
+      
+      {
+        // this ensures that if the path isn't on the list no button shows up
+        getButton() !== 'none' ? (
+          <button
+            style={{ backgroundColor: '#007bff', color: 'white', border: 'none', padding: '8px 25px', borderRadius: '4px', cursor: 'pointer' }}
+            onClick={() => navigate(getButton().path)}
+          >
+            {getButton().text}
+          </button>
+        ) : null
+      }
+      
     </header>
   );
 };
