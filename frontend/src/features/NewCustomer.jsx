@@ -75,7 +75,6 @@ const NewCustomer = () => {
   return (
     <div>
         <form className='new-customer-form' id='new-customer-form' onSubmit={handleSubmit}>
-            <h2>New Customer</h2>
             <div className="new-customer-msg" style={{ color: error ? 'red' : 'green' }}> 
               {error || success}
             </div> <br />

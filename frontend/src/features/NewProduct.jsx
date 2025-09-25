@@ -70,7 +70,6 @@ const NewProduct = () => {
   return (
     <div>
         <form className='new-product-form' id='new-product-form' onSubmit={handleSubmit}>
-            <h2>New Product</h2>
             <div className="new-product-msg" style={{ color: error ? 'red' : 'green' }}> 
               { error || success }
             </div> <br />

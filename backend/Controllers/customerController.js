@@ -75,6 +75,33 @@ export const getCustomer = async (req, res, next) => {
     }
 }
 
+export const getCustomerByName = async (req, res, next) => {
+
+    try {
+        const { search } = req.query;
+
+        if (!search) {
+            return res.status(200).json({
+                success: true,
+                data: { customers: [] }
+            });
+        }
+
+        // regex does partial matching
+        const customers = await Customer.find({
+            name: { $regex: search, $options: 'i' } // 'i' for case insensitive
+        }).limit(5);
+
+        return res.status(200).json({
+            success: true,
+            data: customers
+        });
+
+    } catch (error) {
+        next(createError('Failed to search customers.', 500));
+    }
+}
+
 export const getCustomerBatch = async (req, res, next) => {
 
     try {
