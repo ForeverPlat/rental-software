@@ -11,7 +11,7 @@ const debounce = (func, delay) => {
   }
 }
 
-const SearchBar = ({ searchTerm, setSearchTerm, searchType, onSelect }) => {
+const SearchBar = ({ searchTerm, setSearchTerm, searchType, onSelect, replaceInputOnSelect = true }) => {
   const [results, setResults] = useState([]); // Store API results
   const [isLoading, setIsLoading] = useState(false); // Track loading state
   const [error, setError] = useState(null); // Track errors
@@ -32,7 +32,7 @@ const SearchBar = ({ searchTerm, setSearchTerm, searchType, onSelect }) => {
       const apiUrl = 'http://localhost:2000';
       const res = await fetch(`${apiUrl}/api/${searchType}/by-name?search=${encodeURIComponent(query)}`);
       const result = await res.json();
-      setResults(result.data || []); // Access data[searchType], e.g., data.customers
+      setResults(result.data || []); // Access data => data.customers, products etc
       setIsDropdownOpen(true);
     } catch (error) {
       setError(error.message || `Failed to fetch ${searchType}`);
@@ -42,20 +42,24 @@ const SearchBar = ({ searchTerm, setSearchTerm, searchType, onSelect }) => {
     }
   }
 
-  // Debounced fetch
   const debouncedFetch = debounce(fetchData, 300);
 
   // Fetch when searchTerm changes, but only if no item is selected
   useEffect(() => {
-    if (!selectedItem) {
+    if (!selectedItem || replaceInputOnSelect) {
       debouncedFetch(searchTerm);
     }
   }, [searchTerm, selectedItem]);
 
   // Handle selecting an item from the dropdown
   const handleSelect = (result) => {
-    setSelectedItem(result); // Store selected item
-    setSearchTerm(result.name); // Update searchTerm
+    if (replaceInputOnSelect) {
+      setSelectedItem(result);
+      setSearchTerm(result.name); // Update searchTerm
+    } else {
+      setSearchTerm(''); // clear result if not in replace mode
+    }
+
     setResults([]); // Clear results
     setIsDropdownOpen(false); // Close dropdown
     onSelect(result); // Pass item to parent
@@ -81,17 +85,10 @@ const SearchBar = ({ searchTerm, setSearchTerm, searchType, onSelect }) => {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  // Capitalize searchType for header ("customers" -> "Customers")
-  const headerText = searchType.charAt(0).toUpperCase() + searchType.slice(1);
-
   return (
-    <div className="search-container-wrapper">
-      <div className="search-header">
-        <span>{headerText}</span>
-      </div>
       <div className="search-container">
         {
-          selectedItem ? (
+          replaceInputOnSelect && selectedItem ? (
             <div className="selected-item">
               {selectedItem.name}
               <span className="clear-icon" onClick={handleClear}>✕</span>
@@ -111,7 +108,7 @@ const SearchBar = ({ searchTerm, setSearchTerm, searchType, onSelect }) => {
           )
         }
         {
-          isDropdownOpen && !selectedItem && (
+          isDropdownOpen && (!selectedItem || !replaceInputOnSelect) && (
             <ul className="dropdown">
               { isLoading && <li style={{ padding: '10px' }}>Loading...</li> }
               { error && <li className="error">{error}</li> }
@@ -136,7 +133,6 @@ const SearchBar = ({ searchTerm, setSearchTerm, searchType, onSelect }) => {
           )
         }
       </div>
-    </div>
   );
 }
 

@@ -1,5 +1,6 @@
 import Booking from '../Models/Booking.js';
 import Customer from '../Models/Customer.js'
+import Inventory from '../Models/Inventory.js';
 import { createError } from '../utils/createError.js';
 
 const VALID_STATUSES = ['pending', 'confirmed', 'completed', 'canceled'];
@@ -38,6 +39,29 @@ export const createBooking = async (req, res, next) => {
             payment
         });
         await newBooking.save();
+
+        // update the inventory
+        // again should this be an api call instead?
+        products.array.forEach(async ({ name, productId, quantity }) => {
+            const productInventory = await Inventory.find({ product: productId })
+            const available = productInventory.available;
+
+            // check if the product quantity is more that the available
+            if (quantity > available) { // check to make sure this is how u get this
+                return next(createError(`Only ${productInventory.available} ${name} available.`, 400));
+            }
+
+            // change the amount that is available
+            // check if this should be an api call
+            // research how to change just the one part of the inventory
+            // available -= quantity; something like this?
+            const updatedInventory = await Inventory.findByIdAndUpdate(
+                productId,
+                { $set: { available: available - quantity } }
+            );
+
+            
+        });
 
         res.status(200).json({
             success: true,

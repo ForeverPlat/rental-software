@@ -75,7 +75,7 @@ export const getCustomer = async (req, res, next) => {
     }
 }
 
-export const getCustomerByName = async (req, res, next) => {
+export const getCustomersByName = async (req, res, next) => {
 
     try {
         const { search } = req.query;

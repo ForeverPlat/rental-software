@@ -6,7 +6,7 @@ export const createInventory = async (req, res, next) => {
     try {
         const { userId } = req.userInfo;
         const { productId } = req.param;
-        const { totalStock } = req.body;
+        const { productName, totalStock } = req.body;
 
         if (!productId, !totalStock) {
             return next(createError('All fields most be filled.', 400));
@@ -15,6 +15,7 @@ export const createInventory = async (req, res, next) => {
         const newInventory = new Inventory({
             userId,
             productId, 
+            productName,
             totalStock,
             available: totalStock,
             reserved: 0

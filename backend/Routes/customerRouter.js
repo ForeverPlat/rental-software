@@ -1,5 +1,5 @@
 import express from 'express';
-import { createCustomer, getCustomer, getCustomers, getCustomerByName, getCustomerBatch } from '../Controllers/customerController.js';
+import { createCustomer, getCustomer, getCustomers, getCustomersByName, getCustomerBatch } from '../Controllers/customerController.js';
 import authMiddleware from '../Middleware/authMiddleware.js';
 
 const customerRouter = express.Router();
@@ -10,7 +10,7 @@ customerRouter.post('/batch', getCustomerBatch);
 
 customerRouter.get('/', getCustomers);
 
-customerRouter.get('/by-name', getCustomerByName);
+customerRouter.get('/by-name', getCustomersByName);
 
 customerRouter.get('/:customerId', getCustomer);
 

@@ -1,0 +1,59 @@
+
+.date-picking-container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  /* gap: 16px; */
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  padding: 16px;
+  margin-bottom: 16px;
+  border: 1px solid #e0e0e0;
+}
+
+.pickup-date-section, .return-date-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.pickup-header, .return-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.pickup-header, .return-header span {
+  font-weight: bold;
+  font-size: 12px;
+  color: #333;
+}
+
+.booking-date-picker {
+  width: 75px;
+  font-weight: bold;
+  /* padding: 10px 0px; */
+  border: none;
+  border-bottom: 2px solid #e0e0e0;
+}
+
+.booking-time-picker {
+  width: 60px;
+  /* margin-left: 10px; */
+  font-weight: bold;
+  /* padding: 10px 0px; */
+  border: none;
+  border-bottom: 2px solid #e0e0e0;
+}
+
+.booking-products-container {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  padding: 16px;
+  margin-bottom: 16px;
+  border: 1px solid #e0e0e0;
+}
+

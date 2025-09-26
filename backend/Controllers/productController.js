@@ -1,3 +1,4 @@
+import Inventory from '../Models/Inventory.js';
 import Product from '../Models/Product.js';
 import { createError } from '../utils/createError.js';
 
@@ -5,9 +6,10 @@ export const createProduct = async (req, res, next) => {
     
     try {
         const { userId } = req.user;
-        const { name, pricePerDay } = req.body;
+        // const { name, pricePerDay } = req.body;
+        const { name, pricePerDay, totalStock } = req.body;
 
-        if (!name || !pricePerDay ) {
+        if (!name || !pricePerDay || !totalStock ) {
             return next(createError('All fields most be filled.', 400));
         }
 
@@ -21,6 +23,20 @@ export const createProduct = async (req, res, next) => {
         });
         await newProduct.save();
 
+        // i don't think this can be done this way
+        const productId = newProduct._id;
+
+        // should i make an api call here instead?
+        const newInventory = new Inventory({
+            userId,
+            productId, 
+            productName: name,
+            totalStock,
+            available: totalStock,
+            reserved: 0
+        });
+        await newInventory.save();
+        
         res.status(200).json({
             success: true,
             message: `Product ${name} created successfully.`
@@ -74,6 +90,33 @@ export const getProduct = async (req, res, next) => {
 
     } catch (error) {
         next(error);
+    }
+}
+
+export const getProductsByName = async (req, res, next) => {
+
+    try {
+        const { search } = req.query;
+
+        if (!search) {
+            return res.status(200).json({
+                success: true,
+                data: { products: [] }
+            });
+        }
+
+        // regex does partial matching
+        const products = await Product.find({
+            name: { $regex: search, $options: 'i' } // 'i' for case insensitive
+        }).limit(5);
+
+        return res.status(200).json({
+            success: true,
+            data: products 
+        });
+
+    } catch (error) {
+        next(createError('Failed to search products.', 500));
     }
 }
 

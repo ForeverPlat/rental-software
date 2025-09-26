@@ -13,6 +13,11 @@ const inventorySchema = new mongoose.Schema({
         required: true,
         index: true
     },
+    productName: {
+        type: String,
+        required: true,
+        trim: true
+    },
     totalStock: {
         type: Number,
         required: true,
