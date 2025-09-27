@@ -13,16 +13,15 @@ bookingRouter.get('/metrics', getBookingsMetrics);
 
 bookingRouter.get('/today', getTodaysBookings);
 
+bookingRouter.get('/user', getUserBookings);
+
 bookingRouter.get('/:bookingId', getBooking);
+
+bookingRouter.put('/bookingId', updateUserBookingStatus);
 
 bookingRouter.put('/:bookingId', updateBooking);
 
 bookingRouter.delete('/:bookingId', deleteBooking);
 
-//  More specific routes
-
-bookingRouter.get('/user', getUserBookings);
-
-bookingRouter.put('/bookingId', updateUserBookingStatus);
 
 export default bookingRouter;

@@ -1,0 +1,12 @@
+.product-row {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.product-row-settings {
+    display: flex;
+    gap: 10px;
+}

@@ -14,7 +14,7 @@ import Dashboard from './features/Dashboard/Dashboard';
 import Calendar from './features/Calendar';
 import Inventory from './features/Inventory';
 
-import NewBooking from './features/NewBooking';
+import NewBooking from './features/NewBooking/NewBooking';
 import NewCustomer from './features/NewCustomer'
 import NewProduct from './features/NewProduct';
 

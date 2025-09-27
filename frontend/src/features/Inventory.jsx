@@ -40,7 +40,7 @@ const Inventory = () => {
         setProducts(data);
         
       } catch (error) {
-        console.log('Error fetching customers:', error);
+        console.log('Error fetching products:', error);
       } finally {
         setIsLoading(false);
       }

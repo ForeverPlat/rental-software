@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react'
 import './NewBooking.css'
-import SearchBar from '../components/SearchBar/SearchBar';
+// import SearchBar from '../../components'
+import SearchBar from '../../components/SearchBar/SearchBar';
 // import DatePicker from 'react-datepicker';
 // import 'react-datepicker/dist/react-datepicker.css';
 // import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 // import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import ProductRow from './ProductRow';
 
 const NewBooking = () => {
 
@@ -27,7 +29,7 @@ const NewBooking = () => {
 
     // this will work similarly to the customers
     // but will be an array of products the user chooses
-    const [products, setProducts] = useState([{}]);
+    const [products, setProducts] = useState([]);
 
     // this will be selected using a calender component
     // i beg please look for a component library
@@ -49,11 +51,23 @@ const NewBooking = () => {
 
   // Handle selection from SearchBar
   const handleProductSelect  = (item) => {
-    setProducts(item); // Store full item object or null
+
+    if (products.some(existingProduct => existingProduct.id === item.id)) {
+      console.log(`Product with ID ${item.id} already exists`);
+      return;
+    }
+
+  
+    setProducts((prevProducts) => [...prevProducts, item]);
+    
+    console.log('item', item);
+    console.log('products', products);
+    
     setBooking((prev) => ({
       ...prev,
       products: item ? item : [{}], // Update booking.customerId
     }))
+
   }
 
   const handleCustomerSelect= (item) => {
@@ -82,11 +96,6 @@ const NewBooking = () => {
               onSelect={handleCustomerSelect}
             />
           </div>
-
-        {
-          console.log(searchTerm)
-          
-        }
 
 
           <div className='date-picking-container'>
@@ -176,16 +185,20 @@ const NewBooking = () => {
             />
 
             <div className='booking-product-display'>
-              {/* temp display for testing */}
 
-              {/* {products && (
-                products.map(({ name, quantity }) => (
-                  <div style={{ marginTop: '10px' }}>
-                    <p>Selected: {name}</p>
-                    <p>Email: {quantity}</p>
-                  </div>
+              {/* image | name | available (amt left) | quantity (+/-) | (selection for days) price per day | total for that rental*/}
+
+              {/* Subtotal underneath */}
+              {/* Taxes and security deposit? */}
+
+              {/* temp display for testing */}
+              
+
+              {products && (
+                products.map((product , productIndex) => (
+                  <ProductRow key={productIndex} product={product} />
                 ))
-              )} */}
+              )}
             </div>
 
             <div className='booking-total'>

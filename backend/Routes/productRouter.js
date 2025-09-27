@@ -8,18 +8,14 @@ productRouter.post('/', authMiddleware, createProduct);
 
 productRouter.get('/', getProducts);
 
+productRouter.get('/user', getUserProducts);
+
+productRouter.get('/by-name', getProductsByName);
+
 productRouter.get('/:id', getProduct);
 
 productRouter.put('/:id', updateProduct);
 
 productRouter.delete('/:id', deleteProduct);
-
-//  More specific routes
-
-productRouter.get('/user', getUserProducts);
-
-productRouter.get('/by-name', getProductsByName);
-
-
 
 export default productRouter;
