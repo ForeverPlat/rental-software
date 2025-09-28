@@ -57,16 +57,17 @@ const NewBooking = () => {
       return;
     }
 
-  
     setProducts((prevProducts) => [...prevProducts, item]);
-    
-    console.log('item', item);
-    console.log('products', products);
     
     setBooking((prev) => ({
       ...prev,
       products: item ? item : [{}], // Update booking.customerId
     }))
+  }
+
+  const handleProductClear = (id) => {
+    const product = products.find((product) => product._id === id);
+    setProducts(products.filter((product) => product._id !== id));
 
   }
 
@@ -110,7 +111,6 @@ const NewBooking = () => {
                   className='booking-date-picker'
                   selected={pickupDate}
                   onChange={(date) => setPickupDate(date)}
-                  showTimeSelect
                   timeFormat="HH:mm"
                   dateFormat="yyyy/MM/dd"
                   placeholderText="Select date"
@@ -196,7 +196,7 @@ const NewBooking = () => {
 
               {products && (
                 products.map((product , productIndex) => (
-                  <ProductRow key={productIndex} product={product} />
+                  <ProductRow key={productIndex} product={product} onClear={handleProductClear} />
                 ))
               )}
             </div>

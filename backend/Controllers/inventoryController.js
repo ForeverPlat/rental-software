@@ -4,17 +4,18 @@ import { createError } from "../utils/createError.js";
 export const createInventory = async (req, res, next) => {
         
     try {
-        const { userId } = req.userInfo;
-        const { productId } = req.param;
+        const { userId } = req.user;
+        const { productId } = req.params;
         const { productName, totalStock } = req.body;
+        // product name should be gotten use id
 
-        if (!productId, !totalStock) {
+        if (!productId || !totalStock) {
             return next(createError('All fields most be filled.', 400));
         }
 
         const newInventory = new Inventory({
-            userId,
-            productId, 
+            user: userId,
+            product: productId, 
             productName,
             totalStock,
             available: totalStock,
@@ -55,22 +56,22 @@ export const getInventories = async (req, res, next) => {
 export const getInventory = async (req, res, next) => {
 
     try {
-        const { productId } = req.param;
+        const { productId } = req.params;
 
         if (!productId) {
             return next(createError('All parameters most be filled.', 400));
         }
 
-        const inventory = await Inventory.findById(productId);
+        const inventory = await Inventory.find({ product: productId });
 
-        if (!inventory) {
+        if (inventory.length == 0) {
             return next(createError(`Inventory for product with productId ${productId} not found.`, 404));
         }
 
         res.status(200).json({
             success: true,
             message: `Inventory for product with productId ${productId} was found.`,
-            data: inventory
+            data: inventory[0]
         });
 
     } catch (error) {

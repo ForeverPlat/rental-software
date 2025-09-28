@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import './ProductRow.css'
 
-const ProductRow = ({ product }) => {
+const ProductRow = ({ product, onClear }) => {
     const { _id, name, pricePerDay } = product;
 
     {/* image | name | available (amt left) | quantity (+/-) | (selection for days) price per day | total for that rental*/}
@@ -32,10 +32,11 @@ const ProductRow = ({ product }) => {
             }
 
             const result = await res.json();
-            const available = result.data.available;
-            console.log(available);
             
-            setAvailable(available);
+            const available = result.data.available;
+            const amountRemaining = available - quantity;
+            
+            setAvailable(amountRemaining);
         } catch (error) {
             console.log('Error fetching inventory:', error);
         } finally {
@@ -56,7 +57,8 @@ const ProductRow = ({ product }) => {
         if (quantity > 0) setQuantity(quantity - 1);
     };
 
-    const totalPrice = quantity * selectedDays * pricePerDay;
+    const price = selectedDays * pricePerDay;
+    const totalPrice = quantity * price;
     
     return(
         <div className='product-row'>
@@ -67,13 +69,15 @@ const ProductRow = ({ product }) => {
 
             <div className='product-row-settings'>
 
-                <div className='product-row-available'>{available}</div>
+                <div className='product-row-available'>{available} left</div>
 
                 <div className='product-row-quantity'>
                   {/* add an onchange to update quantity */}
                   <input type="number" value={quantity} onChange={handleChange} />
-                  <button onClick={handleIncrease} disabled={quantity >= available}>+</button>
-                  <button onClick={handleDecrease} disabled={quantity === 0}>-</button>
+                  <div className='product-row-quantity-buttons'>
+                    <button onClick={handleIncrease} disabled={quantity >= available}>+</button>
+                    <button onClick={handleDecrease} disabled={quantity === 0}>-</button>
+                  </div>
                 </div>
 
                 <div className="product-row-days">
@@ -86,12 +90,12 @@ const ProductRow = ({ product }) => {
                     <option value="6">6 days</option>
                     <option value="7">7 days</option>
                   </select>
-                  <div className='product-row-price-per-day'>${pricePerDay.toFixed(2)}</div>
+                  <span className='product-row-price-per-day'>${price.toFixed(2)}</span>
                 </div>
 
                 <div className="product-row-total-price">${totalPrice.toFixed(2)}</div>
 
-                <button className="product-row-remove">×</button> 
+                <button className="product-row-remove" onClick={() => onClear(_id)}>×</button> 
 
             </div>
 
