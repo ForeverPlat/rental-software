@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import './ProductRow.css'
 
-const ProductRow = ({ product, onClear }) => {
+const ProductRow = ({ product, onClear, onTotalChange }) => {
     const { _id, name, pricePerDay } = product;
 
     {/* image | name | available (amt left) | quantity (+/-) | (selection for days) price per day | total for that rental*/}
@@ -10,14 +10,13 @@ const ProductRow = ({ product, onClear }) => {
     const [available, setAvailable] = useState();
     const [isLoading, setIsLoading] = useState(false);
 
-    const handleChange = (e) => {
-        const { name, value } = e.target;
+    const price = selectedDays * pricePerDay;
+    const totalPrice = quantity * price;
+    // onTotalChange(_id, price);
 
-        setQuantity((prevQuantity) => ({
-          ...prevQuantity,
-          [name]: value
-        }))
-    }
+
+
+
 
     const getAvailable = async () => {
         try {
@@ -46,8 +45,13 @@ const ProductRow = ({ product, onClear }) => {
 
     useEffect(() => {
       getAvailable();
-    },[])
+    },[_id])
+
+    useEffect(() => {
+        onTotalChange(_id, totalPrice);
+    }, [totalPrice, _id, onTotalChange]);
      
+    
 
     const handleIncrease = () => {
         if (quantity < available) setQuantity(quantity + 1);
@@ -57,8 +61,18 @@ const ProductRow = ({ product, onClear }) => {
         if (quantity > 0) setQuantity(quantity - 1);
     };
 
-    const price = selectedDays * pricePerDay;
-    const totalPrice = quantity * price;
+    const handleChange = (e) => {
+        const value = Number(e.target.value);
+        if (value >= 0 && value <= available) {
+            setQuantity(value);
+        }
+    }
+
+    const handleProductDaysChange = (e) => {
+        setSelectedDays(Number(e.target.value));
+        onTotalChange(_id, price);
+    }
+    
     
     return(
         <div className='product-row'>
@@ -81,7 +95,7 @@ const ProductRow = ({ product, onClear }) => {
                 </div>
 
                 <div className="product-row-days">
-                  <select value={selectedDays} onChange={(e) => setSelectedDays(Number(e.target.value))}>
+                  <select value={selectedDays} onChange={(e) => handleProductDaysChange(e)}>
                     <option value="1">1 day</option>
                     <option value="2">2 days</option>
                     <option value="3">3 days</option>

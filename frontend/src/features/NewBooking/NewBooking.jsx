@@ -21,7 +21,7 @@ const NewBooking = () => {
     // booking number 
 
     //  check how to properly set up the number
-    const [booking, setBooking] = useState({"customerId": '', "products": [{}], 'startDate': ''});
+    const [booking, setBooking] = useState({"customerId": '', "products": [{}], 'pickupDate': '', 'pickupTime': '', 'returnDate': '', 'returnTime': '' });
 
     // create the rolidex thing of customers
     // selecting the customer will give their id
@@ -30,6 +30,7 @@ const NewBooking = () => {
     // this will work similarly to the customers
     // but will be an array of products the user chooses
     const [products, setProducts] = useState([]);
+    const [productTotal, setProductTotal] = useState([{}])
 
     // this will be selected using a calender component
     // i beg please look for a component library
@@ -53,7 +54,7 @@ const NewBooking = () => {
   const handleProductSelect  = (item) => {
 
     if (products.some(existingProduct => existingProduct.id === item.id)) {
-      console.log(`Product with ID ${item.id} already exists`);
+      console.log(`Product with ID ${item.id} already selected`);
       return;
     }
 
@@ -61,23 +62,81 @@ const NewBooking = () => {
     
     setBooking((prev) => ({
       ...prev,
-      products: item ? item : [{}], // Update booking.customerId
+      products: [...prev.products, item],
     }))
   }
 
-  const handleProductClear = (id) => {
-    const product = products.find((product) => product._id === id);
-    setProducts(products.filter((product) => product._id !== id));
-
-  }
-
-  const handleCustomerSelect= (item) => {
-    setCustomer(item); // Store full item object or null
+  const handleCustomerSelect = (customer) => {
+    setCustomer(customer); // Store full item object or null
     setBooking((prev) => ({
       ...prev,
-      customerId: item ? item._id : '', // Update booking.customerId
+      customerId: customer ? customer._id : '', // Update booking.customerId
     }))
   }
+
+  // time handlers
+
+  const handlePickupDateSelect = (date) => {
+    setPickupDate(date);
+
+    setBooking((prev) => ({
+      ...prev,
+      pickupDate: date
+    }))
+  }
+
+  const handlePickupTimeSelect = (time) => {
+    setPickupTime(time);
+
+    setBooking((prev) => ({
+      ...prev,
+      pickupTime: time 
+    }))
+  }
+
+  const handleReturnTimeSelect = (time) => {
+    setReturnTime(time);
+
+    setBooking((prev) => ({
+      ...prev,
+      returnTime: time 
+    }))
+  }
+
+  const handleReturnDateSelect = (date) => {
+    setReturnDate(date);
+
+    setBooking((prev) => ({
+      ...prev,
+      returnDate: date
+    }))
+  }
+
+  // end of time handlers
+
+  const handleProductClear = (id) => {
+    setProducts(products.filter((product) => product._id !== id));
+    setProductTotal((prev) => prev.filter((total) => total.product !== id));
+    setBooking((prev) => ({
+      ...prev,
+      products: prev.products.filter((product) => product._id !== id),
+    }))
+  }
+
+  const handleProductTotalChange = (id, total) => {
+    setProductTotal((prev) => {
+      const updatedTotals = prev.filter((totalObj) => totalObj.product !== id);
+      return [...updatedTotals, { product: id, total }];
+    })
+  }
+
+  const getBookingTotal = () => {
+    if (!productTotal.length) return 0;
+    return productTotal.reduce((sum, item) => sum + (item.total || 0), 0).toFixed(2);
+  }
+
+  // console.log(booking);
+  
 
   return (
 
@@ -100,7 +159,6 @@ const NewBooking = () => {
 
 
           <div className='date-picking-container'>
-
             <div style={{ marginBottom: '10px' }}>
               <div className='pickup-header'>
                 <span>Pick Up</span>
@@ -110,7 +168,7 @@ const NewBooking = () => {
                 <DatePicker
                   className='booking-date-picker'
                   selected={pickupDate}
-                  onChange={(date) => setPickupDate(date)}
+                  onChange={(date) => handlePickupDateSelect(date)}
                   timeFormat="HH:mm"
                   dateFormat="yyyy/MM/dd"
                   placeholderText="Select date"
@@ -119,7 +177,7 @@ const NewBooking = () => {
                 <DatePicker
                   className='booking-time-picker'
                   selected={pickupTime}
-                  onChange={(time) => setPickupTime(time)}
+                  onChange={(time) => handlePickupTimeSelect(time)}
                   showTimeSelect
                   showTimeSelectOnly
                   timeIntervals={30}
@@ -140,7 +198,7 @@ const NewBooking = () => {
                 <DatePicker
                   className='booking-date-picker'
                   selected={returnDate}
-                  onChange={(date) => setReturnDate(date)}
+                  onChange={(date) => handleReturnDateSelect(date)}
                   dateFormat="yyyy/MM/dd"
                   placeholderText="Select date"
                 />
@@ -148,7 +206,7 @@ const NewBooking = () => {
                 <DatePicker
                   className='booking-time-picker'
                   selected={returnTime}
-                  onChange={(time) => setReturnTime(time)}
+                  onChange={(time) => handleReturnTimeSelect(time)}
                   showTimeSelect
                   showTimeSelectOnly
                   timeIntervals={30}
@@ -161,15 +219,7 @@ const NewBooking = () => {
             </div>
 
           </div>
-
-          {pickupDate && <p>You picked: {pickupDate.toString()}</p>}
-
-
-            {/* {selectedDate && <p>You picked: {selectedDate.toDateString()}</p>} */}
-
-          {/* the search needs to be in a div with the date picker */}
-
-        </div>
+        </div> {/* end of date pickers */}
 
 
         <div className='booking-products-container'>
@@ -185,23 +235,26 @@ const NewBooking = () => {
             />
 
             <div className='booking-product-display'>
-
-              {/* image | name | available (amt left) | quantity (+/-) | (selection for days) price per day | total for that rental*/}
-
-              {/* Subtotal underneath */}
-              {/* Taxes and security deposit? */}
-
-              {/* temp display for testing */}
-              
-
               {products && (
                 products.map((product , productIndex) => (
-                  <ProductRow key={productIndex} product={product} onClear={handleProductClear} />
+                  <ProductRow key={productIndex} product={product} onClear={handleProductClear} onTotalChange={handleProductTotalChange} />
                 ))
               )}
             </div>
 
             <div className='booking-total'>
+              {/* Subtotal underneath */}
+              {/* Taxes and security deposit? */}
+
+              {
+                products.length > 0 && (
+                  <div>
+                    <strong>Total: ${getBookingTotal()}</strong>
+                  </div>
+                )
+              }
+
+              
 
             </div>
 
