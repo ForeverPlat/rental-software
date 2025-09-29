@@ -16,7 +16,7 @@ import Inventory from './features/Inventory';
 
 import NewBooking from './features/NewBooking/NewBooking';
 import NewCustomer from './features/NewCustomer'
-import NewProduct from './features/NewProduct';
+import NewProduct from './features/NewProduct/NewProduct';
 
 const App = () => {
   return (

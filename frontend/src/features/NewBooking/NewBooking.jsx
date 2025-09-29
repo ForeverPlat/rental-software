@@ -21,7 +21,7 @@ const NewBooking = () => {
     // booking number 
 
     //  check how to properly set up the number
-    const [booking, setBooking] = useState({"customerId": '', "products": [{}], 'pickupDate': '', 'pickupTime': '', 'returnDate': '', 'returnTime': '' });
+    const [booking, setBooking] = useState({"customerId": '', "products": [], 'pickupDate': '', 'pickupTime': '', 'returnDate': '', 'returnTime': '' });
 
     // create the rolidex thing of customers
     // selecting the customer will give their id
@@ -30,7 +30,7 @@ const NewBooking = () => {
     // this will work similarly to the customers
     // but will be an array of products the user chooses
     const [products, setProducts] = useState([]);
-    const [productTotal, setProductTotal] = useState([{}])
+    const [productTotal, setProductTotal] = useState([])
 
     // this will be selected using a calender component
     // i beg please look for a component library

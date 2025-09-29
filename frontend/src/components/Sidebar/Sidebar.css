@@ -1,11 +1,13 @@
 .sidebar {
-  width: 250px;
+  width: 200px;
   height: 100vh;
   background-color: #f8f9fa;
+  color: #828282;
   padding: 16px;
   display: flex;
   flex-direction: column;
   border-right: 1px solid #ddd;
+  font-size: 12px;
 }
 
 .new-booking-btn {
@@ -32,8 +34,6 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  margin-top: 7px;
-  margin-bottom: 7px;
   padding: 8px;
   border-radius: 4px;
   cursor: pointer;
@@ -41,7 +41,7 @@
 }
 
 .sidebar-item:hover {
-  background-color: #e2e6ea;
+  background-color: #d3d8de;
 }
 
 .sidebar-divider {
