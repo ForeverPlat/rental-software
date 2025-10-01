@@ -8,16 +8,28 @@ const NewProduct = () => {
     // product pricePerDay 
 
     //  check how to properly set up the number
-    const [product, setProduct] = useState({ "name": '', pricePerDay: 0 });
+    const [product, setProduct] = useState({ "name": '', pricePerDay: 0, totalStock: 0 });
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
 
-    const handleChange = (e) => {
-      const { name, value } = e.target;
-      
+    const handleNameChange = (e) => {
       setProduct((prevProduct) => ({
           ...prevProduct,
-          [name]: value
+          name: e.target.value
+      }))
+    }
+
+    const handlePricingChange = (e) => {
+      setProduct((prevProduct) => ({
+          ...prevProduct,
+          pricePerDay: Number(e.target.value)
+      }))
+    }
+
+    const handleStockChange = (e) => {
+      setProduct((prevProduct) => ({
+          ...prevProduct,
+          totalStock: Number(e.target.value)
       }))
     }
 
@@ -31,8 +43,8 @@ const NewProduct = () => {
       }, 100); // Small delay to ensure previous message clears
     };
 
-    const handleSubmit = async (e) => {
-      e.preventDefault();
+    const handleSubmit = async () => {
+      console.log(product);
       const token = localStorage.getItem('token');
 
       const { name, pricePerDay } = product;
@@ -69,7 +81,7 @@ const NewProduct = () => {
     }
 
   return (
-    <div style={{ padding: '20px' }}>
+    <div style={{ padding: '20px', maxWidth: '750px' }}>
 
       <div className='new-product-container-wrapper'>
         <div className='new-product-description'>
@@ -78,8 +90,11 @@ const NewProduct = () => {
         </div>
         <div className='new-product-name-container'>
             <div>
-              <span>Product Name</span>
-              <input type="text" name='name' value={product.name} onChange={handleChange} /> <br />
+              <span className='new-product-header-span'>Product Name</span>
+              <input type="text" name='name' value={product.name} onChange={handleNameChange} /> <br />
+              <div className="new-product-msg" style={{ color: error ? 'red' : 'green' }}> 
+                { error || success }
+              </div> <br />
             </div>
             <div className='product-image-upload-container'>
               <div className='product-image-upload'></div>
@@ -96,13 +111,13 @@ const NewProduct = () => {
         </div>
         <div className='new-product-pricing-container'>
           <div>
-            <span>Flat fee</span>
+            <span className='new-product-header-span'>Flat fee</span>
             <p>Flat fee per period (for example: $50 per day)</p>
           </div>
           <div className='new-product-pricing-selection-container'>
             <div>
               <span>Price</span>
-              <input type="number" name="price" value={product.pricePerDay} onChange={handleChange} />
+              <input type="number" name="price" value={product.pricePerDay} onChange={handlePricingChange} />
             </div>
 
             <div>
@@ -111,22 +126,30 @@ const NewProduct = () => {
             </div>
 
           </div>
+          <div className="new-product-msg" style={{ color: error ? 'red' : 'green' }}> 
+            { error || success }
+          </div> <br />
         </div>
       </div>
 
-      <button className='new-product-save-button'>Save</button>
+      <hr className='new-product-divider' />
 
-
-        <form className='new-product-form' id='new-product-form' onSubmit={handleSubmit}>
+      <div className='new-product-container-wrapper'>
+        <div className='new-product-description'>
+          <span>Inventory</span>
+          <p>Enter the available inventory for this product. This will be used to calculate availability when creating bookings.</p> 
+        </div>
+        <div className='new-product-inventory-container'>
+            <span className='new-product-header-span'>Quantity</span>
+            <input type="text" name='name' value={product.totalStock} onChange={handleStockChange} /> <br />
             <div className="new-product-msg" style={{ color: error ? 'red' : 'green' }}> 
               { error || success }
             </div> <br />
-            <input type="text" name='name' placeholder="name" value={product.name} onChange={handleChange} required /> <br />
-            <input type="number" name='pricePerDay' placeholder="Number" value={product.pricePerDay} onChange={handleChange} required /> <br />
-            <button type='submit'>Save</button>
-        </form>
-        
+        </div>
+      </div>
 
+      {/* make it so button can only be clicked when all fields are filled */}
+      <button className='new-product-save-button' onClick={handleSubmit}>Save</button>
     </div>
   )
 }

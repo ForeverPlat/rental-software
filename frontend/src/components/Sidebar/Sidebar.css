@@ -1,5 +1,7 @@
 .sidebar {
-  width: 200px;
+  width: 175px;
+  max-width: 175px;
+  min-width: 175px;
   height: 100vh;
   background-color: #f8f9fa;
   color: #828282;
@@ -8,6 +10,14 @@
   flex-direction: column;
   border-right: 1px solid #ddd;
   font-size: 12px;
+}
+
+.sidebar-logo {
+  display: flex;
+  justify-content: center;
+  padding: 14.25px 0px;
+  font-size: 15px;
+  font-weight: bold;
 }
 
 .new-booking-btn {
@@ -45,7 +55,7 @@
 }
 
 .sidebar-divider {
-  margin: 16px 0;
+  margin: 16px -16px;
   border: none;
   border-top: 1px solid #ccc;
 }

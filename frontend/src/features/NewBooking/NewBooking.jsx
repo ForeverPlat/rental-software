@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import './NewBooking.css'
 // import SearchBar from '../../components'
 import SearchBar from '../../components/SearchBar/SearchBar';
@@ -15,35 +15,28 @@ const NewBooking = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [productSearchTerm, setProductSearchTerm] = useState('');
 
-    // get userId from token (in localStorage)
-    // booking name
-    // booking email
-    // booking number 
+    const [booking, setBooking] = useState({
+      "customerId": '',
+      'pickupDate': '',
+      'pickupTime': '',
+      'returnDate': '',
+      'returnTime': '' ,
+      "status": 'pending',
+      "products": [],
+      "payment": {}
+    });
 
-    //  check how to properly set up the number
-    const [booking, setBooking] = useState({"customerId": '', "products": [], 'pickupDate': '', 'pickupTime': '', 'returnDate': '', 'returnTime': '' });
-
-    // create the rolidex thing of customers
-    // selecting the customer will give their id
     const [customer, setCustomer] = useState(null);
 
-    // this will work similarly to the customers
-    // but will be an array of products the user chooses
     const [products, setProducts] = useState([]);
     const [productTotal, setProductTotal] = useState([])
 
-    // this will be selected using a calender component
-    // i beg please look for a component library
     const [pickupDate, setPickupDate] = useState(null);
     const [returnDate, setReturnDate]= useState(null);
 
     const [pickupTime, setPickupTime] = useState(null);
     const [returnTime, setReturnTime] = useState(null);
 
-    // drop down menu?
-    // status starts of as a default maybe?
-
-    // method should be a drop down menu of option
     const [payment, setPayment] = useState({ 'method': '', amount: 0 })
 
     const [error, setError] = useState('');
@@ -53,7 +46,7 @@ const NewBooking = () => {
   // Handle selection from SearchBar
   const handleProductSelect  = (item) => {
 
-    if (products.some(existingProduct => existingProduct.id === item.id)) {
+    if (products.some(existingProduct => existingProduct._id === item._id)) {
       console.log(`Product with ID ${item.id} already selected`);
       return;
     }
@@ -123,17 +116,81 @@ const NewBooking = () => {
     }))
   }
 
-  const handleProductTotalChange = (id, total) => {
+  // do more reading on useCallBack
+  // preventing infinite loop by ensuring this isn't called on every render?
+  // but instead only when user makes change
+  const handleProductTotalChange = useCallback((id, total) => {
     setProductTotal((prev) => {
       const updatedTotals = prev.filter((totalObj) => totalObj.product !== id);
       return [...updatedTotals, { product: id, total }];
     })
-  }
+
+    const bookingTotal = 0;
+      productTotal.forEach((product) => {
+      bookingTotal += product.total;
+    })
+
+    setPayment({ total: bookingTotal });
+
+    setBooking((booking) => ({
+      ...booking,
+      payment: {
+        ...booking.payment,
+        amount: bookingTotal
+      }
+    }))
+
+  }, []);
 
   const getBookingTotal = () => {
     if (!productTotal.length) return 0;
     return productTotal.reduce((sum, item) => sum + (item.total || 0), 0).toFixed(2);
   }
+
+  // const [booking, setBooking] = useState({
+  //     "customerId": '',
+  //     "products": [],
+  //     'pickupDate': '',
+  //     'pickupTime': '',
+  //     'returnDate': '',
+  //     'returnTime': '' 
+  //   });
+
+    const handleSubmit = async () => {
+      const token = localStorage.getItem('token');
+
+      const { customerId, products, pickupDate, pickupTime, returnDate, returnTime } = booking;
+      
+      if (customerId || products || pickupDate || pickupTime || returnDate || returnTime) {
+        setError("All fields must be filled.");
+      }
+
+      try {
+        const res = await fetch('http://localhost:2000/api/bookings', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify(booking), // update from startDate and other to pick up and return
+        });
+
+        const result = await res.json();
+
+        if (res.ok) {
+          // setSuccess('Verification email sent.');
+          delayedMessage(setSuccess, 'Booking has been created.')
+          setBooking({ "customerId": '', "products": [], "pickupDate": '', "pickupTime": '', "returnDate": '', "returnTime": '' });
+        } else {
+          delayedMessage(setError, result.error || 'Failed to create product.')
+          // setError(result.error || 'Failed to create user.');
+        }
+
+      } catch (error) {
+        delayedMessage(setError, 'An error occurred. Please try again later.');
+        // setError('An error occurred. Please try again later.');
+      }
+    }
 
   // console.log(booking);
   
@@ -269,6 +326,9 @@ const NewBooking = () => {
             <p>Number: {customer.number}</p>
           </div>
         )}
+        
+        {/* make it so button can only be clicked when all fields are filled */}
+        <button className='new-booking-save-button' onClick={handleSubmit}>Save</button>
 
 
 

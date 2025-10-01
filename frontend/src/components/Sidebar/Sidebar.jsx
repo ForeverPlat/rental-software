@@ -27,6 +27,12 @@ const Sidebar = () => {
   return (
     <nav className='sidebar' style={Sidebar.css}>
 
+      <div className='sidebar-logo'>
+        Rental Software
+      </div>
+
+      <hr className='sidebar-divider' />
+
       <button className='new-booking-btn' onClick={ () => navigate('/bookings/new') }>New Booking</button>
 
       {/* top group */}

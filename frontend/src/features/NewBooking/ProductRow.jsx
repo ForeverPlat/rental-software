@@ -12,11 +12,6 @@ const ProductRow = ({ product, onClear, onTotalChange }) => {
 
     const price = selectedDays * pricePerDay;
     const totalPrice = quantity * price;
-    // onTotalChange(_id, price);
-
-
-
-
 
     const getAvailable = async () => {
         try {
@@ -70,7 +65,6 @@ const ProductRow = ({ product, onClear, onTotalChange }) => {
 
     const handleProductDaysChange = (e) => {
         setSelectedDays(Number(e.target.value));
-        onTotalChange(_id, price);
     }
     
     
@@ -83,7 +77,9 @@ const ProductRow = ({ product, onClear, onTotalChange }) => {
 
             <div className='product-row-settings'>
 
-                <div className='product-row-available'>{available} left</div>
+                <div className='product-row-available'>
+                    { isLoading ? 'Loading...' : `${available} left`}
+                </div>
 
                 <div className='product-row-quantity'>
                   {/* add an onchange to update quantity */}

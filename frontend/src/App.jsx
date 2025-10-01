@@ -15,7 +15,7 @@ import Calendar from './features/Calendar';
 import Inventory from './features/Inventory';
 
 import NewBooking from './features/NewBooking/NewBooking';
-import NewCustomer from './features/NewCustomer'
+import NewCustomer from './features/NewCustomer/NewCustomer'
 import NewProduct from './features/NewProduct/NewProduct';
 
 const App = () => {

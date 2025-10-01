@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import './NewCustomer.css'
 
 const NewCustomer = () => {
 
@@ -12,12 +13,24 @@ const NewCustomer = () => {
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
 
-    const handleChange = (e) => {
-      const { name, value } = e.target;
-      
+    const handleNameChange = (e) => {
       setCustomer((prevCustomer) => ({
           ...prevCustomer,
-          [name]: value
+          name: e.target.value
+      }))
+    }
+
+    const handleEmailChange = (e) => {
+      setCustomer((prevCustomer) => ({
+          ...prevCustomer,
+          email: e.target.value
+      }))
+    }
+
+    const handleNumberChange = (e) => {
+      setCustomer((prevCustomer) => ({
+          ...prevCustomer,
+          number: e.target.value
       }))
     }
 
@@ -31,8 +44,7 @@ const NewCustomer = () => {
       }, 100); // Small delay to ensure previous message clears
     };
     
-    const handleSubmit = async (e) => {
-      e.preventDefault();
+    const handleSubmit = async () => {
       const token = localStorage.getItem('token');
 
       const { name, email, number } = customer;
@@ -73,18 +85,39 @@ const NewCustomer = () => {
     }
 
   return (
-    <div>
-        <form className='new-customer-form' id='new-customer-form' onSubmit={handleSubmit}>
-            <div className="new-customer-msg" style={{ color: error ? 'red' : 'green' }}> 
-              {error || success}
-            </div> <br />
-            <input type="text" name='name' placeholder="name" value={customer.name} onChange={handleChange} required /> <br />
-            <input type="email" name='email' placeholder="Email" value={customer.email} onChange={handleChange} required /> <br />
-            <input type="phone" name='number' placeholder="Number" value={customer.number} onChange={handleChange} required /> <br />
-            <button id="new-customer-button" type="submit">Create Customer</button>
-        </form>
-        
+    <div  style={{ padding: '20px', maxWidth: '450px' }}>
 
+      <div className='new-customer-container'>
+
+        {/* customer name input */}
+        <input className='new-customer-customer-name-input' type="text" name='name' placeholder="Customer name" value={customer.name} onChange={handleNameChange} /> <br />
+
+        <hr style={{ borderTop: ' 1px solid #ccc', marginBottom: '16px' }}/>
+
+
+        {/* Information header */}
+        <span className='new-customer-information-header'>Information</span>
+        {/* email */}
+        {/* customer type */}
+        {/* phone */}
+        <div className='new-customer-information-container'>
+          <div style={{ display: 'flex', flexDirection: 'column' }}>
+            <span className='new-customer-subheader-span'>Email</span>
+            <input type="email" name='email' placeholder="Email" value={customer.email} onChange={handleEmailChange} required /> 
+          </div>
+          <div style={{ display: 'flex', flexDirection: 'column' }}>
+            <span className='new-customer-subheader-span'>Phone Number</span>
+            <input type="phone" name='number' placeholder="Number" value={customer.number} onChange={handleNumberChange} required /> 
+          </div>
+        </div>
+        <div className="new-product-msg" style={{ color: error ? 'red' : 'green' }}> 
+          { error || success }
+        </div>
+      </div>
+
+
+        {/* make it so button can only be clicked when all fields are filled */}
+        <button className='new-customer-save-button' onClick={handleSubmit}>Save</button>
     </div>
   )
 }
