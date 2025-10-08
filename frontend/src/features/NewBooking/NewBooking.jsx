@@ -292,7 +292,26 @@ const NewBooking = () => {
             />
 
             <div className='booking-product-display'>
-              {products && (
+
+              {
+                products.length != 0 && (
+                  <div className="product-row-titles">
+                      <div className="product-row-description">
+                          <div className="product-row-image-header"></div>
+                          <div className="product-row-name-header"></div>
+                      </div>
+                      <div className="product-row-settings">
+                          <div></div>
+                          <div>Quantity</div>
+                          <div>Duration</div>
+                          <div>Price</div>
+                      </div>
+                      <div></div>
+                  </div>
+                )
+              }
+
+              {products.length != 0 && (
                 products.map((product , productIndex) => (
                   <ProductRow key={productIndex} product={product} onClear={handleProductClear} onTotalChange={handleProductTotalChange} />
                 ))

@@ -1,19 +1,71 @@
-.product-row {
+/* .product-row {
     display: flex;
     justify-content: space-around;
     align-items: center;
     padding: 10px;
     border-bottom: 1px solid #ddd;
+} */
+
+.product-row-container {
+    margin: 20px 0;
+}
+
+.product-row-titles {
+    display: grid;
+    grid-template-columns: 1fr 1fr 23px;
+    gap: 20px;
+    font-weight: bold;
+    font-size: 14px;
+    color: #333;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #ddd;
+}
+
+.product-row-titles .product-row-description {
+  display: grid;
+  grid-template-columns: 50px 1fr;
+  gap: 10px;
+}
+
+.product-row-titles .product-row-settings {
+  display: grid;
+  grid-template-columns: max-content 100px 160px 60px;
+  gap: 25px;
+  align-items: start;
+}
+
+/* product row */
+.product-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr auto;
+    margin: 20px 0px;
+    gap: 20px;
+    align-items: center;
+}
+
+.product-row-description {
+  display: grid;
+  grid-template-columns: 50px 1fr;
+  gap: 10px;
+  align-items: center;
 }
 
 .product-row-settings {
-    display: flex;
+    display: grid;
+    grid-template-columns: max-content 100px 160px 60px;
     gap: 25px;
 }
 
 .product-row-name {
     font-size: 14px;
     font-weight: bold;
+}
+
+.product-row-image {
+  width: 40px;
+  height: 40px;
+  background-color: #e0e0e0;
+  border-radius: 5px;
 }
 
 /* available */
@@ -23,6 +75,11 @@
     border-radius: 5px;
     padding: 10px 15px;
     font-size: 12px;
+    min-width: 30px;
+    text-align: center;
+    /* width: 75px;
+    display: flex;
+    justify-content: center; */
 }
 
 /* quantity */
@@ -31,7 +88,9 @@
     border: 1px solid #e0e0e0;
     border-radius: 5px;
     display: grid;
-    grid-template-columns: 60px 30px;
+    grid-template-columns: 60px auto;
+    max-width: 100px;
+    align-items: center;
 }
 
 .product-row-quantity input {
@@ -52,6 +111,7 @@
     background-color: #e0e0e0;
     border: none;
     height: min-content;
+    cursor: pointer;
 }
 
 /* days */
@@ -86,4 +146,12 @@
     align-items: center;
     font-size: 16px;
     width: 60px;
+}
+
+.product-row-remove {
+  background: none;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  color: #888585;
 }

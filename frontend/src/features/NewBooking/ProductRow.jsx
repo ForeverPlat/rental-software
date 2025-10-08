@@ -69,42 +69,44 @@ const ProductRow = ({ product, onClear, onTotalChange }) => {
     
     
     return(
-        <div className='product-row'>
-            <div className='product-row-description'>
-                <div className='product-row-image'></div>
-                <div className="product-row-name">{name}</div> 
-            </div>
-
-            <div className='product-row-settings'>
-
-                <div className='product-row-available'>
-                    { isLoading ? 'Loading...' : `${available} left`}
+        <div className='product-row-container'>
+            <div className='product-row'>
+                <div className='product-row-description'>
+                    <div className='product-row-image'></div>
+                    <div className="product-row-name">{name}</div> 
                 </div>
 
-                <div className='product-row-quantity'>
-                  {/* add an onchange to update quantity */}
-                  <input type="number" value={quantity} onChange={handleChange} />
-                  <div className='product-row-quantity-buttons'>
-                    <button onClick={handleIncrease} disabled={quantity >= available}>+</button>
-                    <button onClick={handleDecrease} disabled={quantity === 0}>-</button>
-                  </div>
+                <div className='product-row-settings'>
+
+                    <div className='product-row-available'>
+                        { isLoading ? 'Loading...' : `${available} left`}
+                    </div>
+
+                    <div className='product-row-quantity'>
+                    {/* add an onchange to update quantity */}
+                    <input type="number" value={quantity} onChange={handleChange} />
+                    <div className='product-row-quantity-buttons'>
+                        <button onClick={handleIncrease} disabled={quantity >= available}>+</button>
+                        <button onClick={handleDecrease} disabled={quantity === 0}>-</button>
+                    </div>
+                    </div>
+
+                    <div className="product-row-days">
+                    <select value={selectedDays} onChange={(e) => handleProductDaysChange(e)}>
+                        <option value="1">1 day</option>
+                        <option value="2">2 days</option>
+                        <option value="3">3 days</option>
+                        <option value="4">4 days</option>
+                        <option value="5">5 days</option>
+                        <option value="6">6 days</option>
+                        <option value="7">7 days</option>
+                    </select>
+                    <span className='product-row-price-per-day'>${price.toFixed(2)}</span>
+                    </div>
+
+                    <div className="product-row-total-price">${totalPrice.toFixed(2)}</div>
+
                 </div>
-
-                <div className="product-row-days">
-                  <select value={selectedDays} onChange={(e) => handleProductDaysChange(e)}>
-                    <option value="1">1 day</option>
-                    <option value="2">2 days</option>
-                    <option value="3">3 days</option>
-                    <option value="4">4 days</option>
-                    <option value="5">5 days</option>
-                    <option value="6">6 days</option>
-                    <option value="7">7 days</option>
-                  </select>
-                  <span className='product-row-price-per-day'>${price.toFixed(2)}</span>
-                </div>
-
-                <div className="product-row-total-price">${totalPrice.toFixed(2)}</div>
-
                 <button className="product-row-remove" onClick={() => onClear(_id)}>×</button> 
 
             </div>
