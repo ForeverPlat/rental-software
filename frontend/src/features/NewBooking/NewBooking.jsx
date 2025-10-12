@@ -17,13 +17,11 @@ const NewBooking = () => {
 
     const [booking, setBooking] = useState({
       "customerId": '',
-      'pickupDate': '',
-      'pickupTime': '',
-      'returnDate': '',
-      'returnTime': '' ,
-      "status": 'pending',
       "products": [],
-      "payment": {}
+      'pickupDate': '',
+      'returnDate': '',
+      "status": 'pending',
+      "payment": { 'status': 'pending', 'method': 'card', amount: 0 }
     });
 
     const [customer, setCustomer] = useState(null);
@@ -37,7 +35,7 @@ const NewBooking = () => {
     const [pickupTime, setPickupTime] = useState(null);
     const [returnTime, setReturnTime] = useState(null);
 
-    const [payment, setPayment] = useState({ 'method': '', amount: 0 })
+    const [payment, setPayment] = useState({ 'status': '' ,'method': '', amount: 0 })
 
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
@@ -51,11 +49,31 @@ const NewBooking = () => {
       return;
     }
 
+
+    // i need to sleep but these are the next steps to fix
+    // we are not sending quantity and i think id for the product
+
+    // find a way to get quantity from productRow
+    // and use the id we have here
+    // construct a new item object and that is what we will set the state to
+    // from what i remember item will look like { productId: '', quantity: '' }
+
+    console.log(item);
+
     setProducts((prevProducts) => [...prevProducts, item]);
     
     setBooking((prev) => ({
       ...prev,
       products: [...prev.products, item],
+    }))
+  }
+
+  const handleProductClear = (id) => {
+    setProducts(products.filter((product) => product._id !== id));
+    setProductTotal((prev) => prev.filter((total) => total.product !== id));
+    setBooking((prev) => ({
+      ...prev,
+      products: prev.products.filter((product) => product._id !== id),
     }))
   }
 
@@ -78,24 +96,6 @@ const NewBooking = () => {
     }))
   }
 
-  const handlePickupTimeSelect = (time) => {
-    setPickupTime(time);
-
-    setBooking((prev) => ({
-      ...prev,
-      pickupTime: time 
-    }))
-  }
-
-  const handleReturnTimeSelect = (time) => {
-    setReturnTime(time);
-
-    setBooking((prev) => ({
-      ...prev,
-      returnTime: time 
-    }))
-  }
-
   const handleReturnDateSelect = (date) => {
     setReturnDate(date);
 
@@ -107,14 +107,28 @@ const NewBooking = () => {
 
   // end of time handlers
 
-  const handleProductClear = (id) => {
-    setProducts(products.filter((product) => product._id !== id));
-    setProductTotal((prev) => prev.filter((total) => total.product !== id));
-    setBooking((prev) => ({
-      ...prev,
-      products: prev.products.filter((product) => product._id !== id),
+
+  const handlePaymentMethodChange = (e) => {
+    setBooking((prevBooking) => ({
+      ...prevBooking,
+      payment: {
+        ...prevBooking.payment,
+        method: e.target.value
+      }
     }))
   }
+
+  const handlePaymentStatusChange = (e) => {
+    setBooking((prevBooking) => ({
+      ...prevBooking,
+      payment: {
+        ...prevBooking.payment,
+        status: e.target.value
+      }
+    }))
+  }
+
+
 
   // do more reading on useCallBack
   // preventing infinite loop by ensuring this isn't called on every render?
@@ -124,13 +138,15 @@ const NewBooking = () => {
       const updatedTotals = prev.filter((totalObj) => totalObj.product !== id);
       return [...updatedTotals, { product: id, total }];
     })
+  }, []);
 
-    const bookingTotal = 0;
-      productTotal.forEach((product) => {
-      bookingTotal += product.total;
-    })
+  const handleAmountChange = () => {
+    let bookingTotal = getBookingTotal();
 
-    setPayment({ total: bookingTotal });
+    // console.log("get total",getBookingTotal());
+    setPayment({ amount: bookingTotal });
+    // console.log(payment.amount);
+    // console.log("handle prod change booking", bookingTotal);
 
     setBooking((booking) => ({
       ...booking,
@@ -139,13 +155,32 @@ const NewBooking = () => {
         amount: bookingTotal
       }
     }))
+  }
 
-  }, []);
+  
+  useEffect(() => {
+    console.log(booking);
+    
+  }, [booking])
+
+  useEffect(() => {
+    handleAmountChange();
+  }, [productTotal])
 
   const getBookingTotal = () => {
     if (!productTotal.length) return 0;
     return productTotal.reduce((sum, item) => sum + (item.total || 0), 0).toFixed(2);
   }
+
+  const delayedMessage = (setter, message) => {
+    setter(''); 
+    setTimeout(() => {
+      setter(message);
+      setTimeout(() => {
+        setter(''); // Clear message after 5 seconds
+      }, 5000);
+    }, 100); // Small delay to ensure previous message clears
+  };
 
   // const [booking, setBooking] = useState({
   //     "customerId": '',
@@ -159,11 +194,14 @@ const NewBooking = () => {
     const handleSubmit = async () => {
       const token = localStorage.getItem('token');
 
-      const { customerId, products, pickupDate, pickupTime, returnDate, returnTime } = booking;
+      const { customerId, products, pickupDate, returnDate, payment } = booking;
       
-      if (customerId || products || pickupDate || pickupTime || returnDate || returnTime) {
+      if (customerId || products || pickupDate || returnDate || payment) {
         setError("All fields must be filled.");
       }
+
+      // console.log(booking);
+      
 
       try {
         const res = await fetch('http://localhost:2000/api/bookings', {
@@ -176,8 +214,9 @@ const NewBooking = () => {
         });
 
         const result = await res.json();
+        console.log(result.message)
 
-        if (res.ok) {
+        if (result.ok) {
           // setSuccess('Verification email sent.');
           delayedMessage(setSuccess, 'Booking has been created.')
           setBooking({ "customerId": '', "products": [], "pickupDate": '', "pickupTime": '', "returnDate": '', "returnTime": '' });
@@ -188,7 +227,7 @@ const NewBooking = () => {
 
       } catch (error) {
         delayedMessage(setError, 'An error occurred. Please try again later.');
-        // setError('An error occurred. Please try again later.');
+        setError('An error occurred. Please try again later.', result.message);
       }
     }
 
@@ -198,7 +237,7 @@ const NewBooking = () => {
   return (
 
 
-      <div style={{ padding: '20px' }}>
+      <div style={{ padding: '20px', maxWidth: '750px' }}>
 
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
 
@@ -223,24 +262,15 @@ const NewBooking = () => {
 
               <div className='pickup-date-section'>
                 <DatePicker
-                  className='booking-date-picker'
+                  className={`booking-date-picker ${pickupDate ? 'booking-date-picker-selected' : 'booking-date-picker-unselected'}`}
                   selected={pickupDate}
                   onChange={(date) => handlePickupDateSelect(date)}
                   timeFormat="HH:mm"
                   dateFormat="yyyy/MM/dd"
-                  placeholderText="Select date"
-                />
-
-                <DatePicker
-                  className='booking-time-picker'
-                  selected={pickupTime}
-                  onChange={(time) => handlePickupTimeSelect(time)}
                   showTimeSelect
-                  showTimeSelectOnly
                   timeIntervals={30}
-                  timeCaption="Time"
-                  dateFormat="h:mm aa"
-                  placeholderText='Time'
+                  timeCaption='Time'
+                  placeholderText="Select date and time"
                 />
               </div>
 
@@ -253,23 +283,15 @@ const NewBooking = () => {
 
               <div className='return-date-section'>
                 <DatePicker
-                  className='booking-date-picker'
+                  className={`booking-date-picker ${returnDate ? 'booking-date-picker-selected' : 'booking-date-picker-unselected'}`}
                   selected={returnDate}
                   onChange={(date) => handleReturnDateSelect(date)}
+                  timeFormat='HH:mm'
                   dateFormat="yyyy/MM/dd"
-                  placeholderText="Select date"
-                />
-
-                <DatePicker
-                  className='booking-time-picker'
-                  selected={returnTime}
-                  onChange={(time) => handleReturnTimeSelect(time)}
                   showTimeSelect
-                  showTimeSelectOnly
                   timeIntervals={30}
-                  timeCaption="Time"
-                  dateFormat="h:mm aa"
-                  placeholderText='Time'
+                  timeCaption='Time'
+                  placeholderText="Select date and time"
                 />
               </div>
 
@@ -278,6 +300,36 @@ const NewBooking = () => {
           </div>
         </div> {/* end of date pickers */}
 
+        <div className='booking-payment-container'>
+          
+
+            {/* <div className='new-product-pricing-container'> */}
+              <div>
+                <span className='new-payment-header-span'>Payment</span>
+                <p>Select the payment method and current payment status</p>
+              </div>
+              <div className='booking-payment-selection-container'>
+                <div>
+                  <span>Method</span>
+                  <select value={payment.method} onChange={handlePaymentMethodChange} >
+                    <option value="card">Card</option>
+                    <option value="cash">Cash</option>
+                    <option value="transfer">Transfer</option>
+                  </select>
+                </div>
+
+                <div>
+                  <span>Status</span>
+                  <select value={payment.status} onChange={handlePaymentStatusChange} >
+                    <option value="pending">Pending</option>
+                    <option value="partial">Partial</option>
+                    <option value="paid">Paid</option>
+                    <option value="overpaid">Overpaid</option>
+                  </select>
+                </div>
+
+              </div>
+        </div>
 
         <div className='booking-products-container'>
             <div className='search-header'>

@@ -9,21 +9,19 @@ export const createBooking = async (req, res, next) => {
     
     try {
         const { userId } = req.user;
-        const { customerId, products , startDate, endDate, status, payment } = req.body;
+        const { customerId, products , pickupDate, returnDate, payment } = req.body;
 
         // console.log( customerId, products , startDate, endDate, status, payment )
 
-        if (!customerId || !products || !startDate || !endDate || !status || !payment) {
+
+        if (!customerId || !products || !pickupDate || !returnDate || !payment) {
             return next(createError('All fields most be filled.', 400));
         }
 
-        if (new Date(startDate) >= new Date(endDate)) {
+        if (new Date(pickupDate) >= new Date(returnDate)) {
             return next(createError('Start date must be before end date.', 400));
         }
 
-        if (!VALID_STATUSES.includes(status)) {
-            return next(createError('Invalid status value.', 400));
-        }
         // consider adding a time of date as well?
         // maybe that can be passed with start date?
 
@@ -33,9 +31,8 @@ export const createBooking = async (req, res, next) => {
             user: userId,
             customerId,
             products,
-            startDate,
-            endDate,
-            status,
+            pickupDate,
+            returnDate,
             payment
         });
         await newBooking.save();

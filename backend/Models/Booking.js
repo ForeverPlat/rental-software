@@ -25,22 +25,46 @@ const bookingSchema = new mongoose.Schema({
             required: true
         }
     }],
-    startDate: {
+    pickupDate: {
         type: Date,
         required: true,
     },
-    endDate: {
+    returnDate: {
         type: Date,
         required: true,
     },
     status: {
         type: String,
-        enum: ['pending', 'confirmed', 'completed', 'cancelled'],
+        enum: [
+            'pending',
+            'picked-up',
+            'late',
+            'returned',
+            'completed',
+            'cancelled',
+            'lost'
+        ],
         default: 'pending',
         required: true,
         trim: true
     },
     payment: {
+        status: {
+            type: String,
+            enum: [
+                'pending',
+                'paid',
+                'partial',
+                'overpaid',
+                'refunded',
+                'disputed',
+                'processing',
+                'void'
+            ],
+            default: 'pending',
+            required: true,
+            trim: true
+        },
         method: {
             type: String,
             enum: ['card', 'cash', 'transfer'],
