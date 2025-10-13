@@ -47,10 +47,10 @@ const NewProduct = () => {
       console.log(product);
       const token = localStorage.getItem('token');
 
-      const { name, pricePerDay } = product;
+      const { name, pricePerDay, totalStock } = product;
       
-      if ( !name || pricePerDay) {
-        setError("All fields must be filled.");
+      if ( !name || !pricePerDay || !totalStock) {
+          delayedMessage(setError, 'All fields must be filled.')
       }
 
       try {
@@ -64,11 +64,12 @@ const NewProduct = () => {
         });
 
         const result = await res.json();
+        console.log(result.message);
 
         if (res.ok) {
           // setSuccess('Verification email sent.');
           delayedMessage(setSuccess, 'Product has been created.')
-          setProduct({ "name": '', pricePerDay: '' });
+          setProduct({ "name": '', pricePerDay: '', totalStock: 0 });
         } else {
           delayedMessage(setError, result.error || 'Failed to create product.')
           // setError(result.error || 'Failed to create user.');

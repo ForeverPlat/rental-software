@@ -15,7 +15,6 @@ const productSchema = new mongoose.Schema({
     pricePerDay: {
         type: Number,
         required: true,
-        unique: true,
         trim: true
     }
 });

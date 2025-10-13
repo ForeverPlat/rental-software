@@ -28,8 +28,8 @@ export const createProduct = async (req, res, next) => {
 
         // should i make an api call here instead?
         const newInventory = new Inventory({
-            userId,
-            productId, 
+            user: userId,
+            product: productId, 
             productName: name,
             totalStock,
             available: totalStock,
