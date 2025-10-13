@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import './ProductRow.css'
 
-const ProductRow = ({ product, onClear, onTotalChange }) => {
+const ProductRow = ({ product, onClear, onTotalChange, onQuantityChange }) => {
     const { _id, name, pricePerDay } = product;
 
     {/* image | name | available (amt left) | quantity (+/-) | (selection for days) price per day | total for that rental*/}
@@ -44,6 +44,7 @@ const ProductRow = ({ product, onClear, onTotalChange }) => {
 
     useEffect(() => {
         onTotalChange(_id, totalPrice);
+        onQuantityChange(_id, quantity);
     }, [totalPrice, _id, onTotalChange]);
      
     

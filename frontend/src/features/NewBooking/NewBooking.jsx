@@ -60,11 +60,13 @@ const NewBooking = () => {
 
     console.log(item);
 
+    const newProduct = { name: item.name, productId: item._id, quantity: 1 };
+
     setProducts((prevProducts) => [...prevProducts, item]);
     
     setBooking((prev) => ({
       ...prev,
-      products: [...prev.products, item],
+      products: [...prev.products, newProduct],
     }))
   }
 
@@ -140,6 +142,14 @@ const NewBooking = () => {
     })
   }, []);
 
+  const handleQuantityChange = useCallback((id, quantity) => {
+    setBooking((prev) => ({
+      ...prev,
+      products: prev.products.map((product) => 
+        product.productId === id ? { ...product, quantity } : product )
+    }))
+  }, [])
+
   const handleAmountChange = () => {
     let bookingTotal = getBookingTotal();
 
@@ -196,7 +206,7 @@ const NewBooking = () => {
 
       const { customerId, products, pickupDate, returnDate, payment } = booking;
       
-      if (customerId || products || pickupDate || returnDate || payment) {
+      if (!customerId || !products.length || !pickupDate || !returnDate || !payment.method, !payment.status) {
         setError("All fields must be filled.");
       }
 
@@ -214,7 +224,7 @@ const NewBooking = () => {
         });
 
         const result = await res.json();
-        console.log(result.message)
+        console.log(result)
 
         if (result.ok) {
           // setSuccess('Verification email sent.');
@@ -365,7 +375,7 @@ const NewBooking = () => {
 
               {products.length != 0 && (
                 products.map((product , productIndex) => (
-                  <ProductRow key={productIndex} product={product} onClear={handleProductClear} onTotalChange={handleProductTotalChange} />
+                  <ProductRow key={productIndex} product={product} onClear={handleProductClear} onTotalChange={handleProductTotalChange} onQuantityChange={handleQuantityChange} />
                 ))
               )}
             </div>
