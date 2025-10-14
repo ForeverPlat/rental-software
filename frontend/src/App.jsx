@@ -18,6 +18,8 @@ import NewBooking from './features/NewBooking/NewBooking';
 import NewCustomer from './features/NewCustomer/NewCustomer'
 import NewProduct from './features/NewProduct/NewProduct';
 
+import BookingDetails from './features/BookingDetails/BookingDetails';
+
 const App = () => {
   return (
     <Router>
@@ -34,6 +36,8 @@ const App = () => {
           <Route path="/bookings/new" element={<NewBooking />} />
           <Route path="/customers/new" element={<NewCustomer />} />
           <Route path="/products/new" element={<NewProduct />} />
+
+          <Route path="/bookings/details" element={<BookingDetails />} />
 
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login />} />

@@ -61,6 +61,7 @@ const bookingSchema = new mongoose.Schema({
             type: String,
             enum: [
                 'pending',
+                'due',
                 'paid',
                 'partial',
                 'overpaid',

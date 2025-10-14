@@ -1,9 +1,15 @@
 import React from 'react'
 import './Table.css'
+import { useNavigate } from 'react-router-dom'
 
-const Table = ({ headers, rows }) => {
+const Table = ({ headers, rows, onRowClick }) => {
 
-    const headerLength = headers.length;
+    const navigate = useNavigate();
+
+    // will have to move this to booking its self, then pass an onclick value in to this I think
+    // const handleRowClick = (booking) => {
+    //     navigate('/bookings/details', { state: { booking } });
+    // }
 
   return (
     <div style={{ 'width': '100%' }}>
@@ -24,7 +30,7 @@ const Table = ({ headers, rows }) => {
                         <tr key={rowIndex} className='table-row'>
                             {
                                 headers.map((header, dataIndex) => (
-                                    <td key={dataIndex} className='cell'>
+                                    <td key={dataIndex} className='cell' onClick={() => onRowClick(row)} >
                                         { 
                                             header.key === 'payment' ? row[header.key].amount :
                                             header.key === 'paymentStatus' ? row.payment.status :

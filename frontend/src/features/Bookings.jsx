@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 import MetricsSummary from '../components/MetricsSummary'
 // import BookingRow from '../components/BookingsTable/BookingsRow/BookingsRow'
 // import BookingsHeader from '../components/BookingsTable/BookingsHeader/BookingsHeader'
@@ -11,11 +12,14 @@ const Bookings = () => {
 
     const headers = [
       { display: 'Customer', key: 'customer' },
+      { display: 'Status', key: 'status' },
       { display: 'From', key: 'pickupDate' },
       { display: 'Until', key: 'returnDate' },
       { display: 'Price', key: 'payment' },
       { display: 'Payment Status', key: 'paymentStatus' },
     ];
+
+    const navigate = useNavigate();
 
     const getBookings = async () => {
       try {
@@ -47,6 +51,10 @@ const Bookings = () => {
     }, [])
     // getBookings();
 
+    const handleBookingClick = (booking) => {
+        navigate('/bookings/details', { state: { booking } });
+    }
+
   if (isLoading) {
       return <div style={{ textAlign: 'center' }}>Loading Bookings...</div>
     }
@@ -56,7 +64,7 @@ const Bookings = () => {
     <div style={{ flexGrow: 1, padding: '20px' }}>
       <MetricsSummary />
 
-      <Table headers={headers} rows={bookings} />
+      <Table headers={headers} rows={bookings} onRowClick={handleBookingClick} />
 
         {/* <BookingsHeader/> */}
         {/* <BookingRow /> */}

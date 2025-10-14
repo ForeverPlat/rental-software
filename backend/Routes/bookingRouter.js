@@ -17,9 +17,9 @@ bookingRouter.get('/user', getUserBookings);
 
 bookingRouter.get('/:bookingId', getBooking);
 
-bookingRouter.put('/bookingId', updateUserBookingStatus);
+bookingRouter.patch('/bookingId', updateUserBookingStatus);
 
-bookingRouter.put('/:bookingId', updateBooking);
+bookingRouter.patch('/:bookingId', updateBooking);
 
 bookingRouter.delete('/:bookingId', deleteBooking);
 

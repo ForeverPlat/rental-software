@@ -124,8 +124,8 @@ export const getTodaysBookings = async (req, res, next) => {
     try {
 
         // this doesn't store time (add a time ot the booking schema?)
-        // const currentDate = new Date();
-        const currentDate = '2025-10-01T00:00:00.000+00:00';
+        const currentDate = new Date();
+        // const currentDate = '2025-10-01T00:00:00.000+00:00';
 
         const todaysBookings = await Booking.find({ startDate: currentDate })
 
@@ -228,28 +228,37 @@ export const getBookingsMetrics = async (req, res, next) => {
 }
 
 export const updateBooking = async (req, res, next) => {
+    const { bookingId } = req.params;
+    const updates = req.body;
+
+    const allowedFields = ['status', 'payments']
+    const updateKeys = Object.keys(updates);
+
+    if (updateKeys.length === 0) {
+        return next(createError('No update data provided.', 404));
+    }
+
+    const isValidUpdate = updateKeys.every(key => allowedFields.includes)
+    if (!isValidUpdate) {
+        return next(createError('Invalid field update.', 404));
+    }
 
     try {
-        const { bookingId } = req.params;
 
-        if (!bookingId) {
-            return next(createError('All parameters most be filled.', 400));
-        }
-
-        const booking = await Booking.findByIdAndUpdate(
+        const updatedItem = await Booking.findByIdAndUpdate(
             bookingId,
-            req.body,
+            { $set: updates },
             { new: true }   // returns updated document
         );
 
-        if (!booking) {
+        if (!updatedItem) {
             return next(createError(`Booking with bookingId ${bookingId} not found.`, 404));
         }
 
         res.status(200).json({
             success: true,
             message: `Booking with bookingId ${bookingId} was updated.`,
-            data: booking
+            data: updatedItem
         });
 
     } catch (error) {
