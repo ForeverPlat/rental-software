@@ -9,12 +9,12 @@ export const createBooking = async (req, res, next) => {
     
     try {
         const { userId } = req.user;
-        const { customerId, products , pickupDate, returnDate, payment } = req.body;
+        const { customer, products , pickupDate, returnDate, payment } = req.body;
 
         // console.log( customerId, products , startDate, endDate, status, payment )
 
 
-        if (!customerId || !products || !pickupDate || !returnDate || !payment) {
+        if (!customer || !products || !pickupDate || !returnDate || !payment) {
             return next(createError('All fields most be filled.', 400));
         }
 
@@ -29,7 +29,7 @@ export const createBooking = async (req, res, next) => {
 
         const newBooking = new Booking({
             user: userId,
-            customerId,
+            customer,
             products,
             pickupDate,
             returnDate,
@@ -79,6 +79,8 @@ export const getBookings = async (req, res, next) => {
         if (!bookings) {
             return next(createError('No bookings found.', 404));
         }
+
+        console.log(bookings);
 
         res.status(200).json({
             success: true,

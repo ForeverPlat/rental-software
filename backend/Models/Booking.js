@@ -7,11 +7,19 @@ const bookingSchema = new mongoose.Schema({
         required: true,
         index: true
     },
-    customerId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Customer',
-        required: true,
-        index: true
+    customer: {
+        customerId: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Customer',
+            required: true,
+            index: true
+        },
+        name: {
+            type: String,
+            required: true,
+            trim: true,
+            lowercase: true
+        }
     },
     products: [{
         productId: {

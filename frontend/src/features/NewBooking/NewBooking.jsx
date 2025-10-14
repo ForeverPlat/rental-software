@@ -16,7 +16,7 @@ const NewBooking = () => {
   const [productSearchTerm, setProductSearchTerm] = useState('');
 
     const [booking, setBooking] = useState({
-      "customerId": '',
+      "customer": { 'customerId': '', 'name': '' },
       "products": [],
       'pickupDate': '',
       'returnDate': '',
@@ -81,9 +81,14 @@ const NewBooking = () => {
 
   const handleCustomerSelect = (customer) => {
     setCustomer(customer); // Store full item object or null
-    setBooking((prev) => ({
-      ...prev,
-      customerId: customer ? customer._id : '', // Update booking.customerId
+    setBooking((prevBooking) => ({
+      ...prevBooking,
+      customer: {
+        ...prevBooking.customer,
+
+        customerId: customer._id,
+        name: customer.name
+      }
     }))
   }
 

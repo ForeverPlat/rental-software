@@ -24,7 +24,16 @@ const Table = ({ headers, rows }) => {
                         <tr key={rowIndex} className='table-row'>
                             {
                                 headers.map((header, dataIndex) => (
-                                    <td key={dataIndex} className='cell'>{row[header.key]}</td>
+                                    <td key={dataIndex} className='cell'>
+                                        { 
+                                            header.key === 'payment' ? row[header.key].amount :
+                                            header.key === 'paymentStatus' ? row.payment.status :
+                                            header.key === 'customer' && row[header.key] != null ? row[header.key].name :
+                                            header.key === 'customer' && row[header.key] == null ? '-' :
+                                            header.key != null ? row[header.key] :
+                                            row[header.key]
+                                        }
+                                    </td>
                                 ))
                             }
                         </tr>

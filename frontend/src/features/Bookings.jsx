@@ -11,43 +11,46 @@ const Bookings = () => {
 
     const headers = [
       { display: 'Customer', key: 'customer' },
-      { display: 'From', key: 'from' },
-      { display: 'Until', key: 'until' },
-      { display: 'Price', key: 'price' },
+      { display: 'From', key: 'pickupDate' },
+      { display: 'Until', key: 'returnDate' },
+      { display: 'Price', key: 'payment' },
       { display: 'Payment Status', key: 'paymentStatus' },
     ];
 
-    useEffect(() => {
-        const getBookings = async () => {
-          try {
-            setIsLoading(true);
+    const getBookings = async () => {
+      try {
+        setIsLoading(true);
 
-            // const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:2000';
-            const apiUrl = 'http://localhost:2000';
-            const res = await fetch(`${apiUrl}/api/bookings`);
+        // const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:2000';
+        const apiUrl = 'http://localhost:2000';
+        const res = await fetch(`${apiUrl}/api/bookings`);
 
-            if (!res.ok) {
-              throw new Error(`Failed to fetch customers: ${res.status}`)
-            }
+        if (!res.ok) {
+          throw new Error(`Failed to fetch customers: ${res.status}`)
+        }
 
-            const result = await res.json();
+        const result = await res.json();
 
-            setBookings(result.data);
+        console.log(result);
+        
+        setBookings(result.data);
 
-          } catch (error) {
-            console.log('Error fetching customers:', error);
-          } finally {
-            setIsLoading(false);
-          }
-
-          getBookings();
+      } catch (error) {
+        console.log('Error fetching customers:', error);
+      } finally {
+        setIsLoading(false);
       }
-    }, []);
+    }
 
-    if (isLoading) {
+    useEffect(() => {
+      getBookings();
+    }, [])
+    // getBookings();
+
+  if (isLoading) {
       return <div style={{ textAlign: 'center' }}>Loading Bookings...</div>
     }
-    console.log(bookings)
+    // console.log(bookings)
 
   return (
     <div style={{ flexGrow: 1, padding: '20px' }}>

@@ -31,13 +31,15 @@ const MetricsSummary = () => {
  
                 setMetrics({
                     bookings,
-                    products,
+                    items: products,
                     revenue,
                     due
                 });
 
             } catch (error) {
                 console.error('Error fetching metrics: ', error);
+                console.log("message:", result.message);
+                
             } finally {
                 setIsLoading(false);
             }
