@@ -42,7 +42,7 @@ const BookingDetails = () => {
       })      
 
       const result = await res.json();
-      console.log(result.message);
+      console.log(result);
       
       if (!res.ok) throw new Error("Failed to update booking");
 

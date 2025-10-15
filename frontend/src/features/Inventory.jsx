@@ -10,8 +10,8 @@ const Inventory = () => {
   const headers = [
     { display: 'Name', key: 'name' },
     { display: 'Price Per Day', key: 'pricePerDay' },
-    ,
-    'Price Per Day'
+    { display: 'Available', key: 'available' },
+    { display: 'Reserved', key: 'reserved' },
   ]
 
   useEffect(() => {
@@ -21,7 +21,7 @@ const Inventory = () => {
 
         // const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:2000';
         const apiUrl = 'http://localhost:2000';
-        const res = await fetch(`${apiUrl}/api/products`);
+        const res = await fetch(`${apiUrl}/api/inventory`);
 
         if (!res.ok) {
           throw new Error(`Failed to fetch products: ${res.status}`)
@@ -31,7 +31,6 @@ const Inventory = () => {
         const data = result.data;
         console.log(data);
         
-
         // const product = {
         //   'Name': data.name,
         //   'Price Per Day': data.pricePerDay
@@ -55,7 +54,7 @@ const Inventory = () => {
 
   return (
     <div style={{ flexGrow: 1, padding: '20px' }}>
-      <Table rows={products} headers={headers} />
+      <Table rows={products} headers={headers} type={"inventory"} />
     </div>
   )
 }

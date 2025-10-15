@@ -26,12 +26,26 @@ const inventorySchema = new mongoose.Schema({
     available: {
         type: Number,
         required: true,
-        trim: true
+        trim: true,
+        min: 0,
+        validate: {
+            validator: function(value) {
+                return value <= this.totalStock;  // Ensures available doesn't exceed total
+            },
+            message: 'Available stock cannot exceed total stock'
+        }
     },
     reserved: {
         type: Number,
         required: true,
-        trim: true
+        trim: true,
+        min: 0,
+        validate: {
+            validator: function(value) {
+                return value <= this.totalStock && (value + this.available) <= this.totalStock;
+            },
+            message: 'Reserved + Available cannot exceed total stock'
+        }
     }
 });
 

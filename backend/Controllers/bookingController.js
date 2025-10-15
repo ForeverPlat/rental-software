@@ -55,7 +55,7 @@ export const createBooking = async (req, res, next) => {
             // check if this should be an api call
             await Inventory.findOneAndUpdate(
                 { product: productId },
-                { $inc: { available: -quantity } } // Use $inc for safer updates
+                { $inc: { available: -quantity, reserved: quantity } } // Use $inc for safer updates
             );
         }
 
@@ -132,7 +132,7 @@ export const getTodaysBookings = async (req, res, next) => {
         // promise.all ensures all the async code happens in proper order before everything is sent
         // at least as far as ik
         const allBookingData = await Promise.all(todaysBookings.map(async (booking) => {
-            const { name, email } = await Customer.findById(booking.customerId);
+            const { name, email } = await Customer.findById(booking.customer.customerId);
 
             if (!name || !email) {
                 throw createError(`Customer not found for booking ID ${booking._id}`, 404);
@@ -165,7 +165,7 @@ export const getTodaysBookings = async (req, res, next) => {
 
         res.status(200).json({
             success: true,
-            message: `Booking metrics sent.`,
+            message: `Booking todays bookings sent.`,
             data: allBookingData
         });
 
@@ -178,6 +178,10 @@ export const getBookingsMetrics = async (req, res, next) => {
     
     try {
         const totalBookings = await Booking.countDocuments({});
+
+        if (!totalBookings) {
+            return next(createError('No bookings found.', 404));
+        }
         
         const quantityAggregation = await Booking.aggregate([
             { $unwind: "$products" },
@@ -189,8 +193,8 @@ export const getBookingsMetrics = async (req, res, next) => {
 
         //  filters for only completed bookings
         const revenueAggregation = await Booking.aggregate([
-            { $match: { status: "completed" } },
             { $unwind: "$payment" },
+            { $match: { "payment.status": "paid" } },
             {
                 $group: { _id: null, total: { $sum: "$payment.amount" } }
             }
@@ -198,18 +202,13 @@ export const getBookingsMetrics = async (req, res, next) => {
         const totalRevenue = revenueAggregation.length > 0 ? revenueAggregation[0].total : 0;
 
         const dueAggregation = await Booking.aggregate([
-            { $match: { status: { $ne: "completed" } } },
             { $unwind: "$payment" },
+            { $match: { "payment.status": { $ne: "paid" } } },
             {
                 $group: { _id: null, total: { $sum: "$payment.amount" } }
             }
         ]);
         const totalAmountDue = dueAggregation .length > 0 ? dueAggregation [0].total : 0;
-
-
-        if (!totalBookings) {
-            return next(createError('No bookings found.', 404));
-        }
 
         res.status(200).json({
             success: true,
@@ -230,8 +229,12 @@ export const getBookingsMetrics = async (req, res, next) => {
 export const updateBooking = async (req, res, next) => {
     const { bookingId } = req.params;
     const updates = req.body;
-    console.log("hello");
+    console.log('updates', updates);
     
+
+    if (!bookingId || !updates || typeof updates != 'object') {
+        return next(createError('All parameters most be filled.', 400));
+    }
 
     const allowedFields = ['status', 'payments']
     const updateKeys = Object.keys(updates);
@@ -241,8 +244,32 @@ export const updateBooking = async (req, res, next) => {
     }
 
     const isValidUpdate = updateKeys.every(key => allowedFields.includes)
+
     if (!isValidUpdate) {
         return next(createError('Invalid field update.', 404));
+    }
+
+    if (updates.status === 'returned' || updates.status === 'cancelled') {
+        console.log("booking closed")
+
+        // update the available products based on what was rented out
+        const products = updates.products;
+
+        for (const product of products) {
+            // change the amount that is available
+            // check if this should be an api call
+            await Inventory.findOneAndUpdate(
+                { product: product.productId },
+                { $inc: { available: product.quantity, reserved: -product.quantity } } // Use $inc for safer updates
+            );
+        }
+    }
+
+    // attempt at updating booking after changing status
+    if (updates.payment.status === 'paid') {
+        console.log("booking paid");
+        // ensure it become revenue
+        // check again how rev is calculated in metrics
     }
 
     try {

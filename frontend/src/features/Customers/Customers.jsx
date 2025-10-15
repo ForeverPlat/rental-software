@@ -45,7 +45,7 @@ const Customers = () => {
 
   return (
     <div style={{ flexGrow: 1, padding: '20px' }}>
-      <Table rows={customers} headers={headers} />
+      <Table rows={customers} headers={headers} type={"customers"} />
     </div>
   )
 }

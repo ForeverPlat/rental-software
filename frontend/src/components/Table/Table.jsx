@@ -1,12 +1,31 @@
 import React from 'react'
 import './Table.css'
 
-const Table = ({ headers, rows, onRowClick }) => {
+const Table = ({ headers, rows, onRowClick, type }) => {
 
     // will have to move this to booking its self, then pass an onclick value in to this I think
     // const handleRowClick = (booking) => {
     //     navigate('/bookings/details', { state: { booking } });
     // }
+
+    const bookingChecks = (row, key) => {
+        return key === 'status' ? row[key].replace(/-/g, ' ') : // removing the dash
+        key === 'payment' ? row[key].amount :
+        key === 'paymentStatus' ? row.payment.status :
+        key === 'customer' && row[key] != null ? row[key].name :
+        key === 'customer' && row[key] == null ? '-' :
+        key != null ? row[key] :
+        row[key]
+    }
+
+    const inventoryChecks = (row, key) => {
+        return key === 'name' ? row.productName : 
+        row[key]
+    }
+
+    const customerChecks = (row, key) => {
+        return row[key]
+    }
 
   return (
     <div style={{ 'width': '100%' }}>
@@ -29,12 +48,10 @@ const Table = ({ headers, rows, onRowClick }) => {
                                 headers.map((header, dataIndex) => (
                                     <td key={dataIndex} className='cell' onClick={() => onRowClick(row)} >
                                         { 
-                                            header.key === 'payment' ? row[header.key].amount :
-                                            header.key === 'paymentStatus' ? row.payment.status :
-                                            header.key === 'customer' && row[header.key] != null ? row[header.key].name :
-                                            header.key === 'customer' && row[header.key] == null ? '-' :
-                                            header.key != null ? row[header.key] :
-                                            row[header.key]
+                                            type === "bookings" ? bookingChecks(row, header.key) :
+                                            type === "inventory" ? inventoryChecks(row, header.key) :
+                                            type === "customers" ? customerChecks(row, header.key) :
+                                            null
                                         }
                                     </td>
                                 ))
