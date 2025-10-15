@@ -1,10 +1,7 @@
 import React from 'react'
 import './Table.css'
-import { useNavigate } from 'react-router-dom'
 
 const Table = ({ headers, rows, onRowClick }) => {
-
-    const navigate = useNavigate();
 
     // will have to move this to booking its self, then pass an onclick value in to this I think
     // const handleRowClick = (booking) => {

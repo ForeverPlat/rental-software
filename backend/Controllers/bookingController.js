@@ -230,6 +230,8 @@ export const getBookingsMetrics = async (req, res, next) => {
 export const updateBooking = async (req, res, next) => {
     const { bookingId } = req.params;
     const updates = req.body;
+    console.log("hello");
+    
 
     const allowedFields = ['status', 'payments']
     const updateKeys = Object.keys(updates);
