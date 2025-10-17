@@ -138,3 +138,48 @@ export const getCustomerBatch = async (req, res, next) => {
         next(error);
     }
 }
+
+export const updateCustomer = async (req, res, next) => {
+    const { customerId } = req.params;
+    const updates = req.body;
+    
+
+    if (!customerId || !updates || typeof updates != 'object') {
+        return next(createError('All parameters most be filled.', 400));
+    }
+
+    const allowedFields = ['name', 'email']
+    const updateKeys = Object.keys(updates);
+
+    if (updateKeys.length === 0) {
+        return next(createError('No update data provided.', 404));
+    }
+
+    const isValidUpdate = updateKeys.every(key => allowedFields.includes)
+
+    if (!isValidUpdate) {
+        return next(createError('Invalid field update.', 404));
+    }
+
+    try {
+
+        const updatedItem = await Customer.findByIdAndUpdate(
+            customerId,
+            { $set: updates },
+            { new: true }   // returns updated document
+        );
+
+        if (!updatedItem) {
+            return next(createError(`Customer with bookingId ${customerId} not found.`, 404));
+        }
+
+        res.status(200).json({
+            success: true,
+            message: `Booking with bookingId ${customerId} was updated.`,
+            data: updatedItem
+        });
+
+    } catch (error) {
+        next(error);
+    }
+}

@@ -1,4 +1,5 @@
 import Inventory from "../Models/Inventory.js";
+import Product from "../Models/Product.js";
 import { createError } from "../utils/createError.js";
 
 export const createInventory = async (req, res, next) => {
@@ -81,27 +82,55 @@ export const getInventory = async (req, res, next) => {
 
 export const updateInventory = async (req, res, next) => {
 
+    const { productId } = req.param;
+    const updates = req.body;
+    const { productName } = updates;
+
+    if (!productId || !updates|| typeof updates != 'object') {
+        return next(createError('All parameters most be filled.', 400));
+    }
+
+    const allowedFields = ['productName', 'totalStock']
+    const updateKeys = Object.keys(updates);
+
+    if (updateKeys.length === 0) {
+        return next(createError('No update data provided.', 404));
+    }
+
+    const isValidUpdate = updateKeys.every(key => allowedFields.includes)
+
+    if (!isValidUpdate) {
+        return next(createError('Invalid field update.', 404));
+    }
+
     try {
-        const { productId } = req.param;
 
-        if (!productId) {
-            return next(createError('All parameters most be filled.', 400));
-        }
-
-        const inventory = await Inventory.findByIdAndUpdate(
+        const updatedInventory = await Inventory.findByIdAndUpdate(
             productId,
-            req.body,
+            { $set: updates },
             { new: true }   // returns updated document
         );
 
-        if (!inventory) {
+        if (updateKeys.includes("productName")){
+            const updatedProduct = await Product.findByIdAndUpdate(
+                productId,
+                { $set: { name: productName } },
+                { new: true }
+            );
+
+            if (!updatedProduct) {
+                return next(createError(`Inventory for product with productId ${productId} not found.`, 404));
+            }
+        }
+
+        if (!updatedInventory) {
             return next(createError(`Inventory for product with productId ${productId} not found.`, 404));
         }
 
         res.status(200).json({
             success: true,
             message: `Inventory for product with productId ${productId} was updated.`,
-            data: inventory
+            data: updatedInventory
         });
 
     } catch (error) {
