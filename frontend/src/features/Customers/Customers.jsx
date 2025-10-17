@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import './Customers.css'
 import Table from '../../components/Table/Table';
+import { useNavigate } from 'react-router-dom';
 
 const Customers = () => {
 
@@ -11,6 +12,8 @@ const Customers = () => {
       { display: 'Name', key: 'name'},
       { display: 'Email', key: 'email' }
     ];
+
+    const navigate = useNavigate();
 
   useEffect(() => {
     const getCustomers = async () => {
@@ -28,6 +31,7 @@ const Customers = () => {
         const result = await res.json();
 
         setCustomers(result.data);
+        // console.log(result.data);
 
       } catch (error) {
         console.log('Error fetching customers:', error);
@@ -38,6 +42,10 @@ const Customers = () => {
  
     getCustomers();
   }, [])
+  
+  const handleCustomerClick = (customer) => {
+    navigate('/customers/details', { state: { customer } })
+  }
 
   if(isLoading) {
     return <div style={{ textAlign: 'center' }}>Loading customers...</div>
@@ -45,7 +53,7 @@ const Customers = () => {
 
   return (
     <div style={{ flexGrow: 1, padding: '20px' }}>
-      <Table rows={customers} headers={headers} type={"customers"} />
+      <Table rows={customers} headers={headers} onRowClick={handleCustomerClick} type={"customers"} />
     </div>
   )
 }

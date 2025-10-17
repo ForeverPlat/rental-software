@@ -19,6 +19,7 @@ import NewCustomer from './features/NewCustomer/NewCustomer'
 import NewProduct from './features/NewProduct/NewProduct';
 
 import BookingDetails from './features/BookingDetails/BookingDetails';
+import CustomerDetails from './features/CustomerDetails/CustomerDetails';
 
 const App = () => {
   return (
@@ -38,6 +39,7 @@ const App = () => {
           <Route path="/products/new" element={<NewProduct />} />
 
           <Route path="/bookings/details" element={<BookingDetails />} />
+          <Route path="/customers/details" element={<CustomerDetails />} />
 
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login />} />
