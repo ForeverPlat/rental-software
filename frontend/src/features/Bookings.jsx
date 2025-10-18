@@ -64,7 +64,7 @@ const Bookings = () => {
     <div style={{ flexGrow: 1, padding: '20px' }}>
       <MetricsSummary />
 
-      <Table headers={headers} rows={bookings} onRowClick={handleBookingClick} type={"booking"} />
+      <Table headers={headers} rows={bookings} onRowClick={handleBookingClick} type={"bookings"} />
 
         {/* <BookingsHeader/> */}
         {/* <BookingRow /> */}

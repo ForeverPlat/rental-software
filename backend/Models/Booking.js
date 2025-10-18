@@ -84,7 +84,19 @@ const bookingSchema = new mongoose.Schema({
             type: Number,
             required: true,
         }
-    }
+    },
+    notifications: [{
+        type: {
+            type: String,
+            enum: ['upcoming', 'late', 'unsettled'],
+            required: true
+        },
+        sentAt: {
+            type: Date,
+            default: Date.now,
+            required: true
+        }
+    }]
 });
 
 export default mongoose.model('Booking', bookingSchema);

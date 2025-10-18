@@ -11,6 +11,7 @@ import auth from './Routes/authRouter.js';
 import verifyEmail from './Routes/verifyEmailRouter.js';
 
 import errorHandler from './Middleware/errorHandler.js';
+import { lateBooking, unsettledBooking, upcomingBooking } from './utils/sendNotificationEmails.js';
 
 const port = process.env.PORT || 2000;
 
@@ -35,6 +36,10 @@ app.use('/api/auth', auth);
 app.use('/api/auth', verifyEmail);
 
 app.use(errorHandler);
+
+upcomingBooking();
+lateBooking();
+unsettledBooking();
 
 connectToDB().then(() => {
     app.listen(port, () => console.log('Server is running on 2000'));

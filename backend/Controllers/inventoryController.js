@@ -122,6 +122,7 @@ export const updateInventory = async (req, res, next) => {
                 return next(createError(`Inventory for product with productId ${productId} not found.`, 404));
             }
         }
+        
 
         if (!updatedInventory) {
             return next(createError(`Inventory for product with productId ${productId} not found.`, 404));

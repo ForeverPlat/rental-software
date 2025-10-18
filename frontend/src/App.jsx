@@ -20,6 +20,7 @@ import NewProduct from './features/NewProduct/NewProduct';
 
 import BookingDetails from './features/BookingDetails/BookingDetails';
 import CustomerDetails from './features/CustomerDetails/CustomerDetails';
+import InventoryDetails from './features/InventoryDetails/InventoryDetails';
 
 const App = () => {
   return (
@@ -40,6 +41,7 @@ const App = () => {
 
           <Route path="/bookings/details" element={<BookingDetails />} />
           <Route path="/customers/details" element={<CustomerDetails />} />
+          <Route path="/inventory/details" element={<InventoryDetails />} />
 
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login />} />
