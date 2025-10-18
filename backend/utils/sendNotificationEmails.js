@@ -3,7 +3,7 @@ import nodemailer from 'nodemailer';
 import { format } from "date-fns"
 import { addDays, isAfter, isBefore } from "date-fns"
 
-import Booking from "../Models/Booking";
+import Booking from "../Models/Booking.js";
 
 const transporter = nodemailer.createTransport({
     service: 'Gmail',
@@ -16,7 +16,7 @@ const transporter = nodemailer.createTransport({
 const formatDate = (date) => format(date, "PPP 'at' hh:mm a")
 
 const upcomingBooking = async () => {
-    cron.schedule('0 8 * * *', async () => {
+    nodeCron.schedule('0 8 * * *', async () => {
 
         try {
             const now = new Date();
@@ -62,7 +62,7 @@ const upcomingBooking = async () => {
 }
 
 const lateBooking = async () => {
-    cron.schedule('0 9 * * *', async () => {
+    nodeCron.schedule('0 9 * * *', async () => {
 
         try {
             const now = new Date();
@@ -110,7 +110,7 @@ const lateBooking = async () => {
 }
 
 const unsettledBooking = async () => {
-    cron.schedule('0 8 * * *', async () => {
+    nodeCron.schedule('0 8 * * *', async () => {
         
         try {
             const now = new Date();
