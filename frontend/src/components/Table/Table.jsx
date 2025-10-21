@@ -20,6 +20,7 @@ const Table = ({ headers, rows, onRowClick, type }) => {
 
     const inventoryChecks = (row, key) => {
         return key === 'name' ? row.productName : 
+        key === 'pricePerDay' ? row.product.pricePerDay : 
         row[key]
     }
 

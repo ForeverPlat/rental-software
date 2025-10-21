@@ -37,7 +37,7 @@ export const createInventory = async (req, res, next) => {
 export const getInventories = async (req, res, next) => {
 
     try {
-        const inventories = await Inventory.find();
+        const inventories = await Inventory.find().populate("product");
 
         if (!inventories) {
             return next(createError('No inventories found.', 404));
