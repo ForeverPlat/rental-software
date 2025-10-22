@@ -82,11 +82,15 @@ export const getInventory = async (req, res, next) => {
 
 export const updateInventory = async (req, res, next) => {
 
-    const { productId } = req.param;
+    const { inventoryId } = req.params;
+    console.log('product id',inventoryId);
+    
     const updates = req.body;
-    const { productName } = updates;
+    const { productName, product } = updates;
+    const { _id } = product;
+    const productId = _id;
 
-    if (!productId || !updates|| typeof updates != 'object') {
+    if (!inventoryId || !productId || !updates|| typeof updates != 'object') {
         return next(createError('All parameters most be filled.', 400));
     }
 
@@ -106,7 +110,7 @@ export const updateInventory = async (req, res, next) => {
     try {
 
         const updatedInventory = await Inventory.findByIdAndUpdate(
-            productId,
+            inventoryId,
             { $set: updates },
             { new: true }   // returns updated document
         );
@@ -114,7 +118,7 @@ export const updateInventory = async (req, res, next) => {
         if (updateKeys.includes("productName")){
             const updatedProduct = await Product.findByIdAndUpdate(
                 productId,
-                { $set: { name: productName } },
+                { $set: { name: productName, pricePerDay: product.pricePerDay } },
                 { new: true }
             );
 
@@ -123,7 +127,6 @@ export const updateInventory = async (req, res, next) => {
             }
         }
         
-
         if (!updatedInventory) {
             return next(createError(`Inventory for product with productId ${productId} not found.`, 404));
         }

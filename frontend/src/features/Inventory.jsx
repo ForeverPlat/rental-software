@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import Table from '../components/Table/Table';
+import { useNavigate } from 'react-router-dom';
 
 
 const Inventory = () => {
 
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+
+  const navigate = useNavigate();
 
   const headers = [
     { display: 'Name', key: 'name' },
@@ -48,13 +51,17 @@ const Inventory = () => {
     getProducts();
   }, [])
 
+  const handleInventoryClick = (selectedProduct) => {
+    navigate('/inventory/details', { state: { selectedProduct } });
+  }
+
   if (isLoading) {
     return <div style={{ textAlign: 'center' }}>Loading...</div>
   }
 
   return (
     <div style={{ flexGrow: 1, padding: '20px' }}>
-      <Table rows={products} headers={headers} type={"inventory"} />
+      <Table rows={products} headers={headers} onRowClick={handleInventoryClick} type={"inventory"} />
     </div>
   )
 }

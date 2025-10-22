@@ -12,7 +12,7 @@ inventoryRouter.get('/', getInventories);
 
 inventoryRouter.get('/:productId', getInventory);
 
-inventoryRouter.put('/:productId', updateInventory);
+inventoryRouter.put('/:inventoryId', updateInventory);
 
 inventoryRouter.delete('/:productId', deleteInventory);
 
