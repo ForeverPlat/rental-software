@@ -31,6 +31,7 @@ const Customers = () => {
         const result = await res.json();
 
         setCustomers(result.data);
+        console.log(result.data);
         // console.log(result.data);
 
       } catch (error) {
@@ -43,8 +44,8 @@ const Customers = () => {
     getCustomers();
   }, [])
   
-  const handleCustomerClick = (customer) => {
-    navigate('/customers/details', { state: { customer } })
+  const handleCustomerClick = (selectedCustomer) => {
+    navigate('/customers/details', { state: { selectedCustomer } })
   }
 
   if(isLoading) {
