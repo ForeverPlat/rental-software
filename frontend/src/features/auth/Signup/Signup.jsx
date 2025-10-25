@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
+import './Signup.css'
 
 const Signup = () => {
 
@@ -68,19 +69,19 @@ const Signup = () => {
 
 
   return (
-    <div>
-        <form className="form" id="signup-form" onSubmit={handleSignUp}>
+    <div className="signup-container">
+        <form className="signup-form" id="signup-form" onSubmit={handleSignUp}>
           <h2>Sign Up</h2>
-          <div className="auth-msg" style={{ color: error ? 'red' : 'green' }}> 
+          <div className="signup-auth-msg" style={{ color: error ? 'red' : 'green' }}> 
             {error || success}
           </div> <br />
-          <input type="text" name='username' placeholder="Username" value={user.username} onChange={handleChange} required /> <br />
-          <input type="email" name='email' placeholder="Email" value={user.email} onChange={handleChange} required /> <br />
-          <input type="password" name='password' placeholder="Password" value={user.password} onChange={handleChange} required /> <br />
-          <input type="password" name='confirmPassword' placeholder="Confirm Password" value={user.confirmPassword} onChange={handleChange} required /> <br />
-          <button id="signup-button" type="submit">Sign Up</button>
+          <input className="signup-input" type="text" name='username' placeholder="Username" value={user.username} onChange={handleChange} required /> <br />
+          <input className="signup-input" type="email" name='email' placeholder="Email" value={user.email} onChange={handleChange} required /> <br />
+          <input className="signup-input" type="password" name='password' placeholder="Password" value={user.password} onChange={handleChange} required /> <br />
+          <input className="signup-input" type="password" name='confirmPassword' placeholder="Confirm Password" value={user.confirmPassword} onChange={handleChange} required /> <br />
+          <button className="signup-button" id="signup-button" type="submit">Sign Up</button>
         </form>
-        <p>
+        <p className="signup-footer">
           Have an account? <Link to='/login'>Login</Link>
         </p>
     </div>

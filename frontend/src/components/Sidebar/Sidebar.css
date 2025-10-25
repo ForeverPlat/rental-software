@@ -14,8 +14,11 @@
 
 .sidebar-logo {
   display: flex;
+  align-items: center;
   justify-content: center;
   padding: 14.25px 0px;
+  min-height: 25px;
+  max-height: 25px;
   font-size: 15px;
   font-weight: bold;
 }

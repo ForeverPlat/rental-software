@@ -18,8 +18,8 @@ const Header = ({ page }) => {
   const navigate = useNavigate();
 
   return (
-    <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '25px 20px', borderBottom: '1px solid #ddd', backgroundColor: '#f8f9fa' }}>
-      <h2>{page.charAt(0).toUpperCase() + page.slice(1)}</h2>
+    <header style={{ display: 'flex', alignSelf: 'center', justifyContent: 'space-between', maxHeight: '85px', minHeight: '85px', alignItems: 'center', padding: '0 20px', borderBottom: '1px solid #ddd', backgroundColor: '#f8f9fa' }}>
+      <h2 style={{ marginBottom: '0px' }} >{page.charAt(0).toUpperCase() + page.slice(1)}</h2>
       
       {
         // this ensures that if the path isn't on the list no button shows up

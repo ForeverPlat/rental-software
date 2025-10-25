@@ -6,8 +6,8 @@ import Layout from './Layout';
 
 import Sidebar from './components/Sidebar/Sidebar';
 
-import Signup from './features/auth/Signup'
-import Login from './features/auth/Login'
+import Signup from './features/auth/Signup/Signup'
+import Login from './features/auth/Login/Login'
 import Bookings from './features/Bookings';
 import Customers from './features/Customers/Customers'
 import Dashboard from './features/Dashboard/Dashboard';
@@ -43,9 +43,10 @@ const App = () => {
           <Route path="/customers/details" element={<CustomerDetails />} />
           <Route path="/inventory/details" element={<InventoryDetails />} />
 
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/login" element={<Login />} />
         </Route>
+
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/login" element={<Login />} />
 
       </Routes>
     </Router>
