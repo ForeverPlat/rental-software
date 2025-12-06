@@ -168,6 +168,69 @@ export const updateInventory = async (req, res, next) => {
     }
 }
 
+export const updateUserInventory = async (req, res, next) => {
+
+    const { inventoryId } = req.params;
+    const { userId, username } = req.user;
+    console.log('product id',inventoryId);
+    
+    const updates = req.body;
+    const { productName, product } = updates;
+    const { _id } = product;
+    const productId = _id;
+
+    if (!inventoryId || !productId || !updates|| !userId || typeof updates != 'object') {
+        return next(createError('All parameters most be filled.', 400));
+    }
+
+    const allowedFields = ['productName', 'totalStock']
+    const updateKeys = Object.keys(updates);
+
+    if (updateKeys.length === 0) {
+        return next(createError('No update data provided.', 404));
+    }
+
+    const isValidUpdate = updateKeys.every(key => allowedFields.includes)
+
+    if (!isValidUpdate) {
+        return next(createError('Invalid field update.', 404));
+    }
+
+    try {
+
+        const updatedInventory = await Inventory.findOneAndUpdate(
+            { _id: inventoryId, user: userId },
+            { $set: updates },
+            { new: true }   // returns updated document
+        );
+
+        if (updateKeys.includes("productName")){
+            const updatedProduct = await Product.findOneAndUpdate(
+                { _id: productId, user: userId },
+                { $set: { name: productName, pricePerDay: product.pricePerDay } },
+                { new: true }
+            );
+
+            if (!updatedProduct) {
+                return next(createError(`Inventory for product with productId ${productId} not found.`, 404));
+            }
+        }
+        
+        if (!updatedInventory) {
+            return next(createError(`Inventory for product with productId ${productId} not found.`, 404));
+        }
+
+        res.status(200).json({
+            success: true,
+            message: `Inventory for product for ${username} with productId ${productId} was updated.`,
+            data: updatedInventory
+        });
+
+    } catch (error) {
+        next(error);
+    }
+}
+
 export const deleteInventory = async (req, res, next) => {
 
     try {

@@ -31,13 +31,17 @@ const InventoryDetails = () => {
   const handleSave = async () => {
     setLoading(true);
     setMessage("");
+    const token = localStorage.getItem('token');
     // console.log("id",updatedInventory.product._id);
 
     try {
       const apiUrl = 'http://localhost:2000';
       const res = await fetch(`${apiUrl}/api/inventory/${updatedInventory._id}`, {
         method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
         body: JSON.stringify(updatedInventory)
       });
 
