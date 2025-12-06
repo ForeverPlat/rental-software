@@ -17,12 +17,19 @@ const Customers = () => {
 
   useEffect(() => {
     const getCustomers = async () => {
+      const token = localStorage.getItem('token');
+
       try {
         setIsLoading(true);
-
         // const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:2000';
         const apiUrl = 'http://localhost:2000';
-        const res = await fetch(`${apiUrl}/api/customers`);
+        const res = await fetch(`${apiUrl}/api/customers/user`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+        });
 
         if (!res.ok) {
           throw new Error(`Failed to fetch customers: ${res.status}`)

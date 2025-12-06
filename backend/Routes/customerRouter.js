@@ -1,5 +1,5 @@
 import express from 'express';
-import { createCustomer, getCustomer, getCustomers, getCustomersByName, getCustomerBatch, updateCustomer } from '../Controllers/customerController.js';
+import { createCustomer, getCustomer, getUserCustomers, getCustomers, getCustomersByName, getCustomerBatch, updateCustomer } from '../Controllers/customerController.js';
 import authMiddleware from '../Middleware/authMiddleware.js';
 
 const customerRouter = express.Router();
@@ -10,6 +10,8 @@ customerRouter.post('/batch', getCustomerBatch);
 
 customerRouter.get('/', getCustomers);
 
+customerRouter.get('/user', authMiddleware, getUserCustomers);
+
 customerRouter.get('/by-name', getCustomersByName);
 
 customerRouter.get('/:customerId', getCustomer);
@@ -17,10 +19,6 @@ customerRouter.get('/:customerId', getCustomer);
 customerRouter.put('/:customerId', updateCustomer);
 
 // customerRouter.delete('/:customerId', deleteCustomer);
-
-//  More specific
-
-// customerRouter.get('/user', getUserCustomers);
 
 export default customerRouter;
 

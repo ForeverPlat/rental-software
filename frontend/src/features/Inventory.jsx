@@ -20,8 +20,6 @@ const Inventory = () => {
   useEffect(() => {
     const getProducts = async () => {
       const token = localStorage.getItem('token');
-      console.log("token:", token);
-      
       
       try {
         setIsLoading(true);

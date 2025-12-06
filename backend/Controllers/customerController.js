@@ -49,6 +49,32 @@ export const getCustomers = async (req, res, next) => {
     }
 }
 
+export const getUserCustomers = async (req, res, next) => {
+    try {
+        const { userId, username } = req.user;
+
+        if (!userId) {
+            return next(createError('All parameters most be filled.', 400));
+        }
+
+        const customers = await Customer.find({ user: userId });
+
+        if (!customers) {
+            return next(createError('No customers found.', 404));
+        }
+
+        res.status(200).json({
+            success: true,
+            message: `customers for ${username} found.`,
+            data: customers 
+        });
+
+    } catch (error) {
+        next(error);
+    }
+}
+
+
 export const getCustomer = async (req, res, next) => {
 
     try {
