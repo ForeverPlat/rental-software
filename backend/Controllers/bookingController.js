@@ -425,8 +425,6 @@ export const updateUserBooking = async (req, res, next) => {
         }
     }
 
-    
-
     // attempt at updating booking after changing status
     if (updates.payment.status === 'paid') {
         console.log("booking paid");
@@ -436,7 +434,7 @@ export const updateUserBooking = async (req, res, next) => {
 
     try {
 
-        const updatedItem = await Booking.findByIdAndUpdate(
+        const updatedItem = await Booking.findOneAndUpdate(
             { _id: bookingId, user: userId },
             { $set: updates },
             { new: true }   // returns updated document

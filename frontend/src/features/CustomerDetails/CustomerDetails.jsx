@@ -20,12 +20,16 @@ const CustomerDetails = () => {
   const handleSave = async () => {
     setLoading(true);
     setMessage("");
+    const token = localStorage.getItem('token');
 
     try {
       const apiUrl = 'http://localhost:2000';
-      const res = await fetch(`${apiUrl}/api/customers/${updatedCustomer._id}`, {
+      const res = await fetch(`${apiUrl}/api/customers/user/${updatedCustomer._id}`, {
         method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
         body: JSON.stringify(updatedCustomer)
       });
 
