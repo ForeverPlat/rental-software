@@ -13,7 +13,7 @@ bookingRouter.get('/metrics', getBookingsMetrics);
 
 bookingRouter.get('/today', getTodaysBookings);
 
-bookingRouter.get('/user', getUserBookings);
+bookingRouter.get('/user', authMiddleware, getUserBookings);
 
 bookingRouter.get('/:bookingId', getBooking);
 

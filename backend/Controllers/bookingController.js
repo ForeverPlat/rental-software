@@ -327,21 +327,21 @@ export const getUserBookings = async (req, res, next) => {
 
     try {
         const { userId, username } = req.user;
-
+        
         if (!userId) {
             return next(createError('All parameters most be filled.', 400));
         }
 
         const bookings = await Booking.find({ user: userId });
 
-        if (!bookings) {
+        if (bookings.length == 0) {
             return next(createError(`Bookings for ${username} was not found.`, 404));
         }
 
         res.status(200).json({
             success: true,
             message: `Bookings for ${username} was found.`,
-            data: products
+            data: bookings
         });
 
     } catch (error) {
