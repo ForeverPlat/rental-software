@@ -8,7 +8,7 @@ productRouter.post('/', authMiddleware, createProduct);
 
 productRouter.get('/', getProducts);
 
-productRouter.get('/user', getUserProducts);
+productRouter.get('/user', authMiddleware, getUserProducts);
 
 productRouter.get('/by-name', getProductsByName);
 

@@ -54,6 +54,32 @@ export const getInventories = async (req, res, next) => {
     }
 }
 
+export const getUserInventories = async (req, res, next) => {
+
+    try {
+        const { userId, username } = req.user;
+
+        if (!userId) {
+            return next(createError('All parameters most be filled.', 400));
+        }
+
+        const inventories = await Inventory.find({ user: userId }).populate("product");
+
+        if (!inventories) {
+            return next(createError('No inventories found.', 404));
+        }
+
+        res.status(200).json({
+            success: true,
+            message: `Inventories for ${username} was found.`,
+            data: inventories
+        });
+
+    } catch (error) {
+        next(error);
+    }
+}
+
 export const getInventory = async (req, res, next) => {
 
     try {

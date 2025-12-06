@@ -19,12 +19,22 @@ const Inventory = () => {
 
   useEffect(() => {
     const getProducts = async () => {
+      const token = localStorage.getItem('token');
+      console.log("token:", token);
+      
+      
       try {
         setIsLoading(true);
 
         // const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:2000';
         const apiUrl = 'http://localhost:2000';
-        const res = await fetch(`${apiUrl}/api/inventory`);
+        const res = await fetch(`${apiUrl}/api/inventory/user`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+        });
 
         if (!res.ok) {
           throw new Error(`Failed to fetch products: ${res.status}`)

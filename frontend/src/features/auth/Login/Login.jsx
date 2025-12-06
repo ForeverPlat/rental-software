@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './Login.css';
 
 const Login = () => {
 
-  const [credentials, setCredentials] = useState({ email: '', password: '' });
+  const [credentials, setCredentials] = useState({ username: '', password: '' });
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
+
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -15,9 +17,9 @@ const Login = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    const { email, password } = credentials;
+    const { username, password } = credentials;
 
-    if (!email || !password) {
+    if (!username || !password) {
       setError('All fields must be filled.');
       return;
     }
@@ -34,7 +36,13 @@ const Login = () => {
       if (res.ok) {
         // successful login
         setSuccess('Login successful.');
+
+        setCredentials({ username: '', password: '' })
+        localStorage.setItem("token", result.data.token)
+
         setError('');
+        navigate('/');
+
       } else {
         // failed login
         setError(result.error || 'Invalid credentials.');
@@ -54,7 +62,7 @@ const Login = () => {
         <div className="login-auth-msg" style={{ color: error ? 'red' : 'green' }}>
           {error || success}
         </div> <br />
-        <input className="login-input" type="email" name="email" placeholder="Email" value={credentials.email} onChange={handleChange} required /> <br />
+        <input className="login-input" type="text" name="username" placeholder="Username" value={credentials.username} onChange={handleChange} required /> <br />
         <input className="login-input" type="password" name="password" placeholder="Password" value={credentials.password} onChange={handleChange} required /> <br />
         <button className="login-button" id="login-button" type="submit">Log In</button>
       </form>
