@@ -384,3 +384,75 @@ export const updateUserBookingStatus = async (req, res, next) => {
         next(error);
     }
 }
+
+export const updateUserBooking = async (req, res, next) => {
+    const { bookingId } = req.params;
+    const updates = req.body;
+    const { userId } = req.user;
+
+    // console.log('updates', updates);
+
+    if (!bookingId || !updates || !userId || typeof updates != 'object') {
+        return next(createError('All parameters most be filled.', 400));
+    }
+
+    const allowedFields = ['status', 'payments']
+    const updateKeys = Object.keys(updates);
+
+    if (updateKeys.length === 0) {
+        return next(createError('No update data provided.', 404));
+    }
+
+    const isValidUpdate = updateKeys.every(key => allowedFields.includes)
+
+    if (!isValidUpdate) {
+        return next(createError('Invalid field update.', 404));
+    }
+
+    if (updates.status === 'returned' || updates.status === 'cancelled') {
+        console.log("booking closed")
+
+        // update the available products based on what was rented out
+        const products = updates.products;
+
+        for (const product of products) {
+            // change the amount that is available
+            // check if this should be an api call
+            await Inventory.findOneAndUpdate(
+                { product: product.productId, user: userId },
+                { $inc: { available: product.quantity, reserved: -product.quantity } } // Use $inc for safer updates
+            );
+        }
+    }
+
+    
+
+    // attempt at updating booking after changing status
+    if (updates.payment.status === 'paid') {
+        console.log("booking paid");
+        // ensure it become revenue
+        // check again how rev is calculated in metrics
+    }
+
+    try {
+
+        const updatedItem = await Booking.findByIdAndUpdate(
+            { _id: bookingId, user: userId },
+            { $set: updates },
+            { new: true }   // returns updated document
+        );
+
+        if (!updatedItem) {
+            return next(createError(`Booking with bookingId ${bookingId} not found.`, 404));
+        }
+
+        res.status(200).json({
+            success: true,
+            message: `Booking with bookingId ${bookingId} was updated.`,
+            data: updatedItem
+        });
+
+    } catch (error) {
+        next(error);
+    }
+}

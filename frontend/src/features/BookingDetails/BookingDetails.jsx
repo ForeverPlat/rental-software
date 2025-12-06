@@ -31,13 +31,17 @@ const BookingDetails = () => {
 
   const handleSave = async () => {
     setLoading(true);
+    const token = localStorage.getItem('token');
 
     try {
       // const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:2000';
       const apiUrl = 'http://localhost:2000';
-      const res = await fetch(`${apiUrl}/api/bookings/${updatedBooking._id}`, {
+      const res = await fetch(`${apiUrl}/api/bookings/user/${updatedBooking._id}`, {
         method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
         body: JSON.stringify(updatedBooking)
       })      
 
