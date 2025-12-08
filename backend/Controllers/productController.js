@@ -120,6 +120,39 @@ export const getProductsByName = async (req, res, next) => {
     }
 }
 
+export const getUserProductsByName = async (req, res, next) => {
+
+    try {
+        const { search } = req.query;
+        const { userId } = req.user;
+
+        if (!userId) {
+            return next(createError('All parameters most be filled.', 400));
+        }
+
+        if (!search) {
+            return res.status(200).json({
+                success: true,
+                data: { products: [] }
+            });
+        }
+
+        // regex does partial matching
+        const products = await Product.find({
+            user: userId,
+            name: { $regex: search, $options: 'i' } // 'i' for case insensitive
+        }).limit(5);
+
+        return res.status(200).json({
+            success: true,
+            data: products 
+        });
+
+    } catch (error) {
+        next(createError('Failed to search products.', 500));
+    }
+}
+
 export const updateProduct = async (req, res, next) => {
 
     try {

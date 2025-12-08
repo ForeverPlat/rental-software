@@ -1,5 +1,5 @@
 import express from 'express';
-import { createProduct, deleteProduct, getProduct, getProducts, updateProduct, getUserProducts, getProductsByName } from "../Controllers/productController.js";
+import { createProduct, deleteProduct, getProduct, getProducts, updateProduct, getUserProducts, getProductsByName, getUserProductsByName } from "../Controllers/productController.js";
 import authMiddleware from '../Middleware/authMiddleware.js';
 
 const productRouter = express.Router();
@@ -11,6 +11,8 @@ productRouter.get('/', getProducts);
 productRouter.get('/user', authMiddleware, getUserProducts);
 
 productRouter.get('/by-name', getProductsByName);
+
+productRouter.get('/user/by-name', authMiddleware, getUserProductsByName);
 
 productRouter.get('/:id', getProduct);
 

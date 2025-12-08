@@ -27,6 +27,7 @@ const Sidebar = () => {
   return (
     <nav className='sidebar' style={Sidebar.css}>
 
+    {/* why is the logo here T.T */}
       <div className='sidebar-logo'>
         Rental Software
       </div>

@@ -2,6 +2,8 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const Header = ({ page }) => {
+  const navigate = useNavigate();
+
   const getButton = () => {
     switch (page) {
       case 'customers':
@@ -14,8 +16,6 @@ const Header = ({ page }) => {
         return 'none';
     }
   };
-
-  const navigate = useNavigate();
 
   return (
     <header style={{ display: 'flex', alignSelf: 'center', justifyContent: 'space-between', maxHeight: '85px', minHeight: '85px', alignItems: 'center', padding: '0 20px', borderBottom: '1px solid #ddd', backgroundColor: '#f8f9fa' }}>
