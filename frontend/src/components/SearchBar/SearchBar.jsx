@@ -27,10 +27,17 @@ const SearchBar = ({ searchTerm, setSearchTerm, searchType, onSelect, replaceInp
 
     setIsLoading(true);
     setError(null);
+    const token = localStorage.getItem("token");
 
     try {
       const apiUrl = 'http://localhost:2000';
-      const res = await fetch(`${apiUrl}/api/${searchType}/by-name?search=${encodeURIComponent(query)}`);
+      const res = await fetch(`${apiUrl}/api/${searchType}/user/by-name?search=${encodeURIComponent(query)}`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+      });
       const result = await res.json();
       setResults(result.data || []); // Access data => data.customers, products etc
       setIsDropdownOpen(true);
