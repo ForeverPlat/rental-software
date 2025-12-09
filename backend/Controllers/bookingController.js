@@ -174,6 +174,66 @@ export const getTodaysBookings = async (req, res, next) => {
     }
 }
 
+export const getUserTodaysBookings = async (req, res, next) => {
+    
+    try {
+
+        // this doesn't store time (add a time ot the booking schema?)
+        const currentDate = new Date();
+        const { userId } = req.user;
+        // const currentDate = '2025-10-01T00:00:00.000+00:00';
+
+        if (!userId) {
+            return next(createError('All parameters most be filled.', 400));
+        }
+
+        const todaysBookings = await Booking.find({ _id: userId, startDate: currentDate })
+
+        // promise.all ensures all the async code happens in proper order before everything is sent
+        // at least as far as ik
+        const allBookingData = await Promise.all(todaysBookings.map(async (booking) => {
+            const { name, email } = await Customer.findById(booking.customer.customerId);
+
+            if (!name || !email) {
+                throw createError(`Customer not found for booking ID ${booking._id}`, 404);
+            }
+
+            let quantity = 0;
+
+            booking.products.map((product) => {
+                quantity += product.quantity;
+            });
+
+            return {
+                startDate: booking.startDate,
+                name,
+                email,
+                quantity
+            };
+            // console.log(bookingData);
+            
+            // console.log(allBookingData);
+            // allBookingData.push(bookingData);
+            // console.log(allBookingData);
+        }));
+
+        console.log(allBookingData);
+        
+        if (!todaysBookings) {
+            return next(createError('No bookings found.', 404));
+        }
+
+        res.status(200).json({
+            success: true,
+            message: `Booking todays bookings sent.`,
+            data: allBookingData
+        });
+
+    } catch (error) {
+        next(error);
+    }
+}
+
 export const getBookingsMetrics = async (req, res, next) => {
     
     try {
@@ -229,8 +289,6 @@ export const getBookingsMetrics = async (req, res, next) => {
 export const updateBooking = async (req, res, next) => {
     const { bookingId } = req.params;
     const updates = req.body;
-    console.log('updates', updates);
-    
 
     if (!bookingId || !updates || typeof updates != 'object') {
         return next(createError('All parameters most be filled.', 400));

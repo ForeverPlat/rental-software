@@ -15,10 +15,17 @@ const Dashboard = () => {
         const getTodaysBookings = async () => {
           try {
             setIsLoading(true);
+            const token = localStorage.getItem("token");
 
             // const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:2000';
             const apiUrl = 'http://localhost:2000';
-            const res = await fetch(`${apiUrl}/api/bookings/today`);
+            const res = await fetch(`${apiUrl}/api/bookings/today`, {
+              method: 'GET',
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+              },
+            });
 
             if (!res.ok) {
               throw new Error(`Failed to fetch todays bookings: ${res.status}`)

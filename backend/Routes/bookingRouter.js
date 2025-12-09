@@ -1,5 +1,5 @@
 import express from 'express';
-import { createBooking, deleteBooking, getBooking, getBookings, getBookingsMetrics , updateBooking, updateUserBooking, getUserBookings, updateUserBookingStatus, getTodaysBookings } from "../Controllers/bookingController.js";
+import { createBooking, deleteBooking, getBooking, getBookings, getBookingsMetrics, getUserTodaysBookings, updateBooking, updateUserBooking, getUserBookings, updateUserBookingStatus, getTodaysBookings } from "../Controllers/bookingController.js";
 import authMiddleware from '../Middleware/authMiddleware.js';
 
 const bookingRouter = express.Router();
@@ -12,6 +12,8 @@ bookingRouter.get('/', getBookings);
 bookingRouter.get('/metrics', getBookingsMetrics);
 
 bookingRouter.get('/today', getTodaysBookings);
+
+bookingRouter.get('/user/today', authMiddleware, getUserTodaysBookings);
 
 bookingRouter.get('/user', authMiddleware, getUserBookings);
 
