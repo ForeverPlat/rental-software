@@ -9,6 +9,7 @@ import SearchBar from '../../components/SearchBar/SearchBar';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import ProductRow from './ProductRow';
+import Status from '../../components/Status/Status';
 
 const NewBooking = () => {
 
@@ -429,6 +430,8 @@ const NewBooking = () => {
             <input type="number" name='number' placeholder="Number" value={booking.number} onChange={handleChange} required /> <br />
         </form>
          */}
+
+         {/* <Status statusType={"complete"} statusText={"RETURNED"} /> */}
 
     </div>
   )
