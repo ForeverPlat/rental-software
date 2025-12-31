@@ -1,8 +1,9 @@
 import React from 'react'
+import styles from './Layout.module.css';
 import { Outlet, useLocation } from 'react-router-dom'
 
-import Sidebar from './components/Sidebar/Sidebar'
-import Header from './components/Header/Header'
+import Sidebar from '../components/Sidebar/Sidebar'
+import Header from '../components/Header/Header'
 
 const Layout = () => {
 
@@ -28,13 +29,15 @@ const Layout = () => {
   const page = getPageFromPath();
 
   return (
-    <div style={{ display: 'flex' }}>
+    <div className={styles.appLayout}>
+      <Header page={page} />
+      <div className={styles.appBody}>
         <Sidebar />
-        <main style={{ flexGrow: 1, 'backgroundColor': '#edf1f5' }}>
-            <Header page={page} />
-            <Outlet />
+
+        <main className={styles.appMain}>
+          <Outlet />
         </main>
-        
+      </div>
     </div>
   )
 }

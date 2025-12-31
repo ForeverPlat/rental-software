@@ -2,23 +2,17 @@ import React from 'react'
 import './Sidebar.css'
 import { useNavigate } from 'react-router-dom';
 
-import { RiDashboard3Line } from "react-icons/ri";
-import { FaRegCalendarMinus } from "react-icons/fa6";
-import { LuInbox } from "react-icons/lu";
-import { FaRegUser } from "react-icons/fa";
-import { MdOutlineInventory2 } from "react-icons/md";
+import { HiHome } from "react-icons/hi";
+import { HiArchiveBox } from "react-icons/hi2";
+import { FaInbox } from "react-icons/fa";
+import { BsPersonFill } from "react-icons/bs";
 
-const topItems = [
-  { name: "Dashboard", path: "/dashboard", icon: <RiDashboard3Line /> },
-  // { name: "Calendar", path: "/calendar", icon: <FaRegCalendarMinus /> },
-];
-
-const bottomItems = [
-  { name: "Bookings", path: "/bookings", icon: <LuInbox /> },
-  { name: "Customers", path: "/customers", icon: <FaRegUser /> },
-  { name: "Inventory", path: "/inventory", icon: <MdOutlineInventory2 /> }
-];
-
+const items = [
+  { name: "Home", path: '/home', icon: <HiHome /> },
+  { name: "Bookings", path: "/bookings", icon: <FaInbox /> },
+  { name: "Customers", path: "/customers", icon: <BsPersonFill /> },
+  { name: "Inventory", path: "/inventory", icon: <HiArchiveBox /> }
+]
 
 const Sidebar = () => {
 
@@ -26,41 +20,11 @@ const Sidebar = () => {
 
   return (
     <nav className='sidebar' style={Sidebar.css}>
-
-    {/* why is the logo here T.T */}
-      <div className='sidebar-logo'>
-        Rental Software
-      </div>
-
-      <hr className='sidebar-divider' />
-
-      <button className='new-booking-btn' onClick={ () => navigate('/bookings/new') }>New Booking</button>
-
-      {/* top group */}
-
-      {
-        topItems.map(({ name, path, icon }) => (
-          <div className='sidebar-item' key={path} onClick={() => navigate(path)}>
-            {icon}
-            {name}
-          </div>
-        ))
-      }
-
-      <hr className='sidebar-divider' />
-
-      {/* bottom group */}
-      {
-        bottomItems.map(({ name, path, icon }) => (
-          <div className='sidebar-item' key={path} onClick={() => navigate(path)}>
-            {icon}
-            {name}
-          </div>
-        ))
-      }
-
-      <hr className='sidebar-divider' />
-      
+      {items.map(({ name, path, icon }) => (
+        <div className='sidebar-item' key={path} onClick={() => navigate(path)}>
+          {icon}{name}
+        </div>
+      ))}
     </nav>
   )
 }
