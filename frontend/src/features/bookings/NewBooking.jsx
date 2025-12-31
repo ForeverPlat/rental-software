@@ -397,14 +397,8 @@ const NewBooking = () => {
                   </div>
                 )
               }
-
-              
-
             </div>
-
         </div>
-
-
         
         {customer && (
           <div style={{ marginTop: '10px' }}>

@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import MetricsSummary from '../components/MetricsSummary'
+import MetricsSummary from '../../components/MetricsSummary'
 // import BookingRow from '../components/BookingsTable/BookingsRow/BookingsRow'
 // import BookingsHeader from '../components/BookingsTable/BookingsHeader/BookingsHeader'
-import Table from '../components/Table/Table'
+import Table from '../../components/Table/Table'
 
 const Bookings = () => {
 

@@ -12,7 +12,7 @@ const Layout = () => {
     const path = location.pathname.toLowerCase();
 
     if (path === '/' || path === '/dashboard') return 'dashboard';
-    if (path === '/calendar') return 'calender';
+    // if (path === '/calendar') return 'calender';
     if (path === '/bookings') return 'bookings';
     if (path === '/customers') return 'customers';
     if (path === '/inventory') return 'inventory';

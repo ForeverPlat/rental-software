@@ -10,7 +10,7 @@ import { MdOutlineInventory2 } from "react-icons/md";
 
 const topItems = [
   { name: "Dashboard", path: "/dashboard", icon: <RiDashboard3Line /> },
-  { name: "Calendar", path: "/calendar", icon: <FaRegCalendarMinus /> },
+  // { name: "Calendar", path: "/calendar", icon: <FaRegCalendarMinus /> },
 ];
 
 const bottomItems = [

@@ -6,21 +6,22 @@ import Layout from './Layout';
 
 import Sidebar from './components/Sidebar/Sidebar';
 
-import Signup from './features/auth/Signup/Signup'
-import Login from './features/auth/Login/Login'
-import Bookings from './features/Bookings';
-import Customers from './features/Customers/Customers'
-import Dashboard from './features/Dashboard/Dashboard';
-import Calendar from './features/Calendar';
-import Inventory from './features/Inventory';
+import Signup from './features/auth/signup/Signup'
+import Login from './features/auth/Login/Login';
+// import Login from './features/auth/Login/Login';
+import Bookings from './features/bookings/Bookings';
+import Customers from './features/Customers/Customers';
+import Home from './features/home/Home';
+// import Calendar from './features/Calendar';
+import Inventory from './features/inventory/Inventory';
 
-import NewBooking from './features/NewBooking/NewBooking';
-import NewCustomer from './features/NewCustomer/NewCustomer'
-import NewProduct from './features/NewProduct/NewProduct';
+import NewBooking from './features/bookings/NewBooking'
+import NewCustomer from './features/customers/NewCustomer'
+import NewProduct from './features/inventory/NewProduct';
 
-import BookingDetails from './features/BookingDetails/BookingDetails';
-import CustomerDetails from './features/CustomerDetails/CustomerDetails';
-import InventoryDetails from './features/InventoryDetails/InventoryDetails';
+import BookingDetails from './features/bookings/BookingDetails';
+import CustomerDetails from './features/customers/CustomerDetails';
+import InventoryDetails from './features/inventory/InventoryDetails';
 
 const App = () => {
   return (
@@ -28,9 +29,9 @@ const App = () => {
       <Routes>
 
         <Route path='/' element={<Layout />}>
-          <Route index element={<Dashboard />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/calendar" element={<Calendar />} />
+          <Route index element={<Home />} />
+          <Route path="/home" element={<Home />} />
+          {/* <Route path="/calendar" element={<Calendar />} /> */}
           <Route path="/bookings" element={<Bookings />} />
           <Route path="/customers" element={<Customers />} />
           <Route path="/inventory" element={<Inventory />} />
