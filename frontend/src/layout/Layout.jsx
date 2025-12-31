@@ -12,7 +12,7 @@ const Layout = () => {
   const getPageFromPath = () => {
     const path = location.pathname.toLowerCase();
 
-    if (path === '/' || path === '/dashboard') return 'dashboard';
+    if (path === '/' || path === '/home') return 'home';
     // if (path === '/calendar') return 'calender';
     if (path === '/bookings') return 'bookings';
     if (path === '/customers') return 'customers';
@@ -32,7 +32,7 @@ const Layout = () => {
     <div className={styles.appLayout}>
       <Header page={page} />
       <div className={styles.appBody}>
-        <Sidebar />
+        <Sidebar page={page} />
 
         <main className={styles.appMain}>
           <Outlet />

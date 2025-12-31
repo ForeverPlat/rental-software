@@ -1,6 +1,6 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './Sidebar.css'
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import { HiHome } from "react-icons/hi";
 import { HiArchiveBox } from "react-icons/hi2";
@@ -15,13 +15,25 @@ const items = [
 ]
 
 const Sidebar = () => {
+  const [page, setPage] = useState();
 
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const currPath = location.pathname.toLowerCase();
+
+  const getPage = () => {
+
+  }
 
   return (
     <nav className='sidebar' style={Sidebar.css}>
       {items.map(({ name, path, icon }) => (
-        <div className='sidebar-item' key={path} onClick={() => navigate(path)}>
+        <div
+          className={ currPath === path ? 'sidebar-item curr-page' : 'sidebar-item' }
+          key={path}
+          onClick={() => navigate(path)}
+        >
           {icon}{name}
         </div>
       ))}

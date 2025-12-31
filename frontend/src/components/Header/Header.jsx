@@ -1,5 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import styles from './Header.module.css'
+import logo from '../../../public/temp-logo.png'
 
 const Header = ({ page }) => {
   const navigate = useNavigate();
@@ -18,10 +20,23 @@ const Header = ({ page }) => {
   };
 
   return (
-    <header style={{ display: 'flex', alignSelf: 'center', justifyContent: 'space-between', maxHeight: '85px', minHeight: '85px', alignItems: 'center', padding: '0 20px', borderBottom: '1px solid #ddd', backgroundColor: '#f8f9fa' }}>
-      <h2 style={{ marginBottom: '0px' }} >{page.charAt(0).toUpperCase() + page.slice(1)}</h2>
+    <header className={styles.header}>
+    {/* <header style={{ display: 'flex', alignSelf: 'center', justifyContent: 'space-between', maxHeight: '85px', minHeight: '85px', alignItems: 'center', padding: '0 20px', borderBottom: '1px solid #ddd', backgroundColor: '#f8f9fa' }}> */}
+      {/* <h2 style={{ marginBottom: '0px' }} >{page.charAt(0).toUpperCase() + page.slice(1)}</h2> */}
       
-      {
+      <div className={styles.logo}>
+        <img src={logo} /> Renta.
+      </div>
+
+      <div className={styles.userContainer}>
+        <div className={styles.circle}></div>
+        <div className={styles.user}>
+          <span className={styles.username}>John Doe</span>
+          <span className={styles.role}>Owner</span>
+        </div>
+      </div>
+
+      {/* {
         // this ensures that if the path isn't on the list no button shows up
         getButton() !== 'none' ? (
           <button
@@ -31,7 +46,7 @@ const Header = ({ page }) => {
             {getButton().text}
           </button>
         ) : null
-      }
+      } */}
       
     </header>
   );
