@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import MetricsSummary from '../../components/MetricsSummary'
+// import MetricsSummary from '../../components/MetricsSummary'
+import MetricBar from '../../components/MetricBar/MetricsBar'
 // import BookingRow from '../components/BookingsTable/BookingsRow/BookingsRow'
 // import BookingsHeader from '../components/BookingsTable/BookingsHeader/BookingsHeader'
 import Table from '../../components/Table/Table'
@@ -71,7 +72,8 @@ const Bookings = () => {
 
   return (
     <div style={{ flexGrow: 1, padding: '20px' }}>
-      <MetricsSummary />
+      {/* <MetricsSummary /> */}
+      <MetricBar />
 
       <Table headers={headers} rows={bookings} onRowClick={handleBookingClick} type={"bookings"} />
 
