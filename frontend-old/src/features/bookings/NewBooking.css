@@ -1,0 +1,128 @@
+
+.date-picking-container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  padding: 16px;
+  margin-bottom: 16px;
+  border: 1px solid #e0e0e0;
+}
+
+.pickup-date-section, .return-date-section {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+}
+
+.pickup-header, .return-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.pickup-header, .return-header span {
+  font-weight: bold;
+  font-size: 12px;
+  color: #333;
+}
+
+.booking-date-picker-selected {
+  width: 75px;
+  font-weight: bold;
+  /* padding: 10px 0px; */
+  border: none;
+  border-bottom: 2px solid #e0e0e0;
+}
+
+.booking-date-picker-unselected {
+  width: 135px;
+  font-weight: bold;
+  /* padding: 10px 0px; */
+  border: none;
+  border-bottom: 2px solid #e0e0e0;
+}
+
+.booking-time-picker {
+  width: 60px;
+  /* margin-left: 10px; */
+  font-weight: bold;
+  /* padding: 10px 0px; */
+  border: none;
+  border-bottom: 2px solid #e0e0e0;
+}
+
+/* booking payment container */
+.booking-payment-container {
+    display: grid;
+    grid-template-rows: 50px 1fr;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    padding: 16px;
+    margin-bottom: 16px;
+    border: 1px solid #e0e0e0;
+    min-width: 300px;
+    min-height: 100px;
+}
+
+.booking-payment-container span {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.booking-payment-container p {
+    font-size: 12px;
+    color: #828282;
+}
+
+.booking-payment-selection-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    background-color: #edf1f5;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    gap: 50px;
+    padding: 15px 35px;
+}
+
+.booking-payment-container select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 14px;
+    outline: none;
+}
+
+/* booking product container */
+.booking-products-container {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  padding: 16px;
+  margin-bottom: 16px;
+  border: 1px solid #e0e0e0;
+}
+
+.booking-product-display {
+  margin: 30px 20px;
+}
+
+.new-booking-save-button {
+    display: flex;
+    justify-self: right;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+}

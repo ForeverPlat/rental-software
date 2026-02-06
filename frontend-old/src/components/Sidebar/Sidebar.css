@@ -1,0 +1,69 @@
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 260px;
+  max-width: 260px;
+  min-width: 260px;
+  height: 75vh;
+  background-color: #edf1f5;
+  /* padding: 24px; */
+  padding-right: 24px;
+  padding-top: 70px;
+  font-size: 18px;
+  font-weight: 600;
+  color: #828282;
+}
+
+.sidebar-item {
+  display: flex;
+  /* align-items: center; */
+  gap: 5px;
+  padding: 17px 20px;
+  border-radius: 10px;
+  cursor: pointer;
+  /* margin-bottom: 8px; */
+  /* transition: background-color 0.3s; */
+  /* transition: color 0.3s; */
+}
+
+.sidebar-item:hover {
+  background-color: #d3d8de;
+}
+
+.curr-page {
+  background-color: var(--blue);
+  color: var(--white);
+}
+
+.curr-page:hover {
+  background-color: var(--blue);
+  color: var(--white);
+}
+
+.logout-button {
+  display: flex;
+
+  margin-top: auto;
+  
+  align-items: center;
+  gap: 5px;
+  padding: 17px 20px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+/* .new-booking-btn {
+  margin-bottom: 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.new-booking-btn:hover {
+  background-color: #0056b3;
+} */
+

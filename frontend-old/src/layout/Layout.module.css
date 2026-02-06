@@ -1,0 +1,21 @@
+.appLayout {
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  min-height: 100vh;
+  width: 100%;
+  padding: 0px 40px;
+  background-color: #edf1f5;
+}
+
+.appBody {
+  display: flex;
+  flex: 1;
+  min-height: 0; /* critical for scrolling */
+}
+
+.appMain {
+  flex: 1;
+  /* padding: 16px; */
+  overflow: auto;
+}

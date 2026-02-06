@@ -1,0 +1,41 @@
+.container {
+  /* padding: 20px; */
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  min-width: 600px;
+}
+
+.section {
+  width: 48%;
+  background-color: #f8f9fa;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.dashboard-card-header {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 0px;
+  padding: 15px 10px 20px;
+  border-bottom: 1px solid #ddd;
+}
+
+.results {
+  color: #718096;
+  padding: 50px 0px;
+  text-align: center;
+}
+
+.links {
+  display: flex;
+  justify-content: space-between;
+  border-top: 1px solid #ddd;
+  padding: 15px 25px;
+  gap: 0.5rem;
+}
+
+.link {
+  color: #2b6cb0;
+  cursor: pointer;
+}
