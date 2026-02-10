@@ -1,0 +1,63 @@
+.header {
+  height: var(--header-height);
+  width: 100%;
+  background-color: #edf1f5;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 0 32px;
+}
+
+/* LEFT: logo + brand */
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  font-size: 22px;
+  font-weight: 700;
+  color: #000;
+}
+
+.logo img {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+}
+
+/* RIGHT: user info */
+.user-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* avatar circle */
+.circle {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background-color: #4f7df3;
+}
+
+/* name + role */
+.user {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+}
+
+.username {
+  font-size: 15px;
+  font-weight: 600;
+  color: #000;
+}
+
+.role {
+  font-size: 13px;
+  font-weight: 500;
+  color: #8a8a8a;
+}
+

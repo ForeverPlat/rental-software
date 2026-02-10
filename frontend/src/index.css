@@ -1,0 +1,30 @@
+:root {
+    --blue: #4f7df3;
+    --white: #ffffff;
+    --grey: #6e7075;
+    --lightGrey: #d9d9d9;
+    --background: #edf1f5;
+
+    --header-height: 92px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+body {
+  font-family: Arial, sans-serif;
+}
+

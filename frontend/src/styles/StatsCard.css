@@ -1,0 +1,59 @@
+.stats-card {
+  display: flex;
+  width: 100%;
+  background-color: #ffffff;
+  border-radius: 16px;
+  padding: 28px 0;
+
+  /* subtle card shadow */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+/* each equal section */
+.stat {
+  flex: 1;                /* equal width */
+  display: flex;
+  align-items: center;     /* vertical centering */
+  justify-content: center; /* horizontal centering */
+  position: relative;
+}
+
+/* stack label above value */
+.stat-text {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+/* typography */
+.stat-label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #7a7a7a;
+}
+
+.stat-value {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #000;
+}
+
+/* divider between sections */
+.stat:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+
+  width: 1px;
+  height: 48px;
+  background-color: #e0e0e0;
+}
+
+.dollar {
+     color: var(--lightGrey);
+     padding-right: 3px;
+}
+
