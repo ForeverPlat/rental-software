@@ -1,0 +1,97 @@
+/* card wrapper */
+.data-table-card {
+  background-color: #ffffff;
+  border-radius: 16px;
+  padding: 36px;
+
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+/* header above table */
+.data-table-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.data-table-header h2 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+/* table itself */
+.data-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+/* column headers */
+.data-table thead th {
+  text-align: left;
+  padding: 16px 0;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #b0b3b8;
+
+  border-top: 2px solid #e5e7eb;
+  border-bottom: 2px solid #e5e7eb;
+}
+
+/* rows */
+.data-table tbody td {
+  padding: 22px 0;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #000;
+}
+
+/* IMPORTANT: remove row lines */
+.data-table tbody tr td {
+  border-bottom: none;
+}
+
+
+
+
+
+/* base cell padding */
+.data-table th,
+.data-table td {
+  padding-top: 22px;
+  padding-bottom: 22px;
+  padding-left: 24px;
+  padding-right: 24px;
+}
+
+/* Customer (1st column) – more breathing room on the left */
+.data-table th:nth-child(1),
+.data-table td:nth-child(1) {
+  padding-left: 32px;
+}
+
+/* Status + dates – optically centered */
+.data-table th:nth-child(2),
+.data-table td:nth-child(2),
+.data-table th:nth-child(3),
+.data-table td:nth-child(3),
+.data-table th:nth-child(4),
+.data-table td:nth-child(4) {
+  padding-left: 28px;
+  padding-right: 28px;
+}
+
+/* Price – slightly pulled inward */
+.data-table th:nth-child(5),
+.data-table td:nth-child(5) {
+  padding-right: 36px;
+}
+
+/* Payment Status – prevent edge hugging */
+.data-table th:nth-child(6),
+.data-table td:nth-child(6) {
+  padding-right: 32px;
+}
+

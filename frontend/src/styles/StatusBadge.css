@@ -1,0 +1,30 @@
+.status-badge {
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* variants */
+.status-badge.green {
+  background-color: #c9f0b8;
+  color: #3bb54a;
+}
+
+.status-badge.yellow {
+  background-color: #fff3a3;
+  color: #f5b700;
+}
+
+.status-badge.red {
+  background-color: #ffb3b3;
+  color: #ff4d4f;
+}
+
+.status-badge.default {
+  background-color: #e5e7eb;
+  color: #6b7280;
+}
+
