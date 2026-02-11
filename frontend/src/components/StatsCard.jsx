@@ -9,7 +9,7 @@ const stats = [
 ];
 
 // prop here later
-const StatsCard = () => {
+const StatsCard = ({ stats }) => {
   return (
     <div className="stats-card">
       {stats.map((stat, index) => (
