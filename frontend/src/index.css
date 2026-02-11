@@ -2,7 +2,9 @@
     --blue: #4f7df3;
     --white: #ffffff;
     --grey: #6e7075;
-    --lightGrey: #d9d9d9;
+    --hoverGrey: #f3f4f6;
+    /* --lightGrey: #d9d9d9; */
+    --lightGrey: #e5e7eb;
     --background: #edf1f5;
 
     --header-height: 92px;

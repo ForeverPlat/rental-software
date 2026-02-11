@@ -3,10 +3,17 @@ import "../../styles/BookingsPage.css";
 import StatsCard from "../../components/StatsCard";
 import BookingsTable from "../../components/BookingsTable";
 
+const stats = [
+  { label: "Revenue", value: "$98k" },
+  { label: "Bookings", value: "123" },
+  { label: "Items Ordered", value: "78" },
+  { label: "Due", value: "3" },
+];
+
 const BookingsPage = () => {
   return (
     <div className="bookings-page">
-      <StatsCard />
+      <StatsCard stats={stats} />
 
       <BookingsTable
         bookings={[
