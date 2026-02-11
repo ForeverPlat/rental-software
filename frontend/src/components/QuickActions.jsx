@@ -10,7 +10,7 @@ const QuickActions = () => {
       <h3 className="quick-actions-title">Quick Actions</h3>
 
       <div className="quick-actions-list">
-        <button className="quick-action primary">
+        <button className="quick-action">
           <span className="icon">
             <BsFillCalendarPlusFill />
           </span>

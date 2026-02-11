@@ -8,11 +8,17 @@ const STATUS_MAP = {
   overdue: "red",
 };
 
-const StatusBadge = ({ label }) => {
-  const key = label.toLowerCase();
-  const variant = STATUS_MAP[key] || "default";
+const StatusBadge = ({ label, variant }) => {
+  let finalVariant = variant;
 
-  return <span className={`status-badge ${variant}`}>{label}</span>;
+  if (!finalVariant && label) {
+    const key = label.toLowerCase();
+    finalVariant = STATUS_MAP[key] || "default";
+  }
+
+  return (
+    <span className={`status-badge ${finalVariant || "default"}`}>{label}</span>
+  );
 };
 
 export default StatusBadge;

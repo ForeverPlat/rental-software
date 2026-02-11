@@ -3,6 +3,7 @@ import "../../styles/HomePage.css";
 import StatsCard from "../../components/StatsCard";
 import MonthlyRevenue from "../../components/MonthlyRevenue";
 import QuickActions from "../../components/QuickActions";
+import LowStockItems from "../../components/LowStockItems";
 
 const stats = [
   { label: "Revenue", value: "$98k" },
@@ -19,6 +20,7 @@ const HomePage = () => {
         <MonthlyRevenue />
         <QuickActions />
       </div>
+      <LowStockItems />
     </div>
   );
 };

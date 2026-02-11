@@ -1,0 +1,68 @@
+.low-stock-card {
+  background-color: var(--white);
+  border-radius: 16px;
+  padding: 36px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.low-stock-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 28px;
+}
+
+.low-stock-header h3 {
+  margin: 0;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #111827;
+}
+
+.view-all {
+  background: none;
+  border: none;
+  color: var(--blue);
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 0.95rem;
+}
+
+.view-all:hover {
+  text-decoration: underline;
+}
+
+.low-stock-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.low-stock-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 0;
+}
+
+.low-stock-row + .low-stock-row {
+  border-top: 1px solid var(--lightGrey);
+}
+
+.thumbnail {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background-color: var(--lightGrey);
+  margin-right: 18px;
+}
+
+.item-info {
+  flex: 1;
+}
+
+.item-name {
+  font-weight: 600;
+  color: #111827;
+  font-size: 1rem;
+}
+
