@@ -1,16 +1,7 @@
 import React from "react";
 import StatusBadge from "./StatusBadge";
 import "../styles/LowStockItems.css";
-
-const items = [
-  { id: 1, name: "Corn Hole", quantity: 2 },
-  { id: 2, name: "Axe Throwing", quantity: 3 },
-  { id: 3, name: "Bounce House", quantity: 5 },
-  { id: 4, name: "Speaker System", quantity: 1 },
-  { id: 5, name: "LED Dance Floor", quantity: 8 },
-  { id: 6, name: "Folding Chairs (Set of 20)", quantity: 4 },
-  { id: 7, name: "Photo Booth", quantity: 2 },
-];
+import { useNavigate } from "react-router-dom";
 
 const getStockStatus = (qty) => {
   if (qty <= 2) return "red";
@@ -20,7 +11,8 @@ const getStockStatus = (qty) => {
 };
 
 // items prop later
-const LowStockItems = () => {
+const LowStockItems = ({ items }) => {
+  const navigate = useNavigate();
   const lowestThree = [...items]
     .sort((a, b) => a.quantity - b.quantity)
     .slice(0, 3);
@@ -29,7 +21,9 @@ const LowStockItems = () => {
     <div className="low-stock-card">
       <div className="low-stock-header">
         <h3>Low Stock Items</h3>
-        <button className="view-all">View All</button>
+        <button className="view-all" onClick={() => navigate("/inventory")}>
+          View All
+        </button>
       </div>
 
       <div className="low-stock-list">

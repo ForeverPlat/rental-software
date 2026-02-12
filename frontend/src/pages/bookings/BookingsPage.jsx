@@ -10,31 +10,31 @@ const stats = [
   { label: "Due", value: "3" },
 ];
 
+const bookings = [
+  {
+    customer: "Luqman Ajani",
+    status: "Returned",
+    from: "10/05/25",
+    until: "11/05/25",
+    price: 200,
+    paymentStatus: "Paid",
+  },
+  {
+    customer: "John Doe",
+    status: "Returned",
+    from: "10/05/25",
+    until: "11/05/25",
+    price: 75,
+    paymentStatus: "Overdue",
+  },
+];
+
 const BookingsPage = () => {
   return (
     <div className="bookings-page">
       <StatsCard stats={stats} />
 
-      <BookingsTable
-        bookings={[
-          {
-            customer: "Luqman Ajani",
-            status: "Returned",
-            from: "10/05/25",
-            until: "11/05/25",
-            price: 200,
-            paymentStatus: "Paid",
-          },
-          {
-            customer: "John Doe",
-            status: "Returned",
-            from: "10/05/25",
-            until: "11/05/25",
-            price: 75,
-            paymentStatus: "Overdue",
-          },
-        ]}
-      />
+      <BookingsTable bookings={bookings} />
     </div>
   );
 };

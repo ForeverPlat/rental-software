@@ -10,6 +10,12 @@
     gap: 16px;
 }
 
+.home-page-third-row {
+    display: grid;
+    grid-template-columns: 3fr 7fr;
+    gap: 16px;
+}
+
 /* .home-page-second-row > * { */
 /*     flex: 1; */
 /* } */
