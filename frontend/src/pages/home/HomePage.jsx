@@ -39,9 +39,23 @@ const items = [
 ];
 
 const HomePage = () => {
+  // const homeStatsDisplay = [
+  //   { label: "Revenue", value: `$${stats.revenue}` },
+  //   { label: "Bookings", value: stats.bookings },
+  //   { label: "Customers", value: stats.customers },
+  //   { label: "Products", value: stats.products },
+  // ];
+
+  const homeStatsDisplay = [
+    { label: "Revenue", value: `$550` },
+    { label: "Bookings", value: `12` },
+    { label: "Customers", value: `5` },
+    { label: "Products", value: `3` },
+  ];
+
   return (
     <div className="home-page">
-      <StatsCard stats={stats} />
+      <StatsCard stats={homeStatsDisplay} />
       <div className="home-page-second-row">
         <MonthlyRevenue />
         <QuickActions />

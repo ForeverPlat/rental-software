@@ -1,13 +1,6 @@
 import React from "react";
 import "../styles/StatsCard.css";
 
-const stats = [
-  { label: "Revenue", value: "$98k" },
-  { label: "Bookings", value: "123" },
-  { label: "Items Ordered", value: "78" },
-  { label: "Due", value: "3" },
-];
-
 // prop here later
 const StatsCard = ({ stats }) => {
   return (
