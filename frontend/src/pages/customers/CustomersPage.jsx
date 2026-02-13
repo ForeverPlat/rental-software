@@ -1,31 +1,33 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 // import "../../styles/CustomersPage.css";
 import CustomersTable from "../../components/CustomersTable";
-
-const customers = [
-  {
-    name: "Luqman",
-    email: "Luqman.o.ajani@gmail.com",
-  },
-  {
-    name: "Rashidat",
-    email: "Rashidat.o.ajani@gmail.com",
-  },
-  {
-    name: "Ismail",
-    email: "Ismail.o.ajani@gmail.com",
-  },
-  {
-    name: "Rahdiyah",
-    email: "Rahdiyah.o.ajani@gmail.com",
-  },
-  {
-    name: "Faaiz",
-    email: "Faaiz.o.ajani@gmail.com",
-  },
-];
+import { getCustomers } from "../../features/customers/api";
+import LoadingState from "../../components/LoadingState";
+import ErrorState from "../../components/ErrorState";
 
 const CustomersPage = () => {
+  const [customers, setCustomers] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchCustomers = async () => {
+      try {
+        const data = await getCustomers();
+        setCustomers(data);
+      } catch (error) {
+        setError(error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCustomers();
+  }, []);
+
+  if (loading) return <LoadingState />;
+  if (error) return <ErrorState message={error} />;
+
   return (
     <div className="customers-page">
       <CustomersTable customers={customers} />

@@ -6,14 +6,14 @@ import { useNavigate } from "react-router-dom";
 
 const columns = [
   {
-    key: "name",
+    key: "product",
     header: "Name",
-    render: (value) => <strong>{value}</strong>,
+    render: (value) => <strong>{value.name}</strong>,
   },
   {
-    key: "rate",
+    key: "product", // figure out identical keys
     header: "Rate",
-    render: (value) => <strong>{value}</strong>,
+    render: (value) => <strong>{value.pricePerDay}</strong>, // will have to change to rate later
   },
   {
     key: "available",
