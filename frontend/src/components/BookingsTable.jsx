@@ -7,26 +7,36 @@ const columns = [
   {
     key: "customer",
     header: "Customer",
-    render: (value) => <strong>{value}</strong>,
+    render: (value) => <strong>{value.name}</strong>,
   },
   {
     key: "status",
     header: "Status",
     render: (value) => <StatusBadge label={value} />,
   },
-  { key: "from", header: "From" },
-  { key: "until", header: "Until" },
   {
-    key: "price",
-    header: "Price",
-    render: (value) => `$${value}`,
+    key: "pickupDate",
+    header: "From",
+    render: (value) => <strong>{value}</strong>,
   },
   {
-    key: "paymentStatus",
+    key: "returnDate",
+    header: "Until",
+    render: (value) => <strong>{value}</strong>,
+  },
+  {
+    key: "payment",
+    header: "Price",
+    render: (value) => `$${value.amount}`,
+  },
+  {
+    key: "payment",
     header: "Payment Status",
-    render: (value) => <StatusBadge label={value} />,
+    render: (value) => <StatusBadge label={value.status} />,
   },
 ];
+
+// create a format date function
 
 const BookingsTable = ({ bookings }) => {
   return (

@@ -15,6 +15,8 @@ import CustomerDetailsPage from "./pages/customers/CustomerDetailsPage";
 import InventoryDetailsPage from "./pages/inventory/InventoryDetailsPage";
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Signup from "./pages/auth/Signup";
+import Login from "./pages/auth/Login";
 
 function App() {
   return (
@@ -30,8 +32,11 @@ function App() {
           <Route path="customers/:id" element={<CustomerDetailsPage />} />
           <Route path="inventory" element={<InventoryPage />} />
           <Route path="inventory/new" element={<CreateInventoryPage />} />
-          <Route path="inventory/:id" element={<InventoryDetailsPage />} />{" "}
+          <Route path="inventory/:id" element={<InventoryDetailsPage />} />
         </Route>
+
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/login" element={<Login />} />
       </Routes>
     </BrowserRouter>
   );
