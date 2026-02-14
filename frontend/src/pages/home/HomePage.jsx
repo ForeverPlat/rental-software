@@ -1,17 +1,13 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "../../styles/HomePage.css";
 import StatsCard from "../../components/StatsCard";
 import MonthlyRevenue from "../../components/MonthlyRevenue";
 import QuickActions from "../../components/QuickActions";
 import LowStockItems from "../../components/LowStockItems";
 import UpcomingBookingsTable from "../../components/UpcomingBookingsTable";
-
-const stats = [
-  { label: "Revenue", value: "$98k" },
-  { label: "Bookings", value: "123" },
-  { label: "Customers", value: "54" },
-  { label: "Products", value: "12" },
-];
+import LoadingState from "../../components/LoadingState";
+import ErrorState from "../../components/ErrorState";
+import { getHomeStats, getLowStockProducts } from "../../features/home/api";
 
 const upcomingBookings = [
   {
@@ -39,18 +35,38 @@ const items = [
 ];
 
 const HomePage = () => {
-  // const homeStatsDisplay = [
-  //   { label: "Revenue", value: `$${stats.revenue}` },
-  //   { label: "Bookings", value: stats.bookings },
-  //   { label: "Customers", value: stats.customers },
-  //   { label: "Products", value: stats.products },
-  // ];
+  const [stats, setStats] = useState([]);
+  const [lowStockProducts, setLowStockProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchHomePageData = async () => {
+      try {
+        const statsData = await getHomeStats();
+        const lowStockData = await getLowStockProducts();
+        console.log(lowStockData);
+
+        setStats(statsData);
+        setLowStockProducts(lowStockData);
+      } catch (error) {
+        setError(error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchHomePageData();
+  }, []);
+
+  if (loading) return <LoadingState />;
+  if (error) return <ErrorState message={error} />;
 
   const homeStatsDisplay = [
-    { label: "Revenue", value: `$550` },
-    { label: "Bookings", value: `12` },
-    { label: "Customers", value: `5` },
-    { label: "Products", value: `3` },
+    { label: "Revenue", value: `$${stats.revenue}` },
+    { label: "Bookings", value: stats.bookings },
+    { label: "Customers", value: stats.customers },
+    { label: "Products", value: stats.products },
   ];
 
   return (
@@ -62,7 +78,7 @@ const HomePage = () => {
       </div>
 
       <div className="home-page-third-row">
-        <LowStockItems items={items} />
+        <LowStockItems items={lowStockProducts} />
         <UpcomingBookingsTable upcomingBookings={upcomingBookings} />
       </div>
     </div>

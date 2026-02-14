@@ -32,12 +32,12 @@ const LowStockItems = ({ items }) => {
             <div className="thumbnail" />
 
             <div className="item-info">
-              <span className="item-name">{item.name}</span>
+              <span className="item-name">{item.product.name}</span>
             </div>
 
             <StatusBadge
-              label={`${item.quantity} Left`}
-              variant={getStockStatus(item.quantity)}
+              label={`${item.available} Left`}
+              variant={getStockStatus(item.available)}
             />
           </div>
         ))}
