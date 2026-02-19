@@ -8,6 +8,7 @@ import UpcomingBookingsTable from "../../components/UpcomingBookingsTable";
 import LoadingState from "../../components/LoadingState";
 import ErrorState from "../../components/ErrorState";
 import { getHomeStats, getLowStockProducts } from "../../features/home/api";
+import { getUpcomingBookings } from "../../features/bookings/api";
 
 const upcomingBookings = [
   {
@@ -37,6 +38,7 @@ const items = [
 const HomePage = () => {
   const [stats, setStats] = useState([]);
   const [lowStockProducts, setLowStockProducts] = useState([]);
+  const [upcomingBookings, setUpcomingBookings] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -45,10 +47,12 @@ const HomePage = () => {
       try {
         const statsData = await getHomeStats();
         const lowStockData = await getLowStockProducts();
-        console.log(lowStockData);
+        const upcomingBookingsData = await getUpcomingBookings();
+        console.log(upcomingBookingsData);
 
         setStats(statsData);
         setLowStockProducts(lowStockData);
+        setUpcomingBookings(upcomingBookingsData);
       } catch (error) {
         setError(error.message);
       } finally {

@@ -6,18 +6,22 @@ const columns = [
   {
     key: "customer",
     header: "Customer",
+    render: (value) => <strong>{value.name}</strong>,
+  },
+  {
+    key: "pickupDate",
+    header: "Pickup Time",
     render: (value) => <strong>{value}</strong>,
   },
-  { key: "pickup", header: "Pickup Time" },
   {
-    key: "price",
+    key: "payment",
     header: "Price",
-    render: (value) => `$${value}`,
+    render: (value) => `$${value.price}`,
   },
   {
-    key: "paymentStatus",
+    key: "payment",
     header: "Payment Status",
-    render: (value) => <StatusBadge label={value} />,
+    render: (value) => <StatusBadge label={value.status} />,
   },
 ];
 

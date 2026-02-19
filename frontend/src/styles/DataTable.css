@@ -95,3 +95,9 @@
   padding-right: 32px;
 }
 
+.data-table-empty {
+  text-align: center;
+  padding: 48px 0;
+  font-size: 0.95rem;
+  color: #b0b3b8;
+}

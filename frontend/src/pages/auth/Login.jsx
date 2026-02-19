@@ -42,13 +42,14 @@ const Login = () => {
     }
 
     try {
-      await login(credentials);
+      const result = await login(credentials);
+      localStorage.setItem("token", result.token);
 
       setCredentials(initialState);
 
       navigate("/home");
     } catch (error) {
-      setError(error);
+      setError(error.message);
     }
   };
 
@@ -63,7 +64,7 @@ const Login = () => {
           <div className="auth-input-group">
             <label className="auth-label">Username</label>
             <input
-              type="username"
+              type="text"
               name="username"
               className="auth-input"
               placeholder="Enter Username"
@@ -87,7 +88,7 @@ const Login = () => {
           </div>
 
           <button className="auth-button" type="submit">
-            Sign In
+            Log In
           </button>
         </form>
 

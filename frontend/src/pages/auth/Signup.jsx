@@ -61,7 +61,7 @@ const Signup = () => {
 
       navigate("/login");
     } catch (error) {
-      setError(error);
+      setError(error.message);
     }
   };
 
@@ -75,7 +75,14 @@ const Signup = () => {
         <form className="auth-form" onSubmit={handleSubmit}>
           <div className="auth-input-group">
             <label className="auth-label">Full Name</label>
-            <input type="text" className="auth-input" placeholder="John Doe" />
+            <input
+              type="text"
+              className="auth-input"
+              name="username"
+              value={user.username}
+              placeholder="John Doe"
+              onChange={handleChange}
+            />
           </div>
 
           <div className="auth-input-group">
@@ -83,6 +90,8 @@ const Signup = () => {
             <input
               type="email"
               className="auth-input"
+              name="email"
+              value={user.email}
               placeholder="you@example.com"
               onChange={handleChange}
               required
@@ -94,6 +103,8 @@ const Signup = () => {
             <input
               type="password"
               className="auth-input"
+              name="password"
+              value={user.password}
               placeholder="Create password"
               onChange={handleChange}
               required

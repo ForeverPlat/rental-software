@@ -1,23 +1,35 @@
 //  Think of /inventory as the live status of the physical stock.
 
-import express from 'express';
-import { createInventory, deleteInventory, getInventories, getInventory, getUserInventories, updateInventory, updateUserInventory } from "../Controllers/inventoryController.js";
-import authMiddleware from '../Middleware/authMiddleware.js';
+import express from "express";
+import {
+  createInventory,
+  deleteInventory,
+  getInventories,
+  getInventory,
+  getLowStockInventories,
+  getUserInventories,
+  updateInventory,
+  updateUserInventory,
+} from "../Controllers/inventoryController.js";
+import authMiddleware from "../Middleware/authMiddleware.js";
 
 const inventoryRouter = express.Router();
 
-inventoryRouter.post('/:productId', authMiddleware, createInventory);
+inventoryRouter.post("/:productId", authMiddleware, createInventory);
 
-inventoryRouter.get('/', getInventories);
+inventoryRouter.get("/", getInventories);
 
-inventoryRouter.get('/user', authMiddleware, getUserInventories);
+inventoryRouter.get("/user", authMiddleware, getUserInventories);
 
-inventoryRouter.get('/:productId', getInventory);
+inventoryRouter.get("/user/low-stock", authMiddleware, getLowStockInventories);
 
-inventoryRouter.put('/:inventoryId', updateInventory);
+inventoryRouter.get("/:productId", getInventory);
 
-inventoryRouter.put('/user/:inventoryId', authMiddleware, updateUserInventory);
+inventoryRouter.put("/:inventoryId", updateInventory);
 
-inventoryRouter.delete('/:productId', deleteInventory);
+inventoryRouter.put("/user/:inventoryId", authMiddleware, updateUserInventory);
+
+inventoryRouter.delete("/:productId", deleteInventory);
 
 export default inventoryRouter;
+

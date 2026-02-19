@@ -1,7 +1,12 @@
 import React from "react";
 import "../styles/DataTable.css";
 
-const DataTable = ({ header, columns, data }) => {
+const DataTable = ({
+  header,
+  columns,
+  data,
+  emptyMessage = "No data found.",
+}) => {
   return (
     <div className="data-table-card">
       {header && <div className="data-table-header">{header}</div>}
@@ -16,15 +21,23 @@ const DataTable = ({ header, columns, data }) => {
         </thead>
 
         <tbody>
-          {data.map((row, rowIndex) => (
-            <tr key={rowIndex}>
-              {columns.map((col) => (
-                <td key={col.key}>
-                  {col.render ? col.render(row[col.key], row) : row[col.key]}
-                </td>
-              ))}
+          {data.length == 0 ? (
+            <tr>
+              <td colSpan={columns.length} className="data-table-empty">
+                {emptyMessage}
+              </td>
             </tr>
-          ))}
+          ) : (
+            data.map((row, rowIndex) => (
+              <tr key={rowIndex}>
+                {columns.map((col) => (
+                  <td key={col.key}>
+                    {col.render ? col.render(row[col.key], row) : row[col.key]}
+                  </td>
+                ))}
+              </tr>
+            ))
+          )}
         </tbody>
       </table>
     </div>

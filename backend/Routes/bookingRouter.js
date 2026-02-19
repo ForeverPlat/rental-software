@@ -1,31 +1,46 @@
-import express from 'express';
-import { createBooking, deleteBooking, getBooking, getBookings, getBookingsMetrics, getUserTodaysBookings, updateBooking, updateUserBooking, getUserBookings, updateUserBookingStatus, getTodaysBookings } from "../Controllers/bookingController.js";
-import authMiddleware from '../Middleware/authMiddleware.js';
+import express from "express";
+import {
+  createBooking,
+  deleteBooking,
+  getBooking,
+  getBookings,
+  getBookingsMetrics,
+  getUserTodaysBookings,
+  updateBooking,
+  updateUserBooking,
+  getUserBookings,
+  updateUserBookingStatus,
+  getTodaysBookings,
+  getUpcomingBookings,
+} from "../Controllers/bookingController.js";
+import authMiddleware from "../Middleware/authMiddleware.js";
 
 const bookingRouter = express.Router();
 
-bookingRouter.post('/', authMiddleware, createBooking);
+bookingRouter.post("/", authMiddleware, createBooking);
 
-bookingRouter.get('/', getBookings);
+bookingRouter.get("/", getBookings);
 
 //  position matters (ensures metrics is not seen as param)
-bookingRouter.get('/metrics', getBookingsMetrics);
+bookingRouter.get("/metrics", getBookingsMetrics);
 
-bookingRouter.get('/today', getTodaysBookings);
+bookingRouter.get("/today", getTodaysBookings);
 
-bookingRouter.get('/user/today', authMiddleware, getUserTodaysBookings);
+bookingRouter.get("/user/today", authMiddleware, getUserTodaysBookings);
 
-bookingRouter.get('/user', authMiddleware, getUserBookings);
+bookingRouter.get("/user/upcoming", authMiddleware, getUpcomingBookings);
 
-bookingRouter.get('/:bookingId', getBooking);
+bookingRouter.get("/user", authMiddleware, getUserBookings);
 
-bookingRouter.patch('/bookingId', authMiddleware,updateUserBookingStatus);
+bookingRouter.get("/:bookingId", getBooking);
 
-bookingRouter.put('/:bookingId', updateBooking);
+bookingRouter.patch("/bookingId", authMiddleware, updateUserBookingStatus);
 
-bookingRouter.put('/user/:bookingId', authMiddleware,updateUserBooking);
+bookingRouter.put("/:bookingId", updateBooking);
 
-bookingRouter.delete('/:bookingId', deleteBooking);
+bookingRouter.put("/user/:bookingId", authMiddleware, updateUserBooking);
 
+bookingRouter.delete("/:bookingId", deleteBooking);
 
 export default bookingRouter;
+
