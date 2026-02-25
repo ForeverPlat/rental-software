@@ -47,6 +47,10 @@ const getStockStatus = (available, reserved) => {
 const InventoryTable = ({ inventory }) => {
   const navigate = useNavigate();
 
+  const handleInventoryClick = (inventory) => {
+    navigate("/inventory/details", { state: { inventory } });
+  };
+
   return (
     <DataTable
       header={
@@ -63,6 +67,7 @@ const InventoryTable = ({ inventory }) => {
       }
       columns={columns}
       data={inventory}
+      handleRowClick={handleInventoryClick}
     />
   );
 };
