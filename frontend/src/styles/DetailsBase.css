@@ -1,0 +1,178 @@
+/* =========================
+   PAGE WRAPPER
+========================= */
+
+.details-page {
+  padding: 40px;
+  background-color: var(--background);
+  min-height: 100vh;
+}
+
+/* =========================
+   HEADER
+========================= */
+
+.details-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 28px;
+}
+
+.details-title {
+  margin: 0;
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: #111827;
+}
+
+.details-id {
+  display: block;
+  margin-top: 6px;
+  font-size: 0.85rem;
+  font-weight: 300;
+  color: var(--grey);
+}
+
+/* Message (success/error) */
+
+.details-message {
+  margin-bottom: 24px;
+  padding: 14px 18px;
+  border-radius: 12px;
+  font-size: 0.95rem;
+  font-weight: 600;
+
+  background: var(--white);
+  color: var(--grey);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+/* =========================
+   GRID LAYOUT
+========================= */
+
+.details-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
+
+/* =========================
+   CARD
+========================= */
+
+.details-card {
+  background-color: var(--white);
+  border-radius: 16px;
+  padding: 28px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.details-card.full-width {
+  grid-column: span 2;
+}
+
+.details-card h3 {
+  margin: 0 0 20px 0;
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #111827;
+}
+
+/* =========================
+   ROWS
+========================= */
+
+.details-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px 0;
+}
+
+.details-row > span:first-child {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--grey);
+}
+
+/* =========================
+   INPUTS
+========================= */
+
+.details-input {
+  width: 240px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid var(--lightGrey);
+  background: var(--white);
+
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #111827;
+
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.details-input:focus {
+  border-color: var(--blue);
+  box-shadow: 0 0 0 3px rgba(79, 125, 243, 0.15);
+}
+
+
+/*selects*/
+
+
+.details-select {
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--lightGrey);
+  font-size: 0.9rem;
+  font-weight: 600;
+  background-color: var(--white);
+  outline: none;
+  cursor: pointer;
+  transition: border 0.2s ease;
+}
+
+.details-select:focus {
+  border-color: var(--blue);
+}
+
+
+/* =========================
+   PRICE FIELD
+========================= */
+
+.details-price-field {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.details-price-symbol {
+  font-weight: 800;
+  color: var(--grey);
+  font-size: 1rem;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 900px) {
+  .details-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .details-card.full-width {
+    grid-column: auto;
+  }
+
+  .details-input {
+    width: 100%;
+  }
+}

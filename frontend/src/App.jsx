@@ -26,13 +26,13 @@ function App() {
           <Route path="home" element={<HomePage />} />
           <Route path="bookings" element={<BookingsPage />} />
           <Route path="bookings/new" element={<CreateBookingsPage />} />
-          <Route path="bookings/:id" element={<BookingDetailsPage />} />
+          <Route path="bookings/details" element={<BookingDetailsPage />} />
           <Route path="customers" element={<CustomersPage />} />
           <Route path="customers/new" element={<CreateCustomersPage />} />
-          <Route path="customers/:id" element={<CustomerDetailsPage />} />
+          <Route path="customers/details" element={<CustomerDetailsPage />} />
           <Route path="inventory" element={<InventoryPage />} />
           <Route path="inventory/new" element={<CreateInventoryPage />} />
-          <Route path="inventory/:id" element={<InventoryDetailsPage />} />
+          <Route path="inventory/details" element={<InventoryDetailsPage />} />
         </Route>
 
         <Route path="/signup" element={<Signup />} />

@@ -5,6 +5,7 @@ const DataTable = ({
   header,
   columns,
   data,
+  handleRowClick,
   emptyMessage = "No data found.",
 }) => {
   return (
@@ -31,7 +32,7 @@ const DataTable = ({
             data.map((row, rowIndex) => (
               <tr key={rowIndex}>
                 {columns.map((col) => (
-                  <td key={col.key}>
+                  <td key={col.key} onClick={() => handleRowClick(row)}>
                     {col.render ? col.render(row[col.key], row) : row[col.key]}
                   </td>
                 ))}

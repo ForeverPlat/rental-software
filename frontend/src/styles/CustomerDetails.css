@@ -1,0 +1,99 @@
+/* CustomerDetails.css — mirrors BookingDetails style */
+
+/* .details-page { */
+/*   min-height: 100vh; */
+/* } */
+/**/
+/* /* Header */ */
+/* .details-header { */
+/*   display: flex; */
+/*   justify-content: space-between; */
+/*   align-items: flex-start; */
+/*   margin-bottom: 32px; */
+/* } */
+/**/
+/* .details-title { */
+/*   margin: 0; */
+/*   font-size: 1.6rem; */
+/*   font-weight: 700; */
+/*   color: #111827; */
+/* } */
+/**/
+/* .details-id { */
+/*   display: block; */
+/*   margin-top: 6px; */
+/*   font-size: 0.9rem; */
+/*   color: var(--grey); */
+/*   font-weight: 500; */
+/* } */
+/**/
+/* /* Grid */ */
+/* .details-grid { */
+/*   display: grid; */
+/*   grid-template-columns: repeat(2, 1fr); */
+/*   gap: 24px; */
+/* } */
+/**/
+/* /* Cards */ */
+/* .details-card { */
+/*   background-color: var(--white); */
+/*   border-radius: 16px; */
+/*   padding: 28px; */
+/*   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); */
+/* } */
+/**/
+/* .details-card.full-width { */
+/*   grid-column: span 2; */
+/* } */
+/**/
+/* .details-card h3 { */
+/*   margin: 0 0 20px 0; */
+/*   font-size: 1.1rem; */
+/*   font-weight: 700; */
+/*   color: #111827; */
+/* } */
+/**/
+/* /* Standard row */ */
+/* .details-row { */
+/*   display: flex; */
+/*   justify-content: space-between; */
+/*   align-items: center; */
+/*   padding: 10px 0; */
+/*   font-size: 0.95rem; */
+/*   color: var(--grey); */
+/*   border-bottom: 1px solid var(--lightGrey); */
+/* } */
+/**/
+/* .details-row:last-child { */
+/*   border-bottom: none; */
+/* } */
+/**/
+/* .details-row strong { */
+/*   color: #111827; */
+/* } */
+/**/
+/* /* Input styling */ */
+/* .details-input { */
+/*   padding: 8px 12px; */
+/*   border-radius: 8px; */
+/*   border: 1px solid var(--lightGrey); */
+/*   font-size: 0.9rem; */
+/*   font-weight: 600; */
+/*   color: #111827; */
+/*   background-color: var(--white); */
+/*   outline: none; */
+/*   transition: border 0.2s ease; */
+/*   width: 220px; */
+/*   text-align: right; */
+/* } */
+/**/
+/* .details-input:focus { */
+/*   border-color: var(--blue); */
+/* } */
+/**/
+/* /* Message */ */
+/* .details-message { */
+/*   margin-bottom: 20px; */
+/*   font-weight: 600; */
+/*   color: var(--blue); */
+/* } */

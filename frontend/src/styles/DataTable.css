@@ -54,6 +54,10 @@
 }
 
 
+.data-table tbody tr:hover td {
+  background-color: #f9fafb;
+  cursor: pointer;
+}
 
 
 

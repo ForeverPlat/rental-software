@@ -23,7 +23,7 @@ const Sidebar = () => {
     <aside className="sidebar">
       <nav className="nav-items">
         {items.map(({ name, path, icon }) => {
-          const isActive = pathname == path;
+          const isActive = pathname.startsWith(path);
 
           return (
             <button
