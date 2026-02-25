@@ -2,6 +2,7 @@ import React from "react";
 import DataTable from "./DataTable";
 import StatusBadge from "./StatusBadge";
 import "../styles/PrimaryButton.css";
+import { useNavigate } from "react-router-dom";
 
 const columns = [
   {
@@ -39,6 +40,12 @@ const columns = [
 // create a format date function
 
 const BookingsTable = ({ bookings }) => {
+  const navigate = useNavigate();
+
+  const handleBookingClick = (booking) => {
+    navigate("/bookings/details", { state: { booking } });
+  };
+
   return (
     <DataTable
       header={
@@ -50,6 +57,7 @@ const BookingsTable = ({ bookings }) => {
       }
       columns={columns}
       data={bookings}
+      handleRowClick={handleBookingClick}
     />
   );
 };

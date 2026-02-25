@@ -15,3 +15,12 @@ export const getUpcomingBookings = async () => {
   console.log(result);
   return result.data;
 };
+
+export const updateBooking = async (id, updatedBooking) => {
+  const result = await request(`/bookings/user/${id}`, {
+    method: "PUT",
+    body: JSON.stringify(updatedBooking),
+  });
+
+  return result.data;
+};
