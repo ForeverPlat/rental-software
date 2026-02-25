@@ -19,6 +19,10 @@ const columns = [
 const CustomersTable = ({ customers }) => {
   const navigate = useNavigate();
 
+  const handleCustomerClick = (customer) => {
+    navigate("/customers/details", { state: { customer } });
+  };
+
   return (
     <DataTable
       header={
@@ -35,6 +39,7 @@ const CustomersTable = ({ customers }) => {
       }
       columns={columns}
       data={customers}
+      handleRowClick={handleCustomerClick}
     />
   );
 };

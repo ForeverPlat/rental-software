@@ -1,26 +1,17 @@
+import { request } from "../../lib/http";
+
 // const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:2000';
 const apiUrl = "http://localhost:2000";
 
 export const getCustomers = async () => {
-  const token = localStorage.getItem("token");
+  const result = await request(`/customers/user`);
+  return result.data;
+};
 
-  try {
-    const res = await fetch(`${apiUrl}/api/customers/user`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    });
-
-    if (!res.ok) {
-      throw new Error(`Failed to fetch customers: ${res.status}`);
-    }
-
-    const result = await res.json();
-    return result.data;
-  } catch (error) {
-    console.error(`Error fetching customers: ${error}`);
-    throw error;
-  }
+export const updateCustomer = async (id, updatedCustomer) => {
+  const result = await request(`/customers/user/${id}`, {
+    method: "PUT",
+    body: JSON.stringify(updatedCustomer),
+  });
+  return result.data;
 };
