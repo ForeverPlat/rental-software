@@ -4,32 +4,38 @@ import express from "express";
 import {
   createInventory,
   deleteInventory,
-  getInventories,
-  getInventory,
+  getInventoryById,
   getLowStockInventories,
   getUserInventories,
-  updateInventory,
+  searchUserInventory,
   updateUserInventory,
 } from "../Controllers/inventoryController.js";
 import authMiddleware from "../Middleware/authMiddleware.js";
 
 const inventoryRouter = express.Router();
 
-inventoryRouter.post("/:productId", authMiddleware, createInventory);
-
-inventoryRouter.get("/", getInventories);
+inventoryRouter.post("/", authMiddleware, createInventory);
 
 inventoryRouter.get("/user", authMiddleware, getUserInventories);
 
 inventoryRouter.get("/user/low-stock", authMiddleware, getLowStockInventories);
 
-inventoryRouter.get("/:productId", getInventory);
+inventoryRouter.get("/user/by-name", authMiddleware, searchUserInventory);
 
-inventoryRouter.put("/:inventoryId", updateInventory);
+inventoryRouter.get("/user/:id", authMiddleware, getInventoryById);
 
-inventoryRouter.put("/user/:inventoryId", authMiddleware, updateUserInventory);
+inventoryRouter.put("/user/:id", authMiddleware, updateUserInventory);
 
-inventoryRouter.delete("/:productId", deleteInventory);
+inventoryRouter.delete("/user/:id", deleteInventory);
+
+// inventoryRouter.post("/:productId", authMiddleware, createInventory);
+//
+// inventoryRouter.get("/", getInventories);
+//
+// inventoryRouter.get("/:productId", getInventory);
+//
+// inventoryRouter.put("/:inventoryId", updateInventory);
+//
+//
 
 export default inventoryRouter;
-
