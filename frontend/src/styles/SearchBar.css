@@ -1,0 +1,104 @@
+/* =========================
+   SEARCHBAR
+========================= */
+
+.searchbar-container {
+  position: relative;
+  width: 100%;
+}
+
+.searchbar-input {
+  width: 100%;
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 1px solid var(--lightGrey);
+  background: var(--white);
+
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #111827;
+
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.searchbar-input:focus {
+  border-color: var(--blue);
+  box-shadow: 0 0 0 3px rgba(79, 125, 243, 0.15);
+}
+
+/* =========================
+   DROPDOWN
+========================= */
+
+.searchbar-dropdown {
+  position: absolute;
+  top: 110%;
+  left: 0;
+  right: 0;
+
+  background: var(--white);
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+
+  margin: 0;
+  padding: 6px 0;
+  list-style: none;
+
+  z-index: 50;
+  max-height: 240px;
+  overflow-y: auto;
+}
+
+.searchbar-item {
+  padding: 10px 16px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.searchbar-item:hover {
+  background-color: var(--background);
+}
+
+.searchbar-empty {
+  margin-top: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--grey);
+}
+
+
+/* =========================
+   SELECTED STATE
+========================= */
+
+.searchbar-selected {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 1px solid var(--lightGrey);
+  background-color: var(--background);
+
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #111827;
+}
+
+.searchbar-clear {
+  border: none;
+  background: transparent;
+  font-size: 1rem;
+  font-weight: 800;
+  cursor: pointer;
+  color: var(--grey);
+  transition: color 0.2s ease;
+}
+
+.searchbar-clear:hover {
+  color: #dc2626;
+}
