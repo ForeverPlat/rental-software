@@ -24,3 +24,12 @@ export const updateBooking = async (id, updatedBooking) => {
 
   return result.data;
 };
+
+export const createBooking = async (data) => {
+  const result = await request("/bookings", {
+    method: "POST",
+    body: JSON.stringify(data),
+  });
+  return result.data;
+};
+

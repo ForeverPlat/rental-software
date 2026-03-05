@@ -52,7 +52,12 @@ const BookingsTable = ({ bookings }) => {
         <>
           <h2>Bookings</h2>
           {/*change this to a component later*/}
-          <button className="primary-btn">+ New Booking</button>
+          <button
+            className="primary-btn"
+            onClick={() => navigate("/bookings/new")}
+          >
+            + New Booking
+          </button>
         </>
       }
       columns={columns}

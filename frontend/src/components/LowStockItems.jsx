@@ -32,7 +32,7 @@ const LowStockItems = ({ items }) => {
             <div className="thumbnail" />
 
             <div className="item-info">
-              <span className="item-name">{item.product.name}</span>
+              <span className="item-name">{item.name}</span>
             </div>
 
             <StatusBadge

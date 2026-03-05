@@ -1,0 +1,262 @@
+/* =========================
+   WRAPPER
+========================= */
+
+.inventory-create-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+/* =========================
+   HEADER
+========================= */
+
+.inventory-create-header h1 {
+  margin: 0;
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: #111827;
+}
+
+.inventory-create-header p {
+  margin-top: 6px;
+  color: var(--grey);
+  font-weight: 500;
+}
+
+/* =========================
+   GRID
+========================= */
+
+.inventory-create-grid {
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  gap: 16px;
+}
+
+/* =========================
+   MAIN
+========================= */
+
+.inventory-create-main {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* =========================
+   CARD
+========================= */
+
+.inventory-create-card {
+  background: var(--white);
+  border-radius: 18px;
+  padding: 32px;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.06);
+  display: flex;
+  flex-direction: column;
+  /* gap: 24px; */
+}
+
+/* =========================
+   FIELD GRID
+========================= */
+
+.inventory-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+/* =========================
+   FIELDS
+========================= */
+
+.inventory-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.inventory-field.full {
+  grid-column: span 2;
+}
+
+.inventory-field label {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #111827;
+}
+
+.inventory-field input {
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid var(--lightGrey);
+  font-size: 0.95rem;
+  font-weight: 600;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.inventory-field input:focus {
+  border-color: var(--blue);
+  box-shadow: 0 0 0 3px rgba(79, 125, 243, 0.15);
+}
+
+/* =========================
+   PREFIX
+========================= */
+
+.inventory-input-prefix {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.inventory-input-prefix span {
+  font-weight: 800;
+  color: var(--grey);
+}
+
+/* =========================
+   PREVIEW PANEL
+========================= */
+
+.inventory-create-preview {
+  background: var(--white);
+  border-radius: 18px;
+  padding: 26px;
+  align-self: start;
+  box-shadow: 0 4px 18px rgba(0,0,0,0.05);
+}
+
+/* Header */
+
+.inventory-preview-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+}
+
+.inventory-preview-header h3 {
+  margin: 0;
+  font-weight: 800;
+  color: #111827;
+}
+
+.inventory-preview-header span {
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 4px 8px;
+  border-radius: 6px;
+  background: #eef2ff;
+  color: var(--blue);
+}
+
+/* Body */
+
+.inventory-preview-body {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* Icon */
+
+.inventory-preview-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: #f3f4f6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  margin-bottom: 8px;
+}
+
+.inventory-preview-row.name-row {
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-direction: column;
+}
+
+.preview-name {
+  font-weight: 700;
+  color: #111827;
+  font-size: 1rem;
+}
+
+/* Rows */
+
+.inventory-preview-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.preview-label {
+  color: var(--grey);
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.preview-value {
+  font-weight: 700;
+  color: #111827;
+}
+
+/* Divider */
+
+.inventory-preview-divider {
+  height: 1px;
+  background: #f1f5f9;
+}
+
+
+/* =========================
+   MESSAGE
+========================= */
+
+.inventory-message {
+  padding: 12px 14px;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.inventory-message.success {
+  background: #ecfdf5;
+  color: #065f46;
+}
+
+.inventory-message.error {
+  background: #fef2f2;
+  color: #991b1b;
+}
+
+.primary-btn {
+  align-self: flex-start;
+}
+
+.inventory-create-card-title {
+  margin: 0 0 18px 0;
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #111827;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 1000px) {
+  .inventory-create-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+

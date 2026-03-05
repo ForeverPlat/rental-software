@@ -1,0 +1,180 @@
+/* =========================
+   PAGE WRAPPER
+========================= */
+
+.create-bookings-page {
+  /* padding: 40px; */
+  background-color: var(--background);
+  min-height: 100vh;
+}
+
+/* =========================
+   HEADER
+========================= */
+
+.create-bookings-header {
+  margin-bottom: 28px;
+}
+
+.create-bookings-title {
+  margin: 0;
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: #111827;
+}
+
+/* =========================
+   CARD
+========================= */
+
+.create-bookings-card {
+  background-color: var(--white);
+  border-radius: 16px;
+  padding: 28px;
+  margin-bottom: 24px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.create-bookings-card-title {
+  align-content: center;
+  margin: 0 0 18px 0;
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #111827;
+}
+
+/* =========================
+   DATE GROUP
+========================= */
+
+.create-bookings-date-group {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.create-bookings-date-picker {
+  width: 240px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid var(--lightGrey);
+
+  font-size: 0.95rem;
+  font-weight: 600;
+
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.create-bookings-date-picker:focus {
+  border-color: var(--blue);
+}
+
+/* =========================
+   ITEMS SECTION
+========================= */
+
+.create-bookings-card .inventory-row {
+  margin-top: 10px;
+}
+
+/* =========================
+   TOTAL
+========================= */
+
+.create-bookings-total {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #111827;
+}
+
+/* =========================
+   SAVE BUTTON
+========================= */
+
+.create-bookings-save-button {
+  margin-top: 10px;
+  padding: 12px 20px;
+  border-radius: 10px;
+  border: none;
+
+  background-color: var(--blue);
+  color: var(--white);
+
+  font-weight: 700;
+  font-size: 0.95rem;
+  cursor: pointer;
+
+  transition: background 0.2s ease, transform 0.1s ease;
+}
+
+.create-bookings-save-button:hover {
+  background-color: #3f63d8;
+}
+
+.create-bookings-save-button:active {
+  transform: scale(0.98);
+}
+
+/* =========================
+   HEADER SUBTITLE
+========================= */
+
+.create-bookings-subtitle {
+  margin-top: 6px;
+  color: var(--grey);
+  font-weight: 500;
+}
+
+/* =========================
+   GRID LAYOUT
+========================= */
+
+.create-bookings-grid {
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  gap: 16px;
+}
+
+.create-bookings-main {
+  display: flex;
+  flex-direction: column;
+}
+
+/* =========================
+   PREVIEW PANEL
+========================= */
+
+.booking-preview {
+  background: var(--white);
+  border-radius: 18px;
+  padding: 26px;
+  align-self: start;
+  box-shadow: 0 4px 18px rgba(0,0,0,0.05);
+}
+
+/* responsive */
+
+@media (max-width: 1000px) {
+  .create-bookings-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 900px) {
+  .create-bookings-date-group {
+    flex-direction: column;
+  }
+
+  .create-bookings-date-picker {
+    width: 100%;
+  }
+}
