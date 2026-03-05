@@ -14,6 +14,7 @@ const InventoryPage = () => {
     const fetchInventory = async () => {
       try {
         const data = await getInventory();
+        console.log(data);
         setInventory(data);
       } catch (error) {
         setError(error.message);

@@ -7,8 +7,9 @@ import LowStockItems from "../../components/LowStockItems";
 import UpcomingBookingsTable from "../../components/UpcomingBookingsTable";
 import LoadingState from "../../components/LoadingState";
 import ErrorState from "../../components/ErrorState";
-import { getHomeStats, getLowStockProducts } from "../../features/home/api";
+import { getHomeStats } from "../../features/home/api";
 import { getUpcomingBookings } from "../../features/bookings/api";
+import { getLowStockInventory } from "../../features/inventory/api";
 
 const upcomingBookings = [
   {
@@ -46,7 +47,7 @@ const HomePage = () => {
     const fetchHomePageData = async () => {
       try {
         const statsData = await getHomeStats();
-        const lowStockData = await getLowStockProducts();
+        const lowStockData = await getLowStockInventory();
         const upcomingBookingsData = await getUpcomingBookings();
         console.log(upcomingBookingsData);
 

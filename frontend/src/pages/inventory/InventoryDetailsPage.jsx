@@ -13,7 +13,7 @@ const InventoryDetails = () => {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
 
-  const { product, productName, totalStock } = updatedInventory;
+  const { _id, name, totalStock, pricePerDay } = updatedInventory;
 
   const handleTopLevelChange = (field, value) => {
     setUpdatedInventory((prev) => ({
@@ -51,7 +51,7 @@ const InventoryDetails = () => {
       <div className="details-header">
         <div>
           <h2 className="details-title">Product</h2>
-          <span className="details-id">#{product?._id || "—"}</span>
+          <span className="details-id">#{_id || "—"}</span>
         </div>
         <button className="primary-btn" onClick={handleSave} disabled={loading}>
           {loading ? "Saving..." : "Save Changes"}
@@ -70,10 +70,8 @@ const InventoryDetails = () => {
             <input
               type="text"
               className="details-input"
-              value={productName}
-              onChange={(e) =>
-                handleTopLevelChange("productName", e.target.value)
-              }
+              value={name}
+              onChange={(e) => handleTopLevelChange("name", e.target.value)}
             />
           </div>
         </div>
@@ -101,13 +99,9 @@ const InventoryDetails = () => {
               <input
                 type="number"
                 className="details-input"
-                value={product?.pricePerDay}
+                value={pricePerDay}
                 onChange={(e) =>
-                  handleNestedChange(
-                    "product",
-                    "pricePerDay",
-                    Number(e.target.value),
-                  )
+                  handleTopLevelChange("pricePerday", Number(e.target.value))
                 }
               />
             </div>
