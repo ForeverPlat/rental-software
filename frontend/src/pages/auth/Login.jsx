@@ -3,6 +3,7 @@ import "../../styles/Auth.css";
 import { useNavigate } from "react-router-dom";
 import ErrorState from "../../components/ErrorState";
 import { login } from "../../features/auth/api";
+import { useAuth } from "../../features/auth/AuthContext";
 
 const initialState = {
   username: "",
@@ -21,6 +22,8 @@ const Login = () => {
   const [credentials, setCredentials] = useState(initialState);
   const [error, setError] = useState("");
   const navigate = useNavigate();
+
+  const { login: setAuthLogin } = useAuth();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -43,7 +46,8 @@ const Login = () => {
 
     try {
       const result = await login(credentials);
-      localStorage.setItem("token", result.token);
+      console.log(result);
+      setAuthLogin(result.token, result.user);
 
       setCredentials(initialState);
 

@@ -17,28 +17,42 @@ import InventoryDetailsPage from "./pages/inventory/InventoryDetailsPage";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Signup from "./pages/auth/Signup";
 import Login from "./pages/auth/Login";
+import { AuthProvider } from "./features/auth/AuthContext";
+import ProtectedRoute from "./routes/ProtectedRoute";
 
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Layout />}>
-          <Route path="home" element={<HomePage />} />
-          <Route path="bookings" element={<BookingsPage />} />
-          <Route path="bookings/new" element={<CreateBookingsPage />} />
-          <Route path="bookings/details" element={<BookingDetailsPage />} />
-          <Route path="customers" element={<CustomersPage />} />
-          <Route path="customers/new" element={<CreateCustomersPage />} />
-          <Route path="customers/details" element={<CustomerDetailsPage />} />
-          <Route path="inventory" element={<InventoryPage />} />
-          <Route path="inventory/new" element={<CreateInventoryPage />} />
-          <Route path="inventory/details" element={<InventoryDetailsPage />} />
-        </Route>
+    <AuthProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <ProtectedRoute>
+                <Layout />
+              </ProtectedRoute>
+            }
+          >
+            <Route path="home" element={<HomePage />} />
+            <Route path="bookings" element={<BookingsPage />} />
+            <Route path="bookings/new" element={<CreateBookingsPage />} />
+            <Route path="bookings/details" element={<BookingDetailsPage />} />
+            <Route path="customers" element={<CustomersPage />} />
+            <Route path="customers/new" element={<CreateCustomersPage />} />
+            <Route path="customers/details" element={<CustomerDetailsPage />} />
+            <Route path="inventory" element={<InventoryPage />} />
+            <Route path="inventory/new" element={<CreateInventoryPage />} />
+            <Route
+              path="inventory/details"
+              element={<InventoryDetailsPage />}
+            />
+          </Route>
 
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/login" element={<Login />} />
-      </Routes>
-    </BrowserRouter>
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/login" element={<Login />} />
+        </Routes>
+      </BrowserRouter>
+    </AuthProvider>
   );
 }
 

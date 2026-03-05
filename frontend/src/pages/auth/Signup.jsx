@@ -116,6 +116,7 @@ const Signup = () => {
             <input
               type="password"
               className="auth-input"
+              name="confirmPassword"
               placeholder="Confirm password"
               onChange={handleChange}
               required

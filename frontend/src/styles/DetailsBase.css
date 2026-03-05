@@ -3,7 +3,7 @@
 ========================= */
 
 .details-page {
-  padding: 40px;
+  /* padding: 40px; */
   background-color: var(--background);
   min-height: 100vh;
 }
