@@ -1,0 +1,9 @@
+.settings-layout {
+  display: flex;
+  gap: 32px;
+  height: 100%;
+}
+
+.settings-content {
+  flex: 1;
+}

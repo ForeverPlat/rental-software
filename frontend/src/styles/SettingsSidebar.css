@@ -1,0 +1,28 @@
+.settings-sidebar {
+  width: 200px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.settings-layout-link {
+  padding: 10px 14px;
+  border-radius: 8px;
+
+  font-size: 14px;
+  font-weight: 500;
+
+  text-decoration: none;
+  color: #6b7280;
+}
+
+.settings-layout-link:hover {
+  background-color: var(--hoverGrey);
+}
+
+.settings-layout-link.active {
+  background-color: #e5e7eb;
+  color: #111827;
+  font-weight: 600;
+}

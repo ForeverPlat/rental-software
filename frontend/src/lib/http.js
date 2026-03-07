@@ -3,7 +3,6 @@ const API_URL =
 
 export const request = async (endpoint, options = {}) => {
   const token = localStorage.getItem("token");
-  console.log(token);
 
   const res = await fetch(`${API_URL}${endpoint}`, {
     headers: {
