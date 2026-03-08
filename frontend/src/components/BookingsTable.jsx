@@ -18,12 +18,12 @@ const columns = [
   {
     key: "pickupDate",
     header: "From",
-    render: (value) => <strong>{value}</strong>,
+    render: (value) => <strong>{new Date(value).toLocaleString()}</strong>,
   },
   {
     key: "returnDate",
     header: "Until",
-    render: (value) => <strong>{value}</strong>,
+    render: (value) => <strong>{new Date(value).toLocaleString()}</strong>,
   },
   {
     key: "payment",

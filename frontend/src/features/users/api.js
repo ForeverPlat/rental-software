@@ -13,3 +13,12 @@ export const updateMe = async (data) => {
 
   return result.data;
 };
+
+export const updatePassword = async (data) => {
+  const result = await request("/users/password", {
+    method: "PATCH",
+    body: JSON.stringify(data),
+  });
+
+  return result.data;
+};
