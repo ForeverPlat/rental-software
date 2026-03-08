@@ -9,6 +9,7 @@ import inventory from "./Routes/inventoryRouter.js";
 import booking from "./Routes/bookingRouter.js";
 import customer from "./Routes/customerRouter.js";
 import auth from "./Routes/authRouter.js";
+import user from "./Routes/userRouter.js";
 import verifyEmail from "./Routes/verifyEmailRouter.js";
 
 import errorHandler from "./Middleware/errorHandler.js";
@@ -37,9 +38,10 @@ app.use("/api/products", product);
 app.use("/api/inventory", inventory);
 app.use("/api/bookings", booking);
 app.use("/api/customers", customer);
+app.use("/api/home", home);
 app.use("/api/auth", auth);
 app.use("/api/auth", verifyEmail);
-app.use("/api/home", home);
+app.use("/api/users", user);
 
 app.use(errorHandler);
 
@@ -54,4 +56,3 @@ connectToDB()
   .catch((error) => {
     console.error("Failed to connect to database: ", error);
   });
-
