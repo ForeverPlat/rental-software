@@ -117,63 +117,77 @@ export const updatePassword = async (req, res, next) => {
 export const inviteUser = async (req, res, next) => {
   try {
     const { userId } = req.user;
+    const { email, role = "user" } = req.body;
 
-    if (!userId) {
-      return next(createError("Unauthorized.", 401));
+    const normalizedEmail = email.trim().toLowerCase();
+
+    const user = await User.findById(userId).populate("company");
+
+    if (!user) return next(createError("User not found.", 404));
+    if (!user.company) return next(createError("User has no company.", 400));
+
+    const isOwner = user.company.owner.toString() === user._id.toString();
+    const canInvite = isOwner || user.role === "admin";
+
+    if (!canInvite) {
+      return next(createError("Unauthorized to send invites.", 403));
     }
 
-    const { email, role } = req.body;
-
-    const user = await User.findById(userId).populate("company", "name");
-
-    if (!user) {
-      return next(createError("User not found.", 404));
+    if (normalizedEmail === user.email) {
+      return next(createError("You cannot invite yourself.", 400));
     }
 
-    if (!user.company) {
-      return next(createError("This user does not have a company.", 404));
-    }
-
-    if (user.role !== "owner" && user.role !== "admin") {
-      return next(createError("Unauthorized to send invites.", 401));
-    }
-
-    const inviteExists = await Invitation.exists({
-      email,
+    const existingMember = await User.findOne({
+      email: normalizedEmail,
       company: user.company._id,
+    });
+
+    if (existingMember) {
+      return next(createError("User already belongs to this company.", 400));
+    }
+
+    const existingInvite = await Invitation.findOne({
+      email: normalizedEmail,
+      company: user.company._id,
+      status: "pending",
       expiresAt: { $gt: new Date() },
     });
 
-    if (inviteExists) {
-      return next(createError("An active invite has already been sent.", 400));
+    if (existingInvite) {
+      return next(createError("Active invite already exists.", 400));
     }
 
-    const inviteToken = crypto.randomBytes(32).toString("hex");
-    const inviteTokenExpires = new Date(
-      Date.now() + 48 * 60 * 60 * 1000 + 5 * 60 * 1000,
-    );
+    const rawToken = crypto.randomBytes(32).toString("hex");
 
-    const invite = new Invitation({
-      email,
-      role,
+    const tokenHash = crypto
+      .createHash("sha256")
+      .update(rawToken)
+      .digest("hex");
+
+    const expiresAt = new Date(Date.now() + 48 * 60 * 60 * 1000);
+
+    const invite = await Invitation.create({
+      email: normalizedEmail,
       company: user.company._id,
-      token: inviteToken,
-      expiresAt: inviteTokenExpires,
+      role,
+      invitedBy: user._id,
+      tokenHash,
+      expiresAt,
     });
 
-    await invite.save();
+    // cant remember
+    invite.save();
 
     await sendInvitationEmail({
       user: user.username,
       company: user.company.name,
-      email,
-      token: inviteToken,
+      email: normalizedEmail,
+      token: rawToken,
     });
 
     res.status(200).json({
       success: true,
       message: "Invite sent.",
-      data: invite,
     });
   } catch (error) {
     next(error);
@@ -184,25 +198,26 @@ export const validateInvite = async (req, res, next) => {
   try {
     const { inviteToken } = req.params;
 
+    const tokenHash = crypto
+      .createHash("sha256")
+      .update(inviteToken)
+      .digest("hex");
+
     const invite = await Invitation.findOne({
-      token: inviteToken,
+      tokenHash,
+      status: "pending",
     }).populate("company");
 
     if (!invite) {
-      return next(createError("Invalid invite token.", 400));
+      return next(createError("Invalid invite.", 400));
     }
 
     if (invite.expiresAt < new Date()) {
-      return next(createError("Invite has expired.", 400));
-    }
-
-    if (invite.accepted) {
-      return next(createError("This invite has already been used.", 400));
+      return next(createError("Invite expired.", 400));
     }
 
     res.status(200).json({
       success: true,
-      message: "Invite sent.",
       data: {
         email: invite.email,
         company: invite.company.name,
@@ -213,37 +228,36 @@ export const validateInvite = async (req, res, next) => {
     next(error);
   }
 };
-
-export const acceptInvite = async (req, res, next) => {
-  try {
-    const { inviteToken } = req.params;
-
-    const invite = await Invitation.findOne({
-      token: inviteToken,
-    }).populate("company");
-
-    if (!invite) {
-      return next(createError("Invalid invite token.", 400));
-    }
-
-    if (invite.expiresAt < new Date()) {
-      return next(createError("Invite has expired.", 400));
-    }
-
-    if (invite.accepted) {
-      return next(createError("This invite has already been used.", 400));
-    }
-
-    res.status(200).json({
-      success: true,
-      message: "Invite sent.",
-      data: {
-        email: invite.email,
-        company: invite.company.name,
-        role: invite.role,
-      },
-    });
-  } catch (error) {
-    next(error);
-  }
-};
+// export const acceptInvite = async (req, res, next) => {
+//   try {
+//     const { inviteToken } = req.params;
+//
+//     const invite = await Invitation.findOne({
+//       token: inviteToken,
+//     }).populate("company");
+//
+//     if (!invite) {
+//       return next(createError("Invalid invite token.", 400));
+//     }
+//
+//     if (invite.expiresAt < new Date()) {
+//       return next(createError("Invite has expired.", 400));
+//     }
+//
+//     if (invite.accepted) {
+//       return next(createError("This invite has already been used.", 400));
+//     }
+//
+//     res.status(200).json({
+//       success: true,
+//       message: "Invite sent.",
+//       data: {
+//         email: invite.email,
+//         company: invite.company.name,
+//         role: invite.role,
+//       },
+//     });
+//   } catch (error) {
+//     next(error);
+//   }
+// };

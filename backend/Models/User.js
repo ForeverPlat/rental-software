@@ -11,7 +11,7 @@ const userSchema = new mongoose.Schema(
     email: {
       type: String,
       required: true,
-      // unique: true,
+      unique: true,
       trim: true,
       lowercase: true,
     },
@@ -33,11 +33,14 @@ const userSchema = new mongoose.Schema(
       default: false,
       required: true,
     },
-    verificationToken: {
-      type: String,
-    },
-    verificationTokenExpires: {
-      type: Date,
+
+    verificationToken: String,
+    verificationTokenExpires: Date,
+
+    pendingInvitation: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Invitation",
+      default: null,
     },
   },
   { timestamps: true },

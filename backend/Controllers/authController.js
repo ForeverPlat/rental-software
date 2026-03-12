@@ -8,43 +8,59 @@ import jwt from "jsonwebtoken";
 
 export const signup = async (req, res, next) => {
   try {
-    const { username, email, password } = req.body;
-
-    //  check if username/email is already in the db
-    const user = await User.findOne({ $or: [{ username }, { email }] });
-
-    if (user && user.verified) {
-      return next(createError("This user already exists.", 409));
-    }
+    const { username, email, password, inviteToken } = req.body;
 
     if (!username || !email || !password) {
-      return next(createError("All fields need to be filled", 400));
+      return next(createError("All fields are required.", 400));
+    }
+
+    const normalizedEmail = email.trim().toLowerCase();
+
+    const existingUser = await User.findOne({ email: normalizedEmail });
+
+    if (existingUser && existingUser.verified) {
+      return next(createError("User already exists.", 409));
+    }
+
+    let invite = null;
+
+    if (inviteToken) {
+      invite = await validateInvite(inviteToken, normalizedEmail);
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const verificationToken = crypto.randomBytes(32).toString("hex");
+
     const verificationTokenExpires = new Date(Date.now() + 60 * 60 * 1000);
 
-    const newUser = new User({
-      username,
-      email,
-      password: hashedPassword,
-      verificationToken,
-      verificationTokenExpires,
-      role: "user",
-    });
+    let user;
 
-    await newUser.save();
+    if (existingUser) {
+      existingUser.username = username;
+      existingUser.password = hashedPassword;
+      existingUser.verificationToken = verificationToken;
+      existingUser.verificationTokenExpires = verificationTokenExpires;
 
-    await sendVerificationEmail(newUser);
+      if (invite) existingUser.pendingInvitation = invite._id;
 
-    const safeUser = { username: newUser.username };
+      user = await existingUser.save();
+    } else {
+      user = await User.create({
+        username,
+        email: normalizedEmail,
+        password: hashedPassword,
+        verificationToken,
+        verificationTokenExpires,
+        pendingInvitation: invite ? invite._id : null,
+      });
+    }
 
-    return res.json({
+    await sendVerificationEmail(user);
+
+    res.json({
       success: true,
-      message: "Signup Successful.",
-      data: safeUser,
+      message: "Signup successful. Verify your email.",
     });
   } catch (error) {
     next(error);
@@ -133,4 +149,3 @@ export const login = async (req, res, next) => {
     next(error);
   }
 };
-

@@ -21,16 +21,37 @@ const invitationSchema = new mongoose.Schema(
       default: "user",
     },
 
-    token: {
+    invitedBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
+
+    tokenHash: {
       type: String,
       required: true,
+    },
+
+    status: {
+      type: String,
+      enum: ["pending", "accepted", "revoked", "expired"],
+      default: "pending",
     },
 
     expiresAt: {
       type: Date,
       required: true,
-      index: { expires: 0 },
+      index: true,
     },
+
+    acceptedAt: Date,
+
+    acceptedBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      default: null,
+    },
+
     accepted: { type: Boolean, default: false },
   },
   { timestamps: true },
