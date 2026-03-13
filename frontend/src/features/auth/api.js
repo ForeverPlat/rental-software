@@ -21,3 +21,8 @@ export const handleLogout = () => {
   localStorage.removeItem("token");
   navigate("/login");
 };
+
+export const validateInvite = async (token) => {
+  const result = await request(`/user/invites/validate/${token}`);
+  return result.data;
+};
