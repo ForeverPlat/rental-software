@@ -22,11 +22,18 @@ const ProfileSettingsPage = () => {
     const loadUser = async () => {
       const user = await getMe();
 
+      const companyLabel =
+        user.company &&
+        typeof user.company === "object" &&
+        user.company.name
+          ? user.company.name
+          : user.company || "";
+
       setForm({
         username: user.username || "",
         email: user.email || "",
         role: user.role || "",
-        companyId: user.companyId || "",
+        companyId: companyLabel,
         createdAt: user.createdAt || "",
       });
     };
