@@ -12,7 +12,7 @@ const userRouter = express.Router();
 
 userRouter.get("/me", authMiddleware, getUser);
 
-userRouter.get("/invites/:token", authMiddleware, validateInvite);
+userRouter.get("/invites/validate/:token", validateInvite);
 
 userRouter.post("/invite", authMiddleware, inviteUser);
 

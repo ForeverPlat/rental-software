@@ -10,6 +10,7 @@ import booking from "./Routes/bookingRouter.js";
 import customer from "./Routes/customerRouter.js";
 import auth from "./Routes/authRouter.js";
 import user from "./Routes/userRouter.js";
+import company from "./Routes/companyRouter.js";
 import verifyEmail from "./Routes/verifyEmailRouter.js";
 
 import errorHandler from "./Middleware/errorHandler.js";
@@ -42,6 +43,7 @@ app.use("/api/home", home);
 app.use("/api/auth", auth);
 app.use("/api/auth", verifyEmail);
 app.use("/api/users", user);
+app.use("/api/company", company);
 
 app.use(errorHandler);
 

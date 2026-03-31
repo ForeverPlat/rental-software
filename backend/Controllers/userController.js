@@ -2,6 +2,8 @@ import Invitation from "../Models/Invitation.js";
 import User from "../Models/User.js";
 import { createError } from "../utils/createError.js";
 import { sendInvitationEmail } from "../utils/sendInvitationEmail.js";
+import bcrypt from "bcrypt";
+import crypto from "crypto";
 
 export const getUser = async (req, res, next) => {
   try {
@@ -11,9 +13,9 @@ export const getUser = async (req, res, next) => {
       return next(createError("Unauthorized.", 401));
     }
 
-    const user = await User.findById(userId).select(
-      "-password -verificationToken -verificationTokenExpires",
-    );
+    const user = await User.findById(userId)
+      .select("-password -verificationToken -verificationTokenExpires")
+      .populate("company", "name owner createdAt");
 
     if (!user) {
       return next(createError("User not found.", 404));
@@ -175,9 +177,6 @@ export const inviteUser = async (req, res, next) => {
       expiresAt,
     });
 
-    // cant remember
-    invite.save();
-
     await sendInvitationEmail({
       user: user.username,
       company: user.company.name,
@@ -196,11 +195,11 @@ export const inviteUser = async (req, res, next) => {
 
 export const validateInvite = async (req, res, next) => {
   try {
-    const { inviteToken } = req.params;
+    const { token } = req.params;
 
     const tokenHash = crypto
       .createHash("sha256")
-      .update(inviteToken)
+      .update(token)
       .digest("hex");
 
     const invite = await Invitation.findOne({

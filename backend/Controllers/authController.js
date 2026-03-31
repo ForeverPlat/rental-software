@@ -1,6 +1,7 @@
 import User from "../Models/User.js";
 import { createError } from "../utils/createError.js";
 import { sendVerificationEmail } from "../utils/sendVerificationEmail.js";
+import { validateInvite } from "../utils/validateInvite.js";
 
 import crypto from "crypto";
 import bcrypt from "bcrypt";
