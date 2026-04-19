@@ -46,3 +46,54 @@ export const createCompany = async (req, res, next) => {
     next(error);
   }
 };
+
+export const getCompanyMembers = async (req, res, next) => {
+  try {
+    const { userId } = req.user;
+
+    const user = await User.findById(userId).populate("company", "name");
+
+    if (!user) {
+      return next(createError("User not found.", 404));
+    }
+
+    if (!user.company) {
+      return res.status(200).json({
+        success: true,
+        message: "No company.",
+        data: {
+          company: null,
+          members: [],
+        },
+      });
+    }
+
+    const companyId = user.company._id;
+
+    const members = await User.find({ company: companyId })
+      .select("username email role")
+      .sort({ username: 1 })
+      .lean();
+
+    const safeMembers = members.map((m) => ({
+      id: m._id,
+      username: m.username,
+      email: m.email,
+      role: m.role,
+    }));
+
+    res.status(200).json({
+      success: true,
+      message: "Company members retrieved.",
+      data: {
+        company: {
+          id: user.company._id,
+          name: user.company.name,
+        },
+        members: safeMembers,
+      },
+    });
+  } catch (error) {
+    next(error);
+  }
+};

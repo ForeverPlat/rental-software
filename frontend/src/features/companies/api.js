@@ -8,3 +8,8 @@ export const createCompany = async ({ name }) => {
 
   return result.data;
 };
+
+export const getCompanyMembers = async () => {
+  const result = await request("/company/members");
+  return result.data;
+};
